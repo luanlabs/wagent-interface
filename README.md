@@ -1,2 +1,22 @@
-# wagent-interface
-Introducing Wagent: Your Advanced Payment Gateway Solution for Stellar and Futurenet. Simplify your online transactions with features tailored for both merchants and buyers. Enjoy smooth integration with popular e-commerce platforms and effortless compatibility.
+# Wagent Interface
+
+Wagent makes online transactions hassle-free within Stellar network. Whether you're a merchant or a buyer, Wagent offers practical features tailored to your needs.
+
+### Key Features:
+
+- **Easy Integration:** Wagent seamlessly integrates with popular e-commerce platforms like Presta, Magento, OpenCart, WordPress, and Shopify.
+- **Straightforward Setup:** Our plugins ensure an easy setup for merchants across different platforms.
+- **Security First:** Built for the Stellar and Futurenet networks, Wagent prioritizes secure transactions.
+- **Open Source:** Wagent is open-source, inviting contributions from the community to improve its functionality.
+
+### Contributing:
+
+We welcome contributions from anyone looking to enhance Wagent. Simply fork the repository, make your changes, and submit a pull request. Reach out to us at [support@wagent.io](mailto:support@wagent.io) for any queries.
+
+### License:
+
+Wagent is licensed under the [MIT License](LICENSE).
+
+### Contact:
+
+For more information or support, reach out to us at [support@wagent.io](mailto:support@wagent.io).

@@ -6,7 +6,7 @@ Wagent makes online transactions hassle-free within Stellar network. Whether you
 
 - **Easy Integration:** Wagent seamlessly integrates with popular e-commerce platforms like Presta, Magento, OpenCart, WordPress, and Shopify.
 - **Straightforward Setup:** Our plugins ensure an easy setup for merchants across different platforms.
-- **Security First:** Built for the Stellar and Futurenet networks, Wagent prioritizes secure transactions.
+- **Security First:** Built for the Soroban and Stellar networks, Wagent prioritizes secure transactions.
 - **Open Source:** Wagent is open-source, inviting contributions from the community to improve its functionality.
 
 ### Contributing:

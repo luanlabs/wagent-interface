@@ -3,13 +3,11 @@
 import { useState } from 'react';
 import { Provider } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
-import { usePathname } from 'next/navigation';
 
 import myFont from 'src/utils/localFont';
 import Aside from 'src/containers/Aside';
 import CCard from 'src/components/CCard';
 import Header from 'src/containers/Header';
-import { Pages } from 'src/constants/pages';
 
 import 'src/styles/globals.css';
 import { store } from 'src/store';

@@ -2,36 +2,33 @@ import React from 'react';
 
 import { CNavLinkProps as Type } from './types';
 
-import HomeIcon from 'src/assets/Home';
-import StairsIcon from 'src/assets/Stairs';
-import CalenderIcon from 'src/assets/Calender';
-import SettingsIcon from 'src/assets/Settings';
+import { Home, Basket, Calender, Settings } from '@/assets';
 
 import { Pages } from './pages';
 
 export const navLinks: Type[] = [
   {
     title: 'Dashboard',
-    icon: <HomeIcon fill="#E4F9F1" />,
-    activeIcon: <HomeIcon />,
+    icon: <Home fill="#E4F9F1" />,
+    activeIcon: <Home />,
     url: Pages.DASHBOARD,
   },
   {
-    title: 'Shop',
-    icon: <StairsIcon fill="#E4F9F1" />,
-    activeIcon: <StairsIcon />,
-    url: Pages.SHOP,
-  },
-  {
     title: 'History',
-    icon: <CalenderIcon fill="#E4F9F1" />,
-    activeIcon: <CalenderIcon />,
+    icon: <Calender fill="#E4F9F1" />,
+    activeIcon: <Calender />,
     url: Pages.HISTORY,
   },
   {
-    title: 'Address Book',
-    icon: <SettingsIcon fill="#E4F9F1" />,
-    activeIcon: <SettingsIcon />,
+    title: 'Products',
+    icon: <Basket fill="#E4F9F1" />,
+    activeIcon: <Basket />,
+    url: Pages.SHOP,
+  },
+  {
+    title: 'Settings',
+    icon: <Settings fill="#E4F9F1" />,
+    activeIcon: <Settings />,
     url: Pages.SETTINGS,
   },
 ];

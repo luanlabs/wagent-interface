@@ -11,7 +11,7 @@ Wagent makes online transactions hassle-free within Stellar network. Whether you
 
 ### Contributing:
 
-We welcome contributions from anyone looking to enhance Wagent. Simply fork the repository, make your changes, and submit a pull request. Reach out to us at [support@wagent.io](mailto:support@wagent.io) for any queries.
+We welcome contributions from anyone looking to enhance Wagent. Simply fork the repository, make your changes, and submit a pull request. Reach out to us at [support@wagent.app](mailto:support@wagent.app) for any queries.
 
 ### License:
 
@@ -19,4 +19,4 @@ Wagent is licensed under the [MIT License](LICENSE).
 
 ### Contact:
 
-For more information or support, reach out to us at [support@wagent.io](mailto:support@wagent.io).
+For more information or support, reach out to us at [support@wagent.app](mailto:support@wagent.app).

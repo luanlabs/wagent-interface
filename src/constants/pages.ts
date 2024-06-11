@@ -3,4 +3,6 @@ export enum Pages {
   HISTORY = '/history',
   SHOP = '/shop',
   SETTINGS = '/settings',
+  SIGNUP = '/signup',
+  SIGNIN = '/signin',
 }

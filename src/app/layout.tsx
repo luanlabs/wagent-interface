@@ -59,11 +59,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
       <body className={`overflow-hidden mobile:bg-white desktop:bg-alabaster`}>
         <Provider store={store}>
-          <main className="relative mobile:overflow-hidden px-8 mobile:p-0 pt-[9px] pb-7 w-full h-screen m-auto">
+          <main
+            className={`${currentPath === Pages.SIGNUP ? '!p-0 m-0' : ''}
+              relative mobile:overflow-hidden px-8 mobile:p-0 pt-[9px] pb-7 w-full h-screen m-auto`}
+          >
             <CCard
               className={`!w-full mobile:fixed mobile:top-0 mobile:right-0 mobile:left-0 
                   desktop:mb-[10px] mobile:rounded-none mobile:border-t-0 z-[999] block
-                  ${currentPath === Pages.SIGNUP ? 'hidden' : 'block'}`}
+                  ${currentPath === Pages.SIGNUP ? 'hidden' : 'block'}
+                  `}
+              borderColor="rgba(5, 1, 66, 0.10)"
               bgColor="white"
             >
               <Header />
@@ -79,6 +84,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     }
                     ${currentPath === Pages.SIGNUP ? 'hidden' : 'block'}
                     px-[15px] py-[19px] mobile:p-0`}
+                borderColor="rgba(5, 1, 66, 0.10)"
                 bgColor="white"
               >
                 <Aside isMinimized={isMinimized} onMinimized={() => setIsMinimized(!isMinimized)} />

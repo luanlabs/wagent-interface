@@ -10,7 +10,7 @@ import barcodeIcon from '../../../public/images/barcode.png';
 const SignUp = () => {
   return (
     <div className="flex items-center justify-center h-screen bg-ashGray">
-      <div className="w-[22%] p-6 bg-white rounded-3xl shadow-md">
+      <div className="w-[24%] min-w-[340px] p-6 bg-white rounded-3xl shadow-md">
         <div className="flex flex-col items-center w-full mt-[18px]">
           <Typography />
           <div className="mt-5 text-center space-y-4 mb-4">

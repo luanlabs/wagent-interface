@@ -24,7 +24,7 @@ const config: Config = {
         darkBlue: '#101828',
         offWhite: '#FCFCFD',
         offBlack: '#344054',
-        darkGray: '#667085',
+        darkGray: '#101323',
         success: '#039855',
         lightGreen: '#A6F4C5',
       },

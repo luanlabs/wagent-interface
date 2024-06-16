@@ -101,7 +101,7 @@ const CInput = ({
             inputClassName,
             `${icon ? 'px-12' : 'px-4'}
             self-stretch rounded-lg placeholder-mutedBlue text-darkGray text-base w-full h-10 py-[10px] px-[14px]
-            justify-start items-center inline-flex outline-none border
+            justify-start items-center inline-flex outline-none border hover:bg-offWhite transition-colors duration-300
             ${border ? 'border border-gray' : 'border-transparent'}  
             ${error && 'border !border-error'}
             ${disabled && 'cursor-not-allowed !select-none text-mutedBlue'}

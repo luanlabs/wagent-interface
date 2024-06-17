@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { Tooltip, PieChart, Pie, Cell } from 'recharts';
 
 import { PieChartDataType } from '@/models';
 
 interface CPieChartProps {
-  onChartDataChange: (data: PieChartDataType[]) => void;
+  chartData: (data: PieChartDataType[]) => void;
 }
 
 const pieData = [
@@ -18,19 +18,15 @@ const pieData = [
   { name: 'ETH', value: 3 },
 ];
 
-const CPieChart = ({ onChartDataChange }: CPieChartProps) => {
-  const [chartData, setChartData] = useState<PieChartDataType[]>([]);
-
+const CPieChart = ({ chartData }: CPieChartProps) => {
   useEffect(() => {
     const updatedChartData = pieData.map((entry, index) => ({
       value: entry.value,
       name: entry.name,
     }));
 
-    setChartData(updatedChartData);
-
-    if (onChartDataChange) {
-      onChartDataChange(updatedChartData);
+    if (chartData) {
+      chartData(updatedChartData);
     }
   }, [pieData]);
 

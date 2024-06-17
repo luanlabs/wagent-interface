@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Provider } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
+import { usePathname } from 'next/navigation';
 
 import myFont from 'src/utils/localFont';
 import Aside from 'src/containers/Aside';
@@ -11,9 +12,11 @@ import Header from 'src/containers/Header';
 
 import 'src/styles/globals.css';
 import { store } from 'src/store';
+import { Pages } from '@/constants/pages';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [isMinimized, setIsMinimized] = useState(false);
+  const currentPath = usePathname();
 
   return (
     <html lang="en" className={myFont.className}>
@@ -56,10 +59,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
       <body className={`overflow-hidden mobile:bg-white desktop:bg-alabaster`}>
         <Provider store={store}>
-          <main className="relative mobile:overflow-hidden px-8 mobile:p-0 pt-[9px] pb-7 w-full h-screen m-auto">
+          <main
+            className={`${currentPath === Pages.SIGNUP ? '!p-0 m-0' : ''}
+              relative mobile:overflow-hidden px-8 mobile:p-0 pt-[9px] pb-7 w-full h-screen m-auto`}
+          >
             <CCard
               className={`!w-full mobile:fixed mobile:top-0 mobile:right-0 mobile:left-0 
-                  desktop:mb-[10px] mobile:rounded-none mobile:border-t-0 z-[999] block`}
+                  desktop:mb-[10px] mobile:rounded-none mobile:border-t-0 z-[999] block
+                  ${currentPath === Pages.SIGNUP ? 'hidden' : 'block'}
+                  `}
+              borderColor="rgba(5, 1, 66, 0.10)"
               bgColor="white"
             >
               <Header />
@@ -72,7 +81,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       isMinimized
                         ? 'basis-[80px] transition-all duration-500'
                         : 'basis-[24%] lg:basis-[20%] transition-all duration-500'
-                    } px-[15px] py-[19px] mobile:p-0`}
+                    }
+                    ${currentPath === Pages.SIGNUP ? 'hidden' : 'block'}
+                    px-[15px] py-[19px] mobile:p-0`}
+                borderColor="rgba(5, 1, 66, 0.10)"
                 bgColor="white"
               >
                 <Aside isMinimized={isMinimized} onMinimized={() => setIsMinimized(!isMinimized)} />

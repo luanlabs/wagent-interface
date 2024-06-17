@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import cn from 'classnames';
 import Image from 'next/image';
 
-import CLabel from '../CLabel';
-// import useCustomID from 'src/hooks/useCustomId';
-
-import alertLogo from 'public/images/error.png';
-import clearInputLogo from 'public/images/x.svg';
+// import alertLogo from 'public/images/error.png';
+// import clearInputLogo from 'public/images/x.svg';
 
 interface CInputProps {
+  value?: any;
   icon?: string;
   label?: string;
   error?: boolean;
@@ -20,23 +18,19 @@ interface CInputProps {
   autoFocus?: boolean;
   clearInput?: boolean;
   placeholder?: string;
-  tooltipTitle?: string;
   iconClassName?: string;
-  clipboardText?: string;
-  tooltipDetails?: string;
   inputClassName?: string;
-  value?: string | number | any;
-  onClick?: (event: React.MouseEvent<HTMLInputElement>) => void;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  clearInputClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  handlePaste?: (event: React.MouseEventHandler<HTMLDivElement>) => void;
+  onClick?: MouseEventHandler<HTMLInputElement>;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  clearInputClick?: MouseEventHandler<HTMLImageElement>;
+  handlePaste?: MouseEventHandler<HTMLDivElement>;
   enterKeyHint?: 'search' | 'done' | 'enter' | 'go' | 'next' | 'previous' | 'send';
 }
 
 const CInput = ({
   icon,
-  label,
   error,
+  label,
   paste,
   value,
   border,
@@ -49,25 +43,15 @@ const CInput = ({
   clearInput,
   placeholder,
   handlePaste,
-  tooltipTitle,
   enterKeyHint,
   iconClassName,
   inputClassName,
-  tooltipDetails,
   clearInputClick,
   ...props
 }: CInputProps) => {
-  const id = useCustomID('Cinput');
-
   return (
     <div className={className}>
-      <CLabel
-        label={label}
-        tooltipDetails={tooltipDetails}
-        tooltipTitle={tooltipTitle}
-        htmlFor={id}
-      />
-
+      <p className="text-sm select-none font-normal mb-[6px] text-offBlack">{label}</p>
       <div className="relative w-full">
         {icon && (
           <div className={cn(iconClassName, `absolute bottom-4 left-3.5`)}>
@@ -104,7 +88,6 @@ const CInput = ({
         )}
 
         <input
-          id={id}
           {...props}
           value={value}
           onClick={onClick}
@@ -117,8 +100,9 @@ const CInput = ({
           className={cn(
             inputClassName,
             `${icon ? 'px-12' : 'px-4'}
-            self-stretch rounded-xl placeholder-mutedBlue text-darkGreen text-base w-full h-14 p-4 bg-neutral-100 justify-start items-center inline-flex outline-none border
-            ${border ? 'focus:border-darkBlue' : 'border-transparent'}  
+            self-stretch rounded-lg placeholder-mutedBlue text-darkGray text-base w-full h-10 py-[10px] px-[14px]
+            justify-start items-center inline-flex outline-none border hover:bg-offWhite transition-colors duration-300
+            ${border ? 'border border-gray' : 'border-transparent'}  
             ${error && 'border !border-error'}
             ${disabled && 'cursor-not-allowed !select-none text-mutedBlue'}
           `,

@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import cn from 'classnames';
 
 // import DetailLogo from 'src/assets/detail';
-import CTooltip from 'src/components/CTooltip';
+// import CTooltip from 'src/components/CTooltip';
 
 interface CLabelProps {
   label?: string;
   htmlFor?: string;
   className?: string;
   disabled?: boolean;
-  tooltipTitle: string;
+  tooltipTitle?: string;
   tooltipDetails?: string;
 }
 
@@ -22,16 +22,16 @@ const CLabel = ({
   tooltipDetails,
 }: CLabelProps) => {
   return (
-    <div className={cn('flex items-start ml-1 text-darkGreen', className)}>
-      <label htmlFor={htmlFor} className="text-lg font-normal mb-2 flex sm:font-[500]">
+    <div className={cn('flex items-start text-darkGreen', className)}>
+      <label htmlFor={htmlFor} className="text-2xl font-medium flex sm:font-[500]">
         {label}
-        {tooltipDetails && (
+        {/* {tooltipDetails && (
           <CTooltip text={tooltipDetails} title={tooltipTitle}>
             <div className="ml-2">
-              {/* <DetailLogo fill={disabled ? '#817fa0' : '#050142'} /> */}
+              <DetailLogo fill={disabled ? '#817fa0' : '#050142'} />
             </div>
           </CTooltip>
-        )}
+        )} */}
       </label>
     </div>
   );

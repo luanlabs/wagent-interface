@@ -23,7 +23,7 @@ export const navLinks: Type[] = [
     title: 'Products',
     icon: <Basket fill="#E4F9F1" />,
     activeIcon: <Basket />,
-    url: Pages.SHOP,
+    url: Pages.PRODUCTS,
   },
   {
     title: 'Settings',

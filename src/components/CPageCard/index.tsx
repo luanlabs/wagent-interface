@@ -5,7 +5,7 @@ import CCard from '../CCard';
 
 interface CPageCard {
   divider?: boolean;
-  title?: string;
+  title?: string | JSX.Element;
   children: JSX.Element | React.ReactNode;
   className?: string;
   scroll?: boolean;
@@ -39,7 +39,7 @@ const CPageCard = ({
   return (
     <CCard
       className={cn(
-        `flex flex-col w-full h-[100%] mobile:overflow-y-auto mobile:overflow-x-hidden py-4 px-6 ${
+        `flex flex-col w-full h-full mobile:overflow-y-auto mobile:overflow-x-hidden py-4 px-6 ${
           borderStatus === 'borderless'
             ? 'mobile:!border-transparent mobile:!border-none mobile:!rounded-none'
             : ''

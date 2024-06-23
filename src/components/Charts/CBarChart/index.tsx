@@ -12,27 +12,28 @@ import {
   XAxis,
 } from 'recharts';
 
-import customLabel from './customLabel';
-import customAxisTick from './customAxisTick';
+import customLabel from './CustomLabel';
+import customAxisTick from './CustomAxisTick';
+import CustomTooltip from './CustomTooltip';
 
 export type CBarChartType = {
   name: string;
-  revenue: number;
+  amount: number;
 };
 
 const data: CBarChartType[] = [
-  { name: 'Jan', revenue: 4000 },
-  { name: 'Feb', revenue: 3000 },
-  { name: 'Mar', revenue: 5000 },
-  { name: 'Apr', revenue: 4780 },
-  { name: 'May', revenue: 5890 },
-  { name: 'Jun', revenue: 4390 },
-  { name: 'Jul', revenue: 4490 },
-  { name: 'Aug', revenue: 3790 },
-  { name: 'Sep', revenue: 3490 },
-  { name: 'Oct', revenue: 5490 },
-  { name: 'Nov', revenue: 6090 },
-  { name: 'Dec', revenue: 7000 },
+  { name: 'Jan', amount: 4000 },
+  { name: 'Feb', amount: 3000 },
+  { name: 'Mar', amount: 5000 },
+  { name: 'Apr', amount: 4780 },
+  { name: 'May', amount: 5890 },
+  { name: 'Jun', amount: 4390 },
+  { name: 'Jul', amount: 4490 },
+  { name: 'Aug', amount: 3790 },
+  { name: 'Sep', amount: 3490 },
+  { name: 'Oct', amount: 5490 },
+  { name: 'Nov', amount: 6090 },
+  { name: 'Dec', amount: 7000 },
 ];
 
 const CBarChart = () => {
@@ -46,35 +47,40 @@ const CBarChart = () => {
   );
 
   return (
-    <ResponsiveContainer minWidth={574}>
-      <BarChart width={574} height={230} data={data} className="-mt-3">
-        <XAxis
-          dataKey="name"
-          tick={(props) => customAxisTick(props, activeIndex)}
-          stroke="#D0D5DD"
-          axisLine={false}
-          tickLine={false}
-        />
-        <Tooltip trigger="hover" cursor={false} />
+    <div style={{ width: '100%', height: '100%' }}>
+      <ResponsiveContainer minHeight={230} width="100%" height="100%">
+        <BarChart data={data} className="-mt-3" height={230}>
+          <XAxis
+            dataKey="name"
+            tick={(props) => customAxisTick(props, activeIndex)}
+            stroke="#D0D5DD"
+            axisLine={false}
+            tickLine={false}
+          />
+          <Tooltip trigger="hover" cursor={false} content={<CustomTooltip />} />
 
-        <Bar
-          dataKey="revenue"
-          onClick={handleClick}
-          radius={5}
-          activeBar={<Rectangle fill="#00C17E" />}
-          fill="#8884d8"
-        >
-          {data.map((entry, index) => (
-            <Cell
-              cursor="pointer"
-              fill={index === activeIndex ? '#00C17E' : '#E4E7EC'}
-              key={`cell-${index}`}
+          <Bar
+            dataKey="amount"
+            onClick={handleClick}
+            radius={5}
+            activeBar={<Rectangle fill="#00C17E" />}
+            fill="#8884d8"
+          >
+            {data.map((entry, index) => (
+              <Cell
+                cursor="pointer"
+                fill={index === activeIndex ? '#00C17E' : '#E4E7EC'}
+                key={`cell-${index}`}
+              />
+            ))}
+            <LabelList
+              dataKey="amount"
+              content={(props) => customLabel(props, data, activeIndex)}
             />
-          ))}
-          <LabelList dataKey="revenue" content={(props) => customLabel(props, data, activeIndex)} />
-        </Bar>
-      </BarChart>
-    </ResponsiveContainer>
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 

@@ -1,13 +1,11 @@
 'use client';
-
 import { useEffect } from 'react';
+import { PieChart, Pie, Cell } from 'recharts';
 
-import { Tooltip, PieChart, Pie, Cell } from 'recharts';
+import { DonutChartDataType } from '@/models';
 
-import { PieChartDataType } from '@/models';
-
-interface CPieChartProps {
-  chartData: (data: PieChartDataType[]) => void;
+interface CDonutChartProps {
+  chartData: (data: DonutChartDataType[]) => void;
 }
 
 const pieData = [
@@ -18,7 +16,7 @@ const pieData = [
   { name: 'ETH', value: 3 },
 ];
 
-const CPieChart = ({ chartData }: CPieChartProps) => {
+const CDonutChart = ({ chartData }: CDonutChartProps) => {
   useEffect(() => {
     const updatedChartData = pieData.map((entry, index) => ({
       value: entry.value,
@@ -40,10 +38,9 @@ const CPieChart = ({ chartData }: CPieChartProps) => {
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
-        <Tooltip />
       </PieChart>
     </div>
   );
 };
 
-export default CPieChart;
+export default CDonutChart;

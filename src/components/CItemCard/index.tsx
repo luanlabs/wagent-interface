@@ -1,6 +1,5 @@
 import Image, { StaticImageData } from 'next/image';
-
-import clsx from 'clsx';
+import cn from 'classnames';
 
 import CMethod, { MethodType } from '../CMethod';
 
@@ -35,7 +34,7 @@ const CItemCard = ({
 }: CItemCardProps) => {
   return (
     <div
-      className={clsx(
+      className={cn(
         'w-full flex items-center p-1 py-4 px-4 bg-white hover:bg-lightGray active:bg-lightGray/20 transition cursor-pointer rounded-[10px] text-left border border-1 border-[#0000001A] ',
         className,
       )}

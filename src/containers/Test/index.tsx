@@ -1,9 +1,7 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import CModal from '@/components/CModal';
-import { Optional } from '@/constants/types';
-import useOutsideClickHandler from '@/hooks/useOutsideClickHandler';
 
 const Test = () => {
   const [showModal, setShowModal] = useState(false);

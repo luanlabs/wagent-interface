@@ -9,5 +9,3 @@ export interface CNavLinkProps {
 export type SvgProps = {
   fill?: string;
 };
-
-export type Optional<T> = T | null;

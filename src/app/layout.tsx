@@ -68,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <CCard
                 className={`desktop:relative mobile:fixed mobile:bottom-0 
                     mobile:h-16 mobile:right-0 mobile:left-0 overflow-hidden 
-                    mobile:rounded-none mobile:border-b-0 z-[999]  ${
+                    mobile:rounded-none mobile:border-b-0 z-40  ${
                       isMinimized
                         ? 'basis-[80px] transition-all duration-500'
                         : 'basis-[24%] lg:basis-[20%] transition-all duration-500'

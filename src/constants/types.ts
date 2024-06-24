@@ -1,15 +1,3 @@
-export type CLinkProps = {
-  url: string;
-  title: string;
-};
-
-export type CModalProps = {
-  isOpen: boolean;
-  setIsOpen: (_: boolean) => void;
-  title: string;
-  message?: string;
-};
-
 export interface CNavLinkProps {
   url: string;
   title: string;
@@ -21,3 +9,5 @@ export interface CNavLinkProps {
 export type SvgProps = {
   fill?: string;
 };
+
+export type Optional<T> = T | null;

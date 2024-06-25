@@ -29,7 +29,7 @@ const CPageCard = ({
   let padding = '';
 
   if (divider) {
-    dividerStyle = 'w-full border-b border-[rgba(5, 1, 66, 0.10)] my-[15px]';
+    dividerStyle = 'w-full border-b border-[#0501421A] my-[15px]';
     padding = 'pl-2';
   } else {
     dividerStyle = 'border-none mb-0';

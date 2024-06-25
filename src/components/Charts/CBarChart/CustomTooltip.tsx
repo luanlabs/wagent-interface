@@ -1,20 +1,20 @@
-import { PayloadItem } from '@/models';
+import { CBarChartType } from '@/models';
 
-interface CustomTooltipProps {
+export interface CustomTooltipProps {
   active?: boolean;
-  payload?: PayloadItem[];
+  payload: {
+    payload: CBarChartType;
+    value: number;
+    dataKey: string;
+  }[];
 }
 
-const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="bg-white/85 px-3 py-4 rounded-lg">
-        <p>{`Amount: $ ${payload[0].value}`}</p>
-      </div>
-    );
-  }
-
-  return null;
+const CustomTooltip = ({ payload }: CustomTooltipProps) => {
+  return (
+    <div className="bg-white/85 px-3 py-4 rounded-lg">
+      <p>{`Amount: $ ${payload[0].value}`}</p>
+    </div>
+  );
 };
 
 export default CustomTooltip;

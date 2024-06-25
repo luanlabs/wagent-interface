@@ -38,7 +38,7 @@ const DonutChartContainer = () => {
             {chartData.map((data) => (
               <CStatusCard
                 key={data.name}
-                text={`% ${data.value}`}
+                text={`${data.value}%`}
                 className="w-8 font-medium"
                 transparent
               />

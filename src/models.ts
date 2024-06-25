@@ -6,3 +6,17 @@ export type DonutChartDataType = {
 export type PayloadItem = {
   value: string;
 };
+
+export type CBarChartType = {
+  name: string;
+  amount: number;
+};
+
+export interface TooltipProps {
+  active?: boolean;
+  payload?: {
+    payload: CBarChartType;
+    value: number;
+    dataKey: string;
+  }[];
+}

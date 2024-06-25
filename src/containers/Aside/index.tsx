@@ -14,13 +14,13 @@ const Aside = ({ isMinimized, onMinimized }: AsideProps) => {
   return (
     <aside
       className="mobile:!bg-white overflow-hidden mobile:h-16 flex flex-col
-      mobile:flex-row mobile:justify-around mobile:items-center"
+      mobile:flex-row  mobile:w-full mobile:items-center"
     >
       <div className="cursor-pointer select-none mobile:hidden ml-[10px]" onClick={onMinimized}>
         <SquareHalf />
       </div>
       <hr className="mt-[18px] mb-3 mobile:hidden border-[#0501421A] " />
-      <div className="desktop:space-y-1">
+      <div className="desktop:space-y-1 mobile:flex mobile:flex-row mobile:justify-around mobile:w-full">
         {navLinks.map((item) => (
           <div key={item.title}>
             <CNavLink {...item} isMinimized={isMinimized} />

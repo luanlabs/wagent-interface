@@ -77,13 +77,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <CCard
                 className={`desktop:relative mobile:fixed mobile:bottom-0 
                     mobile:h-16 mobile:right-0 mobile:left-0 overflow-hidden 
-                    mobile:rounded-none mobile:border-b-0 z-[999]  ${
+                    mobile:rounded-none mobile:border-b-0 z-[999] px-[15px] py-[19px] mobile:p-0                     
+                    ${
                       isMinimized
                         ? 'basis-[80px] transition-all duration-500'
                         : 'basis-[24%] lg:basis-[20%] transition-all duration-500'
                     }
-                    ${currentPath === Pages.SIGNUP ? 'hidden' : 'block'}
-                    px-[15px] py-[19px] mobile:p-0`}
+                    ${currentPath === Pages.SIGNUP ? 'hidden' : 'block'}`}
                 borderColor="rgba(5, 1, 66, 0.10)"
                 bgColor="white"
               >

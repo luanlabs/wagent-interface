@@ -1,4 +1,4 @@
-export enum Pages {
+enum Pages {
   DASHBOARD = '/',
   HISTORY = '/history',
   SHOP = '/shop',
@@ -6,3 +6,4 @@ export enum Pages {
   SIGNUP = '/signup',
   SIGNIN = '/signin',
 }
+export default Pages;

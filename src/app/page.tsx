@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function Dashboard() {
   return (
-    <CPageCard borderStatus="bordered" title="Dashboard">
+    <CPageCard borderStatus="borderless" title="Dashboard">
       children
     </CPageCard>
   );

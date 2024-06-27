@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import CPageCard from '@/components/CPageCard';
+import Test from '@/containers/Test';
 
 export const metadata: Metadata = {
   title: 'Wagent - Dashboard',
@@ -8,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function Dashboard() {
   return (
-    <CPageCard borderStatus="borderless" title="Dashboard">
-      children
+    <CPageCard borderStatus="bordered" title="Dashboard">
+      <Test />
     </CPageCard>
   );
 }

@@ -1,11 +1,17 @@
+import { Metadata } from 'next';
+
 import CButton from '@/components/CButton';
-import CItemCard from '@/components/CItemCard';
 import CPageCard from '@/components/CPageCard';
 import { products } from '@/constants/productsList';
+import CProductItemCard from '@/components/CProductItemCard';
+
+export const metadata: Metadata = {
+  title: 'Wagent - Products',
+};
 
 const pageTitle = (
   <div className="flex justify-between items-center w-full">
-    <h1>Product</h1>
+    <h1>Products</h1>
     <CButton variant="add" text="Add product" className="!w-[145px] text-base" />
   </div>
 );
@@ -29,15 +35,14 @@ const Products = () => {
 
       <div className="space-y-3 pb-3 max-h-[calc(100vh-350px)] desktopMax:max-h-[calc(100vh-330px)] w-full overflow-hidden overflow-y-auto">
         {products.map((item) => (
-          <CItemCard
+          <CProductItemCard
             key={item.id}
             title={item.title}
             method={item.method}
             id={item.id}
-            token={item.token}
+            tokens={item.tokens}
             amount={item.amount}
             image={item.image}
-            variant="product"
           />
         ))}
       </div>

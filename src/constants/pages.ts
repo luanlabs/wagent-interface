@@ -1,6 +1,9 @@
-export enum Pages {
+enum Pages {
   DASHBOARD = '/',
   HISTORY = '/history',
   SHOP = '/shop',
   SETTINGS = '/settings',
+  SIGNUP = '/signup',
+  SIGNIN = '/signin',
 }
+export default Pages;

@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import Image, { StaticImageData } from 'next/image';
 
-export type VariantType = 'simple' | 'outline' | 'confirm';
+export type VariantType = 'simple' | 'outline' | 'confirm' | 'add';
 
 interface CButtonProps {
   text?: string;
@@ -39,6 +39,10 @@ const CButton = ({
         {
           'bg-darkGreen text-white hover:bg-darkGreen/90 active:bg-darkGreen':
             variant === 'confirm',
+        },
+        {
+          'bg-emeraldGreen text-white hover:bg-emeraldGreen/90 active:bg-emeraldGreen':
+            variant === 'add',
         },
       )}
       onClick={onClick}

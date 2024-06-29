@@ -27,7 +27,7 @@ const CPageCard = ({
     <CCard
       className={cn(
         className,
-        `flex flex-col !bg-white w-full h-full mobile:overflow-hidden py-4 ${
+        `flex flex-col !bg-white w-full h-full mobile:overflow-hidden py-4 px-2 ${
           borderStatus === 'borderless'
             ? 'mobile:!border-transparent mobile:!border-none mobile:!rounded-none'
             : ''

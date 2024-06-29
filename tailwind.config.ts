@@ -30,7 +30,10 @@ const config: Config = {
       },
       screens: {
         mobile: { max: '1023px' },
-        desktop: { min: '1024px' },
+        tablet: { max: '1099px', min: '731px' },
+        desktop: { min: '1100px' },
+        bigScreen: { min: '1550px' },
+        desktopMax: { max: '1536px' },
         lg: { min: '1024px', max: '1279px' },
         xl: { min: '1280px', max: '1535px' },
         xxl: { min: '1540px' },

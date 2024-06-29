@@ -1,7 +1,7 @@
 enum Pages {
   DASHBOARD = '/',
   HISTORY = '/history',
-  SHOP = '/shop',
+  PRODUCTS = '/products',
   SETTINGS = '/settings',
   SIGNUP = '/signup',
   SIGNIN = '/signin',

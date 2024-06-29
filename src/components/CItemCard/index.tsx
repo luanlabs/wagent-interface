@@ -1,18 +1,15 @@
 import Image, { StaticImageData } from 'next/image';
 import cn from 'classnames';
 
-import CMethods, { MethodType } from '../CMethods';
-
 export interface CItemCardProps {
   title: string;
   image: string | StaticImageData;
   className?: string;
   onClick?: () => void;
-  method: MethodType | MethodType[];
   children: React.ReactNode;
 }
 
-const CItemCard = ({ title, image, className, onClick, method, children }: CItemCardProps) => {
+const CItemCard = ({ title, image, className, onClick, children }: CItemCardProps) => {
   return (
     <div
       className={cn(
@@ -28,12 +25,9 @@ const CItemCard = ({ title, image, className, onClick, method, children }: CItem
       )}
 
       <div className="flex justify-start w-full text-left">
-        <div className="ml-3 w-[36%] mobile:w-full">
-          <h3 className="text-darkBlue text-base ">{title}</h3>
+        <div className="ml-3 w-[27%] mobile:w-full">
+          <h3 className="text-darkBlue text-base">{title}</h3>
         </div>
-        <span className="w-[35%] mobile:hidden">
-          <CMethods method={method} />
-        </span>
 
         {children}
       </div>

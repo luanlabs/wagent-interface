@@ -4,6 +4,7 @@ import CPageCard from '@/components/CPageCard';
 import CBarChart from '@/components/Charts/CBarChart';
 import CCard from '@/components/CCard';
 import DonutChartContainer from '@/containers/DonutChartContainer';
+import Test from '@/containers/Test';
 
 export const metadata: Metadata = {
   title: 'Wagent - Dashboard',
@@ -26,6 +27,6 @@ export default function Dashboard() {
           <CBarChart />
         </CCard>
       </div>
-    </CPageCard>
+            <Test />
   );
 }

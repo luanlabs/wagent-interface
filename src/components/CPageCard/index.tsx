@@ -4,14 +4,13 @@ import cn from 'classnames';
 import CCard from '../CCard';
 
 interface CPageCard {
-  divider?: boolean;
   title?: string;
-  children: JSX.Element | React.ReactNode;
+  divider?: boolean;
   className?: string;
-  scroll?: boolean;
+  dividerClassName?: string;
   childrenClassName?: string;
   borderStatus: 'bordered' | 'borderless';
-  dividerResponsiveClassName?: string;
+  children: JSX.Element | React.ReactNode;
 }
 
 const CPageCard = ({
@@ -19,48 +18,33 @@ const CPageCard = ({
   title,
   children,
   className = '',
-  scroll = false,
   childrenClassName = '',
   borderStatus,
-  dividerResponsiveClassName,
+  dividerClassName,
   ...props
 }: CPageCard) => {
-  let dividerStyle = '';
-  let padding = '';
-
-  if (divider) {
-    dividerStyle = 'w-full border-b border-[rgba(5, 1, 66, 0.10)] my-[15px]';
-    padding = 'pl-2';
-  } else {
-    dividerStyle = 'border-none mb-0';
-    padding = 'p-0';
-  }
-
   return (
     <CCard
       className={cn(
-        `flex flex-col w-full h-[100%] mobile:overflow-y-auto mobile:overflow-x-hidden py-4 px-6 ${
+        className,
+        `flex flex-col !bg-white w-full h-full mobile:overflow-hidden py-4 ${
           borderStatus === 'borderless'
             ? 'mobile:!border-transparent mobile:!border-none mobile:!rounded-none'
             : ''
         }`,
-        className,
       )}
       bgColor="#fff"
       borderColor="rgba(5, 1, 66, 0.10)"
       {...props}
     >
-      {title && <div className="w-full font-medium text-2xl">{title}</div>}
-      {divider && <div className={cn(dividerStyle, dividerResponsiveClassName)} />}
-      <div
-        className={`${cn(
-          padding,
-          childrenClassName,
-          `${scroll && 'desktop:overflow-y-scroll h-[100%]'} `,
-        )}`}
-      >
-        {children}
+      <div>
+        {title && <div className="w-full font-medium text-2xl mobile:mt-1 px-4">{title}</div>}
+        {divider && (
+          <hr className={cn(dividerClassName, ` border-[#0501421A] my-4 desktop:mx-4`)} />
+        )}
       </div>
+
+      <div className={`${cn(childrenClassName, `h-full overflow-y-auto px-4`)}`}>{children}</div>
     </CCard>
   );
 };

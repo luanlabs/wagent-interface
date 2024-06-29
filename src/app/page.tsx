@@ -23,10 +23,12 @@ export default function Dashboard() {
         <CCard
           label="Revenue Chart"
           className="h-full w-full xxl:w-[65%] xl:!w-4/5 px-4 py-6 mobile:w-full lg:w-[66%] mobile:overflow-x-auto"
+          borderColor="#E4E7EC"
         >
           <CBarChart />
         </CCard>
       </div>
-            <Test />
+      <Test />
+    </CPageCard>
   );
 }

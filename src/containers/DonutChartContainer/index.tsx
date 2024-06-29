@@ -17,7 +17,11 @@ const DonutChartContainer = () => {
   };
 
   return (
-    <CCard label="Revenue Distribution" className="!w-full h-[286px] px-4 pt-6 pb-2">
+    <CCard
+      label="Revenue Distribution"
+      className="!w-full h-[286px] px-4 pt-6 pb-2"
+      borderColor="#E4E7EC"
+    >
       <div className="flex justify-between h-full">
         <div className="flex justify-center items-center">
           <CDonutChart chartData={handleChartData} />

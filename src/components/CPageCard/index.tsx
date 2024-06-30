@@ -8,15 +8,15 @@ import CErrorCard from '../CErrorCard';
 import { ErrorType } from '@/models';
 
 interface CPageCard {
-  divider?: boolean;
   title?: string;
-  children: JSX.Element | React.ReactNode;
+  divider?: boolean;
   className?: string;
-  scroll?: boolean;
+  dividerClassName?: string;
   childrenClassName?: string;
   borderStatus: 'bordered' | 'borderless';
   dividerResponsiveClassName?: string;
   showError?: (setError: (error: ErrorType | null) => void) => void;
+  children: JSX.Element | React.ReactNode;
 }
 
 const CPageCard = ({
@@ -24,68 +24,34 @@ const CPageCard = ({
   title,
   children,
   className = '',
-  scroll = false,
   childrenClassName = '',
   borderStatus,
-  dividerResponsiveClassName,
-  showError,
+  dividerClassName,
   ...props
 }: CPageCard) => {
-  const [error, setError] = useState<ErrorType | null>(null);
-
-  useEffect(() => {
-    if (showError) {
-      showError(setError);
-    }
-  }, [showError]);
-
-  const closeError = () => {
-    setError(null);
-  };
-
-  let dividerStyle = '';
-  let padding = '';
-
-  if (divider) {
-    dividerStyle = 'w-full border-b border-[rgba(5, 1, 66, 0.10)] my-[15px]';
-    padding = 'pl-2';
-  } else {
-    dividerStyle = 'border-none mb-0';
-    padding = 'p-0';
-  }
-
   return (
-    <div className={cn()}>
-      <CCard
-        className={cn(
-          `flex flex-col w-full h-[100%] mobile:overflow-y-auto mobile:overflow-x-hidden py-4 px-6 ${
-            borderStatus === 'borderless'
-              ? 'mobile:!border-transparent mobile:!border-none mobile:!rounded-none'
-              : ''
-          }`,
-          className,
+    <CCard
+      className={cn(
+        className,
+        `flex flex-col !bg-white w-full h-full mobile:overflow-hidden py-4 px-2 ${
+          borderStatus === 'borderless'
+            ? 'mobile:!border-transparent mobile:!border-none mobile:!rounded-none'
+            : ''
+        }`,
+      )}
+      bgColor="#fff"
+      borderColor="rgba(5, 1, 66, 0.10)"
+      {...props}
+    >
+      <div>
+        {title && <div className="w-full font-medium text-2xl mobile:mt-1 px-4">{title}</div>}
+        {divider && (
+          <hr className={cn(dividerClassName, ` border-[#0501421A] my-4 desktop:mx-4`)} />
         )}
-        bgColor="#fff"
-        borderColor="rgba(5, 1, 66, 0.10)"
-        {...props}
-      >
-        {title && <div className="w-full font-medium text-2xl">{title}</div>}
+      </div>
 
-        {divider && <div className={cn(dividerStyle, dividerResponsiveClassName)} />}
-        {error && <CErrorCard title={error.title} message={error.message} onClose={closeError} />}
-
-        <div
-          className={`${cn(
-            padding,
-            childrenClassName,
-            `${scroll && 'desktop:overflow-y-scroll h-[100%]'} `,
-            { 'pointer-events-none opacity-50 select-none': error },
-          )}`}
-        >
-          {children}
-        </div>
-      </CCard>
-    </div>
+      <div className={`${cn(childrenClassName, `h-full overflow-y-auto px-4`)}`}>{children}</div>
+    </CCard>
   );
 };
 

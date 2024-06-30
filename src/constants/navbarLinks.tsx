@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { CNavLinkProps as Type } from './types';
-
 import { Home, Basket, Calender, Settings } from '@/assets';
 
-import { Pages } from './pages';
+import Pages from './pages';
+import { CNavLinkProps as Type } from './types';
 
 export const navLinks: Type[] = [
   {
@@ -23,7 +22,7 @@ export const navLinks: Type[] = [
     title: 'Products',
     icon: <Basket fill="#E4F9F1" />,
     activeIcon: <Basket />,
-    url: Pages.SHOP,
+    url: Pages.PRODUCTS,
   },
   {
     title: 'Settings',

@@ -16,11 +16,9 @@ const CNavLink = ({ title, icon, activeIcon, url, isMinimized }: Type) => {
       href={url}
       prefetch
       passHref
-      className={`select-none w-full ${
-        isMinimized ? 'flex justify-start' : 'inline-flex justify-between mobile:justify-center'
-      } items-center rounded-xl ${
-        isActive && ' desktop:bg-mintGreen transition-all duration-500'
-      } w-full px-[10px] h-[48px] cursor-pointer overflow-hidden`}
+      className={`select-none w-full items-center rounded-xl px-[10px] h-[48px] cursor-pointer overflow-hidden
+      ${isMinimized ? 'flex justify-start' : 'inline-flex justify-between mobile:justify-center'}
+      ${isActive && ' desktop:bg-mintGreen transition-all duration-500'}`}
     >
       <div className="flex justify-between items-center w-full overflow-hidden whitespace-nowrap">
         <span className="inline-flex gap-2 !items-center text-lg text-darkGreen mobile:text-base whitespace-nowrap">
@@ -32,7 +30,7 @@ const CNavLink = ({ title, icon, activeIcon, url, isMinimized }: Type) => {
         </span>
       </div>
       {isActive && (
-        <div className="mobile:bg-darkGreen mobile:h-[2px] mobile:rounded-full  mobile:w-[32px] mobile:absolute mobile:bottom-0" />
+        <div className="mobile:bg-darkGreen mobile:h-[2px] mobile:rounded-full  mobile:w-[50px] mobile:absolute mobile:bottom-0" />
       )}
     </Link>
   );

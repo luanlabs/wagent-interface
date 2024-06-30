@@ -5,6 +5,7 @@ import cn from 'classnames';
 
 import CCard from '../CCard';
 import CErrorCard from '../CErrorCard';
+import { ErrorType } from '@/models';
 
 interface CPageCard {
   divider?: boolean;
@@ -15,7 +16,7 @@ interface CPageCard {
   childrenClassName?: string;
   borderStatus: 'bordered' | 'borderless';
   dividerResponsiveClassName?: string;
-  showError?: (setError: (error: { title: string; message: string } | null) => void) => void;
+  showError?: (setError: (error: ErrorType | null) => void) => void;
 }
 
 const CPageCard = ({
@@ -30,10 +31,7 @@ const CPageCard = ({
   showError,
   ...props
 }: CPageCard) => {
-  const [error, setError] = useState<{
-    title: string;
-    message: string;
-  } | null>(null);
+  const [error, setError] = useState<ErrorType | null>(null);
 
   useEffect(() => {
     if (showError) {
@@ -58,8 +56,6 @@ const CPageCard = ({
 
   return (
     <div className={cn()}>
-      {error && <CErrorCard title={error.title} message={error.message} onClose={closeError} />}
-
       <CCard
         className={cn(
           `flex flex-col w-full h-[100%] mobile:overflow-y-auto mobile:overflow-x-hidden py-4 px-6 ${
@@ -67,7 +63,6 @@ const CPageCard = ({
               ? 'mobile:!border-transparent mobile:!border-none mobile:!rounded-none'
               : ''
           }`,
-          { 'pointer-events-none opacity-50': error },
           className,
         )}
         bgColor="#fff"
@@ -77,12 +72,14 @@ const CPageCard = ({
         {title && <div className="w-full font-medium text-2xl">{title}</div>}
 
         {divider && <div className={cn(dividerStyle, dividerResponsiveClassName)} />}
+        {error && <CErrorCard title={error.title} message={error.message} onClose={closeError} />}
 
         <div
           className={`${cn(
             padding,
             childrenClassName,
             `${scroll && 'desktop:overflow-y-scroll h-[100%]'} `,
+            { 'pointer-events-none opacity-50 select-none': error },
           )}`}
         >
           {children}

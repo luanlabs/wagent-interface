@@ -5,52 +5,81 @@ import cn from 'classnames';
 
 import CCard from '../CCard';
 import CErrorCard from '../CErrorCard';
-import { ErrorType } from '@/models';
 
-interface CPageCard {
-  title?: string;
+interface CPageCardProps {
+  title?: string | React.ReactNode;
   divider?: boolean;
   className?: string;
   dividerClassName?: string;
   childrenClassName?: string;
   borderStatus: 'bordered' | 'borderless';
   dividerResponsiveClassName?: string;
-  showError?: (setError: (error: ErrorType | null) => void) => void;
   children: JSX.Element | React.ReactNode;
+  errorTitle?: string;
+  errorMessage?: string;
 }
 
 const CPageCard = ({
-  divider = true,
   title,
+  divider = true,
   children,
   className = '',
   childrenClassName = '',
   borderStatus,
   dividerClassName,
+  errorTitle,
+  errorMessage,
   ...props
-}: CPageCard) => {
+}: CPageCardProps) => {
+  const [errorVisible, setErrorVisible] = useState(true);
+
+  useEffect(() => {
+    if (errorTitle && errorMessage) {
+      setErrorVisible(true);
+    }
+  }, [errorMessage, errorTitle]);
+
+  const handleErrorClose = () => {
+    setErrorVisible(false);
+  };
+
+  const baseClass = 'flex flex-col !bg-white w-full h-full mobile:overflow-hidden py-4 px-2';
+  const borderClass =
+    borderStatus === 'borderless'
+      ? 'mobile:!border-transparent mobile:!border-none mobile:!rounded-none'
+      : '';
+  const titleClass = 'w-full font-medium text-2xl mobile:mt-1 px-4';
+  const dividerClass = 'border-[#0501421A] my-4 desktop:mx-4';
+  const childrenClass = 'h-full overflow-y-auto px-4';
+
   return (
     <CCard
-      className={cn(
-        className,
-        `flex flex-col !bg-white w-full h-full mobile:overflow-hidden py-4 px-2 ${
-          borderStatus === 'borderless'
-            ? 'mobile:!border-transparent mobile:!border-none mobile:!rounded-none'
-            : ''
-        }`,
-      )}
+      className={cn(className, baseClass, borderClass)}
       bgColor="#fff"
       borderColor="rgba(5, 1, 66, 0.10)"
       {...props}
     >
       <div>
-        {title && <div className="w-full font-medium text-2xl mobile:mt-1 px-4">{title}</div>}
-        {divider && (
-          <hr className={cn(dividerClassName, ` border-[#0501421A] my-4 desktop:mx-4`)} />
-        )}
+        {title && <div className={titleClass}>{title}</div>}
+        {divider && <hr className={cn(dividerClassName, dividerClass)} />}
+        <div className="px-4">
+          {errorTitle && errorMessage && errorVisible && (
+            <CErrorCard
+              title={errorVisible && errorTitle}
+              message={errorVisible && errorMessage}
+              onClose={handleErrorClose}
+            />
+          )}
+        </div>
       </div>
 
-      <div className={`${cn(childrenClassName, `h-full overflow-y-auto px-4`)}`}>{children}</div>
+      <div
+        className={cn(childrenClassName, childrenClass, {
+          'pointer-events-none opacity-50 select-none': errorVisible,
+        })}
+      >
+        {children}
+      </div>
     </CCard>
   );
 };

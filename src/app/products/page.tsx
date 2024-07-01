@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import React from 'react';
 
 import CButton from '@/components/CButton';
 import CPageCard from '@/components/CPageCard';
@@ -22,6 +23,8 @@ const Products = () => {
       borderStatus="bordered"
       title={pageTitle}
       className="h-[100%] relative overflow-hidden"
+      errorTitle="Error"
+      errorMessage="Error"
     >
       <h1 className="text-2xl py-4 font-medium">Products list</h1>
 

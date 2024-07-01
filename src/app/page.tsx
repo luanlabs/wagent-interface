@@ -12,7 +12,13 @@ export const metadata: Metadata = {
 
 export default function Dashboard() {
   return (
-    <CPageCard borderStatus="bordered" title="Dashboard" className="overflow-y-auto">
+    <CPageCard
+      borderStatus="bordered"
+      title="Dashboard"
+      className="overflow-y-auto"
+      errorMessage="asdasd"
+      errorTitle="dafsdfsdf"
+    >
       <div
         className="flex space-x-4 h-[286px] w-full mobile:h-full justify-between
          mobile:justify-center mobile:flex-col mobile:space-x-0 mobile:space-y-3 overflow-hidden"

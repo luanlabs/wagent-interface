@@ -4,7 +4,7 @@ import cn from 'classnames';
 import CCard from '../CCard';
 
 interface CPageCard {
-  title?: string;
+  title?: string | React.ReactNode;
   divider?: boolean;
   className?: string;
   dividerClassName?: string;

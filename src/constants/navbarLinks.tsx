@@ -15,7 +15,7 @@ export const navLinks: Type[] = [
   {
     title: 'History',
     icon: <Calender fill="#E4F9F1" />,
-    activeIcon: <Calender />,
+    activeIcon: <Calender fill="white" />,
     url: Pages.HISTORY,
   },
   {

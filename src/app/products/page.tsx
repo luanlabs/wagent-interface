@@ -18,11 +18,7 @@ const pageTitle = (
 
 const Products = () => {
   return (
-    <CPageCard
-      borderStatus="bordered"
-      title={pageTitle}
-      className="h-[100%] relative overflow-hidden"
-    >
+    <CPageCard title={pageTitle} className="h-[100%] relative overflow-hidden">
       <h1 className="text-2xl py-4 font-medium">Products list</h1>
 
       <ul className="flex justify-between items-center rounded-[10px] bg-lightGray text-cadetBlue h-[42px] px-4 mb-4">

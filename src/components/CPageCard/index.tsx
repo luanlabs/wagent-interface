@@ -4,12 +4,12 @@ import cn from 'classnames';
 import CCard from '../CCard';
 
 interface CPageCard {
-  title?: string;
+  title?: string | React.ReactNode;
   divider?: boolean;
   className?: string;
   dividerClassName?: string;
   childrenClassName?: string;
-  borderStatus: 'bordered' | 'borderless';
+  borderStatus?: 'bordered' | 'borderless';
   children: JSX.Element | React.ReactNode;
 }
 
@@ -19,7 +19,7 @@ const CPageCard = ({
   children,
   className = '',
   childrenClassName = '',
-  borderStatus,
+  borderStatus = 'borderless',
   dividerClassName,
   ...props
 }: CPageCard) => {
@@ -27,7 +27,7 @@ const CPageCard = ({
     <CCard
       className={cn(
         className,
-        `flex flex-col !bg-white w-full h-full mobile:overflow-hidden py-4 px-2 ${
+        `flex flex-col !bg-white w-full h-full mobile:overflow-hidden mobile:pb-0 py-4 px-2 ${
           borderStatus === 'borderless'
             ? 'mobile:!border-transparent mobile:!border-none mobile:!rounded-none'
             : ''

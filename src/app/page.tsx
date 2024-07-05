@@ -4,7 +4,6 @@ import CPageCard from '@/components/CPageCard';
 import CBarChart from '@/components/Charts/CBarChart';
 import CCard from '@/components/CCard';
 import DonutChartContainer from '@/containers/DonutChartContainer';
-import Test from '@/containers/Test';
 
 export const metadata: Metadata = {
   title: 'Wagent - Dashboard',
@@ -15,7 +14,7 @@ export default function Dashboard() {
     <CPageCard title="Dashboard" className="overflow-y-auto">
       <div
         className="flex space-x-4 h-[286px] w-full mobile:h-full justify-between
-         mobile:justify-center mobile:flex-col mobile:space-x-0 mobile:space-y-3 overflow-hidden"
+        mobile:justify-center mobile:flex-col mobile:space-x-0 mobile:space-y-3 overflow-hidden"
       >
         <div className="h-full xxl:w-[30%] lg:!w-[50%] desktop:w-[55%]">
           <DonutChartContainer />
@@ -28,7 +27,6 @@ export default function Dashboard() {
           <CBarChart />
         </CCard>
       </div>
-      <Test />
     </CPageCard>
   );
 }

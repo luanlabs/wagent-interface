@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 import CButton from '@/components/CButton';
 import CPageCard from '@/components/CPageCard';
-import { products } from '@/constants/productsList';
+import { products } from '@/constants/mockLists';
 import CProductItemCard from '@/components/CProductItemCard';
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const pageTitle = (
-  <div className="flex justify-between items-center w-full">
+  <div className="flex justify-between items-center w-full -my-1">
     <h1>Products</h1>
     <CButton variant="add" text="Add product" className="!w-[145px] text-base" />
   </div>
@@ -19,7 +19,7 @@ const pageTitle = (
 const Products = () => {
   return (
     <CPageCard title={pageTitle} className="h-[100%] relative overflow-hidden">
-      <h1 className="text-2xl py-4 font-medium">Products list</h1>
+      <h1 className="text-2xl mb-4 font-medium">Products list</h1>
 
       <ul className="flex justify-between items-center rounded-[10px] bg-lightGray text-cadetBlue h-[42px] px-4 mb-4">
         <li className="text-black">Product name</li>

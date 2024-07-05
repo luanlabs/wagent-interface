@@ -27,7 +27,7 @@ const CPageCard = ({
     <CCard
       className={cn(
         className,
-        `flex flex-col !bg-white w-full h-full mobile:overflow-hidden mobile:pb-0 py-4 px-2 ${
+        `flex flex-col !bg-white w-full h-full mobile:overflow-hidden mobile:pb-0 pt-4 pb-2 px-2 ${
           borderStatus === 'borderless'
             ? 'mobile:!border-transparent mobile:!border-none mobile:!rounded-none'
             : ''
@@ -40,7 +40,7 @@ const CPageCard = ({
       <div>
         {title && <div className="w-full font-medium text-2xl mobile:mt-1 px-4">{title}</div>}
         {divider && (
-          <hr className={cn(dividerClassName, ` border-[#0501421A] my-4 desktop:mx-4`)} />
+          <hr className={cn(dividerClassName, ` border-[#0501421A] my-3 desktop:mx-4`)} />
         )}
       </div>
 

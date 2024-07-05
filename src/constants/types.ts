@@ -1,3 +1,6 @@
+import { StaticImageData } from 'next/image';
+import { MethodType } from '@/components/CMethods';
+
 export interface CNavLinkProps {
   url: string;
   title: string;
@@ -9,3 +12,28 @@ export interface CNavLinkProps {
 export type SvgProps = {
   fill?: string;
 };
+
+export type TokensType = {
+  symbol: string;
+  logo: string;
+};
+
+export interface IHistoryItemCard {
+  id?: string;
+  date: number;
+  title: string;
+  amount: string;
+  tokens: TokensType[];
+  image: string | StaticImageData;
+  method: MethodType | MethodType[];
+  status: `active` | `completed` | `cancelled`;
+}
+
+export interface IProductItemCard {
+  title: string;
+  image: string | StaticImageData;
+  id: string;
+  tokens: TokensType[];
+  amount: string;
+  method: MethodType | MethodType[];
+}

@@ -6,14 +6,14 @@ import getPercentageColor from './getPercentageColor';
 
 import Arrow from '@/assets/Arrow';
 
-interface CStatusCardProps {
+interface CChartSummeryProps {
   text?: string | number;
   percentage?: number;
   className?: string;
   transparent?: boolean;
 }
 
-const CStatusCard = ({ text, percentage, className, transparent }: CStatusCardProps) => {
+const CChartSummery = ({ text, percentage, className, transparent }: CChartSummeryProps) => {
   let displayValue = '';
   let arrowColor = '';
   let arrowClass = '';
@@ -58,4 +58,4 @@ const CStatusCard = ({ text, percentage, className, transparent }: CStatusCardPr
   );
 };
 
-export default CStatusCard;
+export default CChartSummery;

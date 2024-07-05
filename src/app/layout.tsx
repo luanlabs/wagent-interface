@@ -67,7 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Aside
                 isMinimized={isMinimized}
                 onMinimized={() => setIsMinimized(!isMinimized)}
-                className={currentPath === Pages.SIGNUP ? 'hidden' : 'block z-30'}
+                className={currentPath === Pages.SIGNUP ? 'hidden' : 'block !z-30'}
               />
               <article className="basis-full h-full mobile:h-[calc(100vh-128px)] mobile:my-16">
                 <div className="h-full">{children}</div>

@@ -23,7 +23,7 @@ export interface IHistoryItemCard {
   date: number;
   title: string;
   amount: string;
-  tokens: TokensType[];
+  token: TokensType;
   image: string | StaticImageData;
   method: MethodType | MethodType[];
   status: `active` | `completed` | `cancelled`;

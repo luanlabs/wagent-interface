@@ -17,12 +17,10 @@ const userTokens: TokensType[] = [
     logo: '',
   },
 ];
-const singleToken: TokensType[] = [
-  {
-    symbol: 'dai',
-    logo: '',
-  },
-];
+const singleToken: TokensType = {
+  symbol: 'dai',
+  logo: require(`/public/images/tokens/dai.svg`),
+};
 
 export const products: IProductItemCard[] = [
   {
@@ -104,7 +102,7 @@ export const history: IHistoryItemCard[] = [
     title: 'XXXXXXXXXXXX Hoodie',
     method: 'single',
     id: '1',
-    tokens: singleToken,
+    token: singleToken,
     amount: '$15',
     image: productImage,
     date: Date.now(),
@@ -114,7 +112,7 @@ export const history: IHistoryItemCard[] = [
     title: 'XXXXXX Hoodie',
     method: 'vesting',
     id: '345837',
-    tokens: singleToken,
+    token: singleToken,
     amount: '$1500',
     image: hoodie,
     date: Date.now(),
@@ -124,7 +122,7 @@ export const history: IHistoryItemCard[] = [
     title: 'X Hoodie',
     method: 'stream',
     id: '3422',
-    tokens: singleToken,
+    token: singleToken,
     amount: '$1500000',
     image: hoodie,
     date: Date.now(),

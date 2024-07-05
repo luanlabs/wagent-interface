@@ -14,11 +14,11 @@ const History = () => {
       <h1 className="text-2xl mb-4 font-medium">Recent transactions</h1>
 
       <ul className="flex w-full justify-between items-center rounded-[10px] bg-lightGray text-cadetBlue h-[42px] px-4 mb-4">
-        <li className="text-black whitespace-nowrap w-[26.5%]">Product name</li>
-        <li className="mobile:hidden w-1/6 min-w-[170px]">Method</li>
-        <li className="mobile:hidden w-1/6">Status</li>
-        <li className="mobile:hidden w-1/6">Date & Time</li>
-        <li className="mobile:hidden w-1/6">Token</li>
+        <li className="text-black whitespace-nowrap w-[37.5%]">Product name</li>
+        <li className="mobile:hidden w-1/4">Method</li>
+        <li className="mobile:hidden w-1/4">Status</li>
+        <li className="mobile:hidden w-1/4">Date & Time</li>
+        <li className="mobile:hidden w-1/4">Token</li>
         <li className="text-right mobile:mr-[10px] w-1/6">Amount</li>
       </ul>
 
@@ -29,7 +29,7 @@ const History = () => {
             title={item.title}
             method={item.method}
             status={item.status}
-            tokens={item.tokens}
+            token={item.token}
             date={item.date}
             amount={item.amount}
             image={item.image}

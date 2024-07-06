@@ -34,7 +34,7 @@ export default function Dashboard() {
       <div className="mt-[31px] overflow-hidden">
         <h1 className="text-2xl mb-4 font-medium">Recent transactions</h1>
         <HistoryListHeader />
-        <div className="space-y-2 pb-3 mobile:space-y-[6px] w-full overflow-y-auto bigScreen:max-h-fit bigScreen:pb-0 desktop:max-h-[150px]">
+        <div className="space-y-2 pb-3 mobile:space-y-[6px] w-full overflow-y-auto bigScreen:max-h-fit bigScreen:pb-0 desktop:max-h-[150px] short:h-[100px]">
           {history.slice(0, 5).map((item) => (
             <CHistoryItemCard
               key={item.id}

@@ -20,7 +20,7 @@ const CProductItemCard = ({ title, image, id, tokens, amount, method }: IProduct
           <span>{id}</span>
         </p>
         <span className="w-[41%] mobile:hidden flex space-x-2">{mapTokens}</span>
-        <span className="w-[30%] mobile:w-full mobile:px-3 text-right">{amount}</span>
+        <span className="w-[30%] mobile:w-full text-right">{amount}</span>
       </div>
     </CItemCard>
   );

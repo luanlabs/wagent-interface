@@ -52,12 +52,12 @@ const CHistoryItemCard = ({
           </span>
           <span className="w-1/4">{CStatusCard(status)}</span>
           <span className="w-1/4">{formatDate(date)}</span>
-          <span className="w-1/4">
+          <span className="w-1/4 ml-2">
             <CTokenLabel symbol={token.symbol} logo={token.logo} />
           </span>
         </div>
 
-        <span className="mobile:w-full mobile:px-3 text-right w-1/6">{amount}</span>
+        <span className="mobile:w-full text-right w-1/6">{amount}</span>
       </div>
 
       <HistoryDetailsModal

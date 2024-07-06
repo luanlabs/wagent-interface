@@ -44,7 +44,7 @@ const config: Config = {
         xl: { min: '1280px', max: '1535px' },
         xxl: { min: '1540px' },
         tall: { raw: '(min-height: 933px)' },
-        short: { raw: '(max-height: 710px)' },
+        short: { raw: '(max-height: 730px)' },
         chartFix: { min: '1023px', max: '1260px' },
       },
     },

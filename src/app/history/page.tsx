@@ -15,8 +15,8 @@ export const HistoryListHeader = () => (
     <li className="mobile:hidden w-1/4">Method</li>
     <li className="mobile:hidden w-1/4 pl-1">Status</li>
     <li className="mobile:hidden w-1/4">Date & Time</li>
-    <li className="mobile:hidden w-1/4">Token</li>
-    <li className="text-right mobile:mr-[10px] w-1/6">Amount</li>
+    <li className="mobile:hidden w-1/4 ml-2">Token</li>
+    <li className="text-right w-1/6">Amount</li>
   </ul>
 );
 
@@ -40,7 +40,7 @@ const History = () => {
   return (
     <CPageCard title={pageTitle} className="h-full relative overflow-hidden">
       <HistoryListHeader />
-      <div className="space-y-2 mobile:space-y-[6px] pb-3 max-h-[calc(100vh-200px)] desktopMax:max-h-[calc(100vh-270px)] w-full overflow-hidden overflow-y-auto">
+      <div className="space-y-2 mobile:space-y-[6px] pb-3 max-h-[calc(100vh-200px)] desktopMax:max-h-[calc(100vh-265px)] w-full overflow-hidden overflow-y-auto">
         {history.map((item) => (
           <CHistoryItemCard
             key={item.id}

@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-import CMethods from '../CMethods';
-import CStatusCard from '../CStatusCard';
-import CTokenLabel from '../CTokenLabel';
+import CMethods from '@/components/CMethods';
+import CStatusCard from '@/components/CStatusCard';
+import CTokenLabel from '@/components/CTokenLabel';
 import { formatDate } from '@/utils/formatDate';
 import { IHistoryItemCard } from '@/constants/types';
 import HistoryDetailsModal from './Modal';
@@ -40,13 +40,13 @@ const CHistoryItemCard = ({
       hover:bg-lightGray active:bg-lightGray/20 transition cursor-pointer border-[#0000001A]"
         onClick={handleItemClick}
       >
-        <div className="inline-flex whitespace-nowrap gap-3 items-center desktop:w-[37.5%]">
+        <div className="inline-flex whitespace-nowrap gap-3 items-center desktop:w-[40%]">
           {image && (
             <Image src={image} alt={title} className="rounded-[50px]" width={30} height={30} />
           )}
           <span className="mobile:w-full text-darkBlue text-base">{title}</span>
         </div>
-        <div className="inline-flex w-full mobile:hidden whitespace-nowrap">
+        <div className="inline-flex items-center w-full mobile:hidden whitespace-nowrap">
           <span className="w-1/4">
             <CMethods method={method} />
           </span>

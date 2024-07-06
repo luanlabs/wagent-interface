@@ -10,7 +10,7 @@ const ProgressBar = ({ progress }: ProgressBarProps) => (
         style={{ width: `${progress}%` }}
       ></div>
     </div>
-    <span className="text-cadetBlue font-medium"> {progress}%</span>
+    <span className="text-cadetBlue"> {progress}%</span>
   </div>
 );
 

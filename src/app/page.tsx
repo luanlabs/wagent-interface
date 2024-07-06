@@ -7,7 +7,7 @@ import DonutChartContainer from '@/containers/DonutChartContainer';
 
 import { history } from '@/constants/mockLists';
 import { HistoryListHeader } from './history/page';
-import CHistoryItemCard from '@/components/CHistoryItemCard';
+import CHistoryItemCard from '@/containers/CHistoryItemCard';
 
 export const metadata: Metadata = {
   title: 'Wagent - Dashboard',

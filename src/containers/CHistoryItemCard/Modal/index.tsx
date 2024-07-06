@@ -33,7 +33,7 @@ const HistoryDetailsModal = ({
 }: IDetailProps) => {
   const Title = (
     <span className="inline-flex gap-1">
-      Payment <span className="text-[#A8A8A8] select-text">#{id}</span>
+      Payment <span className="text-[#A8A8A8] font-normal select-text">#{id}</span>
     </span>
   );
 

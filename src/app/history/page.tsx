@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 import CPageCard from '@/components/CPageCard';
 import { history } from '@/constants/mockLists';
-import CHistoryItemCard from '@/components/CHistoryItemCard';
+import CHistoryItemCard from '@/containers/CHistoryItemCard';
 import { ArrowDown, Filter } from '@/assets';
 
 export const metadata: Metadata = {
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export const HistoryListHeader = () => (
   <ul className="flex w-full justify-between items-center rounded-[10px] bg-lightGray text-cadetBlue h-[42px] px-4 mb-4">
-    <li className="text-black whitespace-nowrap w-[37.5%]">Product name</li>
+    <li className="text-black whitespace-nowrap w-[40%]">Product name</li>
     <li className="mobile:hidden w-1/4">Method</li>
     <li className="mobile:hidden w-1/4 pl-1">Status</li>
     <li className="mobile:hidden w-1/4">Date & Time</li>

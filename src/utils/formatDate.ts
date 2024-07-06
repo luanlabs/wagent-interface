@@ -1,7 +1,8 @@
 export const formatDate = (date: any) => {
   const options: Intl.DateTimeFormatOptions = {
+    year: '2-digit',
     month: 'long',
-    day: 'numeric',
+    day: '2-digit',
     hour: '2-digit',
     minute: '2-digit',
     hour12: false, // Use 12-hour format

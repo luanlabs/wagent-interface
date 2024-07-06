@@ -44,6 +44,7 @@ const History = () => {
         {history.map((item) => (
           <CHistoryItemCard
             key={item.id}
+            id={item.id}
             title={item.title}
             method={item.method}
             status={item.status}
@@ -51,6 +52,9 @@ const History = () => {
             date={item.date}
             amount={item.amount}
             image={item.image}
+            sender={item.sender}
+            progress={item.progress}
+            cancellableAfter={item.cancellableAfter}
           />
         ))}
       </div>

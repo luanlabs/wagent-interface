@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect } from 'react';
+import cn from 'classnames';
 import Image from 'next/image';
 
 import useOutsideClickHandler from '@/hooks/useOutsideClickHandler';
@@ -11,10 +12,11 @@ type CModalProps = {
   isOpen: boolean;
   onClose: () => void;
   children?: React.ReactNode;
-  title?: string | React.ReactNode;
+  className?: string;
+  title?: string | React.ReactNode | React.JSX.Element;
 };
 
-const CModal = ({ title, children, isOpen, width = '482px', onClose }: CModalProps) => {
+const CModal = ({ title, children, isOpen, width, onClose, className }: CModalProps) => {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const backdropRef = useRef<HTMLDivElement | null>(null);
 
@@ -36,10 +38,14 @@ const CModal = ({ title, children, isOpen, width = '482px', onClose }: CModalPro
     >
       <div
         ref={modalRef}
-        className={`fixed transform transition-all duration-500 ease-in-out ${
-          isOpen ? 'scale-100 opacity-100' : 'scale-75 opacity-0'
-        } top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-[10px] shadow-2xl bg-white h-auto`}
-        style={{ width }}
+        className={cn(
+          className,
+          `fixed ${
+            width ? `w-[${width + 'px'}]` : 'w-[482px] mobile:w-[calc(100%-32px)]'
+          } transform transition-all duration-500 ease-in-out ${
+            isOpen ? 'scale-100 opacity-100' : 'scale-75 opacity-0'
+          } top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 !z-[9999] rounded-[10px] shadow-2xl bg-white h-auto`,
+        )}
       >
         <div className="flex flex-col w-full h-full px-6 py-4 gap-4">
           {title && (

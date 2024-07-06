@@ -106,7 +106,10 @@ export const history: IHistoryItemCard[] = [
     amount: '$15',
     image: productImage,
     date: Date.now(),
+    cancellableAfter: Date.now() - 200,
     status: 'active',
+    sender: '0x600',
+    progress: 90,
   },
   {
     title: 'XXXXXX Hoodie',
@@ -117,6 +120,8 @@ export const history: IHistoryItemCard[] = [
     image: hoodie,
     date: Date.now(),
     status: 'completed',
+    sender: '0x600',
+    progress: 30,
   },
   {
     title: 'X Hoodie',
@@ -127,6 +132,8 @@ export const history: IHistoryItemCard[] = [
     image: hoodie,
     date: Date.now(),
     status: 'cancelled',
+    sender: '0x600',
+    progress: 20,
   },
   {
     title: 'XXXXXXXXXXXX Hoodie',
@@ -137,6 +144,7 @@ export const history: IHistoryItemCard[] = [
     image: productImage,
     date: Date.now(),
     status: 'active',
+    sender: '0x600',
   },
   {
     title: 'XXXXXX Hoodie',
@@ -147,6 +155,7 @@ export const history: IHistoryItemCard[] = [
     image: hoodie,
     date: Date.now(),
     status: 'completed',
+    sender: '0x600',
   },
   {
     title: 'X Hoodie',
@@ -157,6 +166,7 @@ export const history: IHistoryItemCard[] = [
     image: hoodie,
     date: Date.now(),
     status: 'cancelled',
+    sender: '0x600',
   },
   {
     title: 'X Hoodie',
@@ -167,6 +177,7 @@ export const history: IHistoryItemCard[] = [
     image: hoodie,
     date: Date.now(),
     status: 'cancelled',
+    sender: '0x600',
   },
   {
     title: 'X Hoodie',
@@ -177,6 +188,7 @@ export const history: IHistoryItemCard[] = [
     image: hoodie,
     date: Date.now(),
     status: 'cancelled',
+    sender: '0x600',
   },
   {
     title: 'X Hoodie',
@@ -187,5 +199,6 @@ export const history: IHistoryItemCard[] = [
     image: hoodie,
     date: Date.now(),
     status: 'cancelled',
+    sender: '0x600',
   },
 ];

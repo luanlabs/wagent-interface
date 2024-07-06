@@ -37,8 +37,7 @@ const config: Config = {
       },
       screens: {
         mobile: { max: '1023px' },
-        tablet: { max: '1099px', min: '731px' },
-        desktop: { min: '1100px' },
+        desktop: { min: '1024px' },
         bigScreen: { min: '1550px' },
         desktopMax: { max: '1536px' },
         lg: { min: '1024px', max: '1279px' },

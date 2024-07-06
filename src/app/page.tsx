@@ -38,6 +38,7 @@ export default function Dashboard() {
           {history.slice(0, 5).map((item) => (
             <CHistoryItemCard
               key={item.id}
+              id={item.id}
               title={item.title}
               method={item.method}
               status={item.status}
@@ -45,6 +46,9 @@ export default function Dashboard() {
               date={item.date}
               amount={item.amount}
               image={item.image}
+              sender={item.sender}
+              progress={item.progress}
+              cancellableAfter={item.cancellableAfter}
             />
           ))}
         </div>

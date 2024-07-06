@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import CPageCard from '@/components/CPageCard';
 import { history } from '@/constants/mockLists';
 import CHistoryItemCard from '@/components/CHistoryItemCard';
+import { ArrowDown, Filter } from '@/assets';
 
 export const metadata: Metadata = {
   title: 'Wagent - History',
@@ -19,9 +20,25 @@ export const HistoryListHeader = () => (
   </ul>
 );
 
+const pageTitle = (
+  <div className="flex justify-between items-center w-full -my-1">
+    <h1>History</h1>
+    <div
+      className="inline-flex items-center justify-center hover:bg-lightGray active:bg-lightGray/20 transition
+      gap-2 w-[100px] font-normal text-sm h-10 border border-customGray rounded-[10px] cursor-pointer"
+    >
+      <Filter />
+      <div className="flex items-center gap-2">
+        Filter
+        <ArrowDown />
+      </div>
+    </div>
+  </div>
+);
+
 const History = () => {
   return (
-    <CPageCard title="History" className="h-full relative overflow-hidden">
+    <CPageCard title={pageTitle} className="h-full relative overflow-hidden">
       <HistoryListHeader />
       <div className="space-y-2 mobile:space-y-[6px] pb-3 max-h-[calc(100vh-200px)] desktopMax:max-h-[calc(100vh-270px)] w-full overflow-hidden overflow-y-auto">
         {history.map((item) => (

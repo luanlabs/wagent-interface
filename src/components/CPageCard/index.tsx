@@ -40,11 +40,13 @@ const CPageCard = ({
       <div>
         {title && <div className="w-full font-medium text-2xl mobile:mt-1 px-4">{title}</div>}
         {divider && (
-          <hr className={cn(dividerClassName, ` border-[#0501421A] my-3 desktop:mx-4`)} />
+          <hr className={cn(dividerClassName, ` border-[#0501421A] my-3 mobile:mx-2 mx-4`)} />
         )}
       </div>
 
-      <div className={`${cn(childrenClassName, `h-full overflow-y-auto px-4`)}`}>{children}</div>
+      <div className={`${cn(childrenClassName, `h-full overflow-y-auto mobile:px-2 px-4`)}`}>
+        {children}
+      </div>
     </CCard>
   );
 };

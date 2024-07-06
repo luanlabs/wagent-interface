@@ -25,7 +25,7 @@ const Header = ({ className }: HeaderProps) => {
         </Link>
         <CCard
           borderColor="#F2F4F7"
-          className="cursor-pointer size-10 flex justify-center items-center"
+          className="cursor-pointer size-10 flex justify-center items-center hover:bg-lightGray active:bg-lightGray/20 transition"
         >
           <Bell />
         </CCard>

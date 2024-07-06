@@ -1,9 +1,13 @@
 import type { Metadata } from 'next';
 
+import CCard from '@/components/CCard';
 import CPageCard from '@/components/CPageCard';
 import CBarChart from '@/components/Charts/CBarChart';
-import CCard from '@/components/CCard';
 import DonutChartContainer from '@/containers/DonutChartContainer';
+
+import { history } from '@/constants/mockLists';
+import { HistoryListHeader } from './history/page';
+import CHistoryItemCard from '@/components/CHistoryItemCard';
 
 export const metadata: Metadata = {
   title: 'Wagent - Dashboard',
@@ -26,6 +30,24 @@ export default function Dashboard() {
         >
           <CBarChart />
         </CCard>
+      </div>
+      <div className="mt-[31px] overflow-hidden">
+        <h1 className="text-2xl mb-4 font-medium">Recent transactions</h1>
+        <HistoryListHeader />
+        <div className="space-y-2 pb-3 mobile:space-y-[6px] w-full overflow-y-auto bigScreen:max-h-fit bigScreen:pb-0 desktop:max-h-[150px]">
+          {history.slice(0, 5).map((item) => (
+            <CHistoryItemCard
+              key={item.id}
+              title={item.title}
+              method={item.method}
+              status={item.status}
+              token={item.token}
+              date={item.date}
+              amount={item.amount}
+              image={item.image}
+            />
+          ))}
+        </div>
       </div>
     </CPageCard>
   );

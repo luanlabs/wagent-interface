@@ -10,7 +10,7 @@ import { formatDate } from '@/utils/formatDate';
 import { IHistoryItemCard } from '@/constants/types';
 import HistoryDetailsModal from './Modal';
 
-const CHistoryItemCard = ({
+const HistoryItemCard = ({
   id,
   date,
   title,
@@ -79,4 +79,4 @@ const CHistoryItemCard = ({
   );
 };
 
-export default CHistoryItemCard;
+export default HistoryItemCard;

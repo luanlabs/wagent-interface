@@ -47,6 +47,10 @@ const config: Config = {
         short: { raw: '(max-height: 730px)' },
         chartFix: { min: '1023px', max: '1260px' },
       },
+      boxShadow: {
+        box: '0px 4px 16px 0px rgba(118, 138, 189, 0.3)',
+        input: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+      },
     },
   },
   plugins: [],

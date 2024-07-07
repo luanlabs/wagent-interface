@@ -7,7 +7,7 @@ import DonutChartContainer from '@/containers/DonutChartContainer';
 
 import { history } from '@/constants/mockLists';
 import { HistoryListHeader } from './history/page';
-import CHistoryItemCard from '@/containers/CHistoryItemCard';
+import HistoryItemCard from '@/containers/HistoryItemCard';
 
 export const metadata: Metadata = {
   title: 'Wagent - Dashboard',
@@ -36,7 +36,7 @@ export default function Dashboard() {
         <HistoryListHeader />
         <div className="space-y-2 pb-3 mobile:space-y-[6px] w-full overflow-y-auto bigScreen:max-h-fit bigScreen:pb-0 desktop:max-h-[150px] short:h-[100px]">
           {history.slice(0, 5).map((item) => (
-            <CHistoryItemCard
+            <HistoryItemCard
               key={item.id}
               id={item.id}
               title={item.title}

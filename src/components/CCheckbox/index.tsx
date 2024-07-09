@@ -9,32 +9,23 @@ type CCheckboxProps = {
   label: string | React.JSX.Element;
   value: string;
   disabled?: boolean;
-  onClick: () => void;
 };
 
-const CCheckbox = ({
-  checked,
-  onChange,
-  label,
-  value,
-  onClick,
-  disabled = false,
-}: CCheckboxProps) => {
+const CCheckbox = ({ checked, onChange, label, value, disabled = false }: CCheckboxProps) => {
   return (
     <label className={`flex items-center space-x-[6px]`}>
       <input
         type="checkbox"
-        name={value.toLowerCase()}
-        value={value.toLowerCase()}
+        className="hidden"
+        name={value}
+        value={value}
         checked={checked}
         onChange={onChange}
-        className="hidden"
         disabled={disabled}
       />
       <div
-        onClick={onClick}
         className={`w-6 h-6 flex items-center justify-center border rounded-md transition-all duration-300 ease-in-out transform ${
-          disabled ? 'cursor-not-allowed opacity-60' : ' cursor-pointer '
+          disabled ? 'cursor-not-allowed pointer-events-none opacity-60' : ' cursor-pointer'
         }
         ${
           checked ? 'bg-darkGreen accent-darkGreen border-darkGreen' : ' bg-white border-[#8D8E92]'

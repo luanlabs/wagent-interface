@@ -95,14 +95,12 @@ const FilterHistory = () => {
                   className="absolute top-2 right-3 select-none cursor-pointer w-5 h-5"
                 />
                 <ul className="space-y-2">
-                  {/* <CCheckbox
+                  <CCheckbox
                     value=""
-                    checked={!checkBoxes}
-                    onChange={(e) => {
-                      handleCheckBoxChange(e');
-                    }}
+                    checked
+                    onChange={handleCheckBoxChange}
                     label={<CTokenLabel symbol="usdc" logo="" />}
-                  /> */}
+                  />
                 </ul>
               </div>
             </div>

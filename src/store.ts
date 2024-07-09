@@ -1,8 +1,12 @@
 'use client';
 
+import transactions from './reducers/transactions';
+
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+  transactions,
+});
 
 export const store = configureStore({
   reducer: rootReducer,

@@ -7,7 +7,7 @@ import CMethods from '@/components/CMethods';
 import CStatusCard from '@/components/CStatusCard';
 import CTokenLabel from '@/components/CTokenLabel';
 import { formatDate } from '@/utils/formatDate';
-import { IHistoryItemCard } from '@/constants/types';
+import { IHistoryResponse } from '@/constants/types';
 import HistoryDetailsModal from './Modal';
 
 const HistoryItemCard = ({
@@ -22,7 +22,7 @@ const HistoryItemCard = ({
   sender,
   progress,
   cancellableAfter,
-}: IHistoryItemCard) => {
+}: IHistoryResponse) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleItemClick = () => {

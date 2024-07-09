@@ -1,7 +1,7 @@
 import productImage from 'public/images/p.jpg';
 import hoodie from 'public/images/hoodie.png';
 
-import { IProductItemCard, IHistoryItemCard, TokensType } from './types';
+import { IProductItemCard, IHistoryResponse, TokensType } from './types';
 
 const userTokens: TokensType[] = [
   {
@@ -97,7 +97,7 @@ export const products: IProductItemCard[] = [
   },
 ];
 
-export const history: IHistoryItemCard[] = [
+export const history: IHistoryResponse[] = [
   {
     title: 'XXXXXXXXXXXX Hoodie',
     method: 'single',

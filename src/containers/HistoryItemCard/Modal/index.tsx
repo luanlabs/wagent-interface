@@ -9,9 +9,9 @@ import CStatusCard from '@/components/CStatusCard';
 import CTokenLabel from '@/components/CTokenLabel';
 
 import { formatDate } from '@/utils/formatDate';
-import { IHistoryItemCard } from '@/constants/types';
+import { IHistoryResponse } from '@/constants/types';
 
-interface IDetailProps extends IHistoryItemCard {
+interface IDetailProps extends IHistoryResponse {
   isOpen: boolean;
   onClose: () => void;
 }

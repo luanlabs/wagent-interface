@@ -18,7 +18,7 @@ export type TokensType = {
   logo: string;
 };
 
-export interface IHistoryItemCard {
+export interface IHistoryResponse {
   id?: string;
   date: number;
   title: string;

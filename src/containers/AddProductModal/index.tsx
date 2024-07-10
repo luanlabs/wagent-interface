@@ -7,6 +7,7 @@ import CButton from '@/components/CButton';
 import CButtonGroup from '@/components/CButtonGroup';
 
 import { MultiSelectType } from '@/models';
+import { forceInputNumber } from '@/utils/forceInputNumber';
 
 interface ProductModalProps {
   onClose: () => void;
@@ -69,7 +70,7 @@ const AddProductModal = ({ isOpen, onClose, onAddProduct }: ProductModalProps) =
           label: e.label,
           logo: e.logo,
         })),
-        amount: `$${amount}`,
+        amount: `${amount}`,
         image: '/public/images/hoodie.png',
       };
       onAddProduct(newProduct);
@@ -125,6 +126,7 @@ const AddProductModal = ({ isOpen, onClose, onAddProduct }: ProductModalProps) =
         label="Amount"
         onChange={handleAmountChange}
         value={amount}
+        onKeyPress={forceInputNumber}
       />
       <CButton variant="add" text="Add product" onClick={handleAddProduct} />
     </CModal>

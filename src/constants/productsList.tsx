@@ -27,7 +27,7 @@ export const initialProducts: CProductItemCard[] = [
     method: ['single', 'stream'],
     id: '1',
     tokens: tokensUser,
-    amount: '$15',
+    amount: '15',
     image: productImage,
   },
   {
@@ -35,7 +35,15 @@ export const initialProducts: CProductItemCard[] = [
     method: ['vesting'],
     id: '345837',
     tokens: tokensUser,
-    amount: '$1500',
+    amount: '1500',
+    image: hoodiImage,
+  },
+  {
+    title: 'Purple Hoodie',
+    method: ['vesting', 'single', 'stream'],
+    id: '345837',
+    tokens: tokensUser,
+    amount: '100500',
     image: hoodiImage,
   },
 ];

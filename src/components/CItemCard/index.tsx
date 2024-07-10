@@ -20,7 +20,13 @@ const CItemCard = ({ title, image, className, onClick, children }: CItemCardProp
     >
       {image && (
         <div className="h-[30px] w-[30px] overflow-hidden rounded-[50px]">
-          <Image src={image} alt={title} className="w-full h-auto object-fill" />
+          <Image
+            src={image}
+            alt={title}
+            width={0}
+            height={0}
+            className="w-full h-auto object-fill"
+          />
         </div>
       )}
 

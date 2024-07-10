@@ -42,25 +42,33 @@ const DashboardContainer = () => {
       </div>
       <div className="mt-[31px] overflow-hidden">
         <h1 className="text-2xl mb-4 font-medium">Recent transactions</h1>
-        <HistoryListHeader />
-        <div className="space-y-2 pb-3 mobile:space-y-[6px] w-full overflow-y-auto bigScreen:max-h-fit bigScreen:pb-0 desktop:max-h-[150px] short:h-[100px]">
-          {history.slice(0, 5).map((item) => (
-            <HistoryItemCard
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              method={item.method}
-              status={item.status}
-              token={item.token}
-              date={item.date}
-              amount={item.amount}
-              image={item.image}
-              sender={item.sender}
-              progress={item.progress}
-              cancellableAfter={item.cancellableAfter}
-            />
-          ))}
-        </div>
+        {history.length === 0 ? (
+          <p className="text-cadetBlue mt-4 bigScreen:mt-24 text-center text-lg">
+            No transactions found
+          </p>
+        ) : (
+          <>
+            <HistoryListHeader />
+            <div className="space-y-2 pb-3 mobile:space-y-[6px] w-full overflow-y-auto bigScreen:max-h-fit bigScreen:pb-0 desktop:max-h-[150px] short:h-[100px]">
+              {history.slice(0, 5).map((item) => (
+                <HistoryItemCard
+                  key={item.id}
+                  id={item.id}
+                  title={item.title}
+                  method={item.method}
+                  status={item.status}
+                  token={item.token}
+                  date={item.date}
+                  amount={item.amount}
+                  image={item.image}
+                  sender={item.sender}
+                  progress={item.progress}
+                  cancellableAfter={item.cancellableAfter}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </CPageCard>
   );

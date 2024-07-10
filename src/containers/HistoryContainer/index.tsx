@@ -33,27 +33,34 @@ const HistoryContainer = () => {
 
   return (
     <CPageCard title={pageTitle} className="h-full relative overflow-hidden">
-      <HistoryListHeader />
-
-      <div className="space-y-2 mobile:space-y-[6px] pb-3 max-h-[calc(100vh-200px)] desktopMax:max-h-[calc(100vh-265px)] w-full overflow-hidden overflow-y-auto">
-        {filteredHistory.map((item) => (
-          <HistoryItemCard
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            method={item.method}
-            status={item.status}
-            token={item.token}
-            date={item.date}
-            amount={item.amount}
-            image={item.image}
-            sender={item.sender}
-            progress={item.progress}
-            cancellableAfter={item.cancellableAfter}
-          />
-        ))}
-      </div>
-      <div className="absolute bottom-0 left-0 w-full h-10 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+      {filteredHistory.length === 0 ? (
+        <p className="text-cadetBlue flex h-full justify-center items-center text-lg">
+          No transactions found
+        </p>
+      ) : (
+        <div>
+          <HistoryListHeader />
+          <div className="space-y-2 mobile:space-y-[6px] pb-3 max-h-[calc(100vh-200px)] desktopMax:max-h-[calc(100vh-265px)] w-full overflow-hidden overflow-y-auto">
+            {filteredHistory.map((item) => (
+              <HistoryItemCard
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                method={item.method}
+                status={item.status}
+                token={item.token}
+                date={item.date}
+                amount={item.amount}
+                image={item.image}
+                sender={item.sender}
+                progress={item.progress}
+                cancellableAfter={item.cancellableAfter}
+              />
+            ))}
+          </div>
+          <div className="absolute bottom-0 left-0 w-full h-10 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+        </div>
+      )}
     </CPageCard>
   );
 };

@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 
@@ -11,24 +12,28 @@ import { ArrowDown, Filter } from '@/assets';
 import close from '../../../public/images/close.svg';
 import searchLogo from '../../../public/images/search.svg';
 
+import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
+import { IChangeCheckbox, setCheckBox, setTokenCheckBox } from '@/reducers/transactions';
+import { ReducerTokensType } from '@/constants/types';
+
 const FilterHistory = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [checkBoxes, setCheckBoxes] = useState({
-    stream: false,
-    single: false,
-    vesting: false,
-    active: false,
-    completed: false,
-    cancelled: false,
-  });
   const [inputValue, setInputValue] = useState('');
   const [isListVisible, setIsListVisible] = useState(false);
 
+  const dispatch = useAppDispatch();
+  const filteredValues = useAppSelector((state) => state.transactions.filterValues);
+
   const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCheckBoxes((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.checked,
-    }));
+    dispatch(setCheckBox({ key: e.target.name, value: e.target.checked } as IChangeCheckbox));
+  };
+
+  const filteredTokensBySearch = filteredValues.selectedTokens.filter((item) =>
+    item.symbol.toLowerCase().startsWith(inputValue.toLowerCase()),
+  );
+
+  const handleTokenCheckBoxChange = (token: ReducerTokensType) => {
+    dispatch(setTokenCheckBox(token.symbol));
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,12 +100,18 @@ const FilterHistory = () => {
                   className="absolute top-2 right-3 select-none cursor-pointer w-5 h-5"
                 />
                 <ul className="space-y-2">
-                  <CCheckbox
-                    value=""
-                    checked
-                    onChange={handleCheckBoxChange}
-                    label={<CTokenLabel symbol="usdc" logo="" />}
-                  />
+                  {filteredTokensBySearch.map((token, index) => (
+                    <li key={index}>
+                      <CCheckbox
+                        value={token.symbol}
+                        checked={token.checked}
+                        onChange={() => {
+                          handleTokenCheckBoxChange(token);
+                        }}
+                        label={<CTokenLabel symbol={token.symbol} logo={token.logo} />}
+                      />
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -110,19 +121,19 @@ const FilterHistory = () => {
             <CCheckbox
               value="stream"
               label="Stream"
-              checked={checkBoxes.stream}
+              checked={filteredValues.stream}
               onChange={handleCheckBoxChange}
             />
             <CCheckbox
               value="single"
               label="Single"
-              checked={checkBoxes.single}
+              checked={filteredValues.single}
               onChange={handleCheckBoxChange}
             />
             <CCheckbox
               value="vesting"
               label="Vesting"
-              checked={checkBoxes.vesting}
+              checked={filteredValues.vesting}
               onChange={handleCheckBoxChange}
             />
           </div>
@@ -131,19 +142,19 @@ const FilterHistory = () => {
             <CCheckbox
               value="active"
               label="Active"
-              checked={checkBoxes.active}
+              checked={filteredValues.active}
               onChange={handleCheckBoxChange}
             />
             <CCheckbox
               value="completed"
               label="Completed"
-              checked={checkBoxes.completed}
+              checked={filteredValues.completed}
               onChange={handleCheckBoxChange}
             />
             <CCheckbox
               value="cancelled"
               label="Cancelled"
-              checked={checkBoxes.cancelled}
+              checked={filteredValues.cancelled}
               onChange={handleCheckBoxChange}
             />
           </div>

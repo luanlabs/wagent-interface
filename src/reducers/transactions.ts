@@ -1,18 +1,36 @@
 'use client';
 
+import { tokenList } from '@/constants/mockLists';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { IHistoryResponse } from 'src/constants/types';
+import { IFilterValues, IHistoryResponse } from 'src/constants/types';
 
 interface ITransactions {
+  filterValues: IFilterValues;
   history: IHistoryResponse[];
   loading: boolean;
 }
 
 const initialState: ITransactions = {
+  filterValues: {
+    stream: true,
+    single: true,
+    vesting: true,
+    active: true,
+    completed: true,
+    cancelled: true,
+    selectedTokens: tokenList.map((token) => ({
+      ...token,
+      checked: true,
+    })),
+  },
   history: [],
   loading: true,
 };
+export interface IChangeCheckbox {
+  key: 'stream' | 'single' | 'vesting' | 'completed' | 'cancelled' | 'active';
+  value: boolean;
+}
 
 export const transactions = createSlice({
   name: 'transactions',
@@ -22,9 +40,21 @@ export const transactions = createSlice({
       state.history = action.payload;
       state.loading = false;
     },
+    setCheckBox: (state, action: PayloadAction<IChangeCheckbox>) => {
+      state.filterValues[action.payload.key] = action.payload.value;
+    },
+    setTokenCheckBox: (state, action: PayloadAction<string>) => {
+      const tokenIndex = state.filterValues.selectedTokens.findIndex(
+        (token) => token.symbol === action.payload,
+      );
+      if (tokenIndex !== -1) {
+        state.filterValues.selectedTokens[tokenIndex].checked =
+          !state.filterValues.selectedTokens[tokenIndex].checked;
+      }
+    },
   },
 });
 
-export const { loadHistory } = transactions.actions;
+export const { loadHistory, setCheckBox, setTokenCheckBox } = transactions.actions;
 
 export default transactions.reducer;

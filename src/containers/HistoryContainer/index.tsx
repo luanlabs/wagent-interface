@@ -1,10 +1,12 @@
+'use client';
+
 import React from 'react';
 
 import CPageCard from '@/components/CPageCard';
 import FilterHistory from '../FilterHistory';
 import HistoryItemCard from '../HistoryItemCard';
-
-import { history } from '@/constants/mockLists';
+import { useAppSelector } from '@/hooks/useRedux';
+import filterHistoryByValues from '@/utils/filterHistoryByValues';
 
 export const HistoryListHeader = () => (
   <ul className="flex w-full justify-between items-center rounded-[10px] bg-lightGray text-cadetBlue h-[42px] px-4 mb-4">
@@ -24,12 +26,17 @@ const pageTitle = (
   </div>
 );
 const HistoryContainer = () => {
+  const history = useAppSelector((state) => state.transactions.history);
+  const values = useAppSelector((state) => state.transactions.filterValues);
+
+  const filteredHistory = filterHistoryByValues(history, values);
+
   return (
     <CPageCard title={pageTitle} className="h-full relative overflow-hidden">
       <HistoryListHeader />
 
       <div className="space-y-2 mobile:space-y-[6px] pb-3 max-h-[calc(100vh-200px)] desktopMax:max-h-[calc(100vh-265px)] w-full overflow-hidden overflow-y-auto">
-        {history.map((item) => (
+        {filteredHistory.map((item) => (
           <HistoryItemCard
             key={item.id}
             id={item.id}

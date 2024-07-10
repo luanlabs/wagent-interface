@@ -1,5 +1,6 @@
 'use client';
-import React from 'react';
+
+import React, { useEffect } from 'react';
 
 import CCard from '@/components/CCard';
 import CPageCard from '@/components/CPageCard';
@@ -8,11 +9,20 @@ import CBarChart from '@/components/Charts/CBarChart';
 import HistoryItemCard from '@/containers/HistoryItemCard';
 import DonutChartContainer from '@/containers/DonutChartContainer';
 
-import { history } from '@/constants/mockLists';
+import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
+import { history as historyMock } from '@/constants/mockLists';
 
 import { HistoryListHeader } from '../HistoryContainer';
+import { loadHistory } from '@/reducers/transactions';
 
 const DashboardContainer = () => {
+  const dispatch = useAppDispatch();
+  const history = useAppSelector((state) => state.transactions.history);
+
+  useEffect(() => {
+    dispatch(loadHistory(historyMock));
+  }, [dispatch]);
+
   return (
     <CPageCard title="Dashboard" className="overflow-y-auto">
       <div

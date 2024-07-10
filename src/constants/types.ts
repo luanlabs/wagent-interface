@@ -16,6 +16,13 @@ export type SvgProps = {
 export type TokensType = {
   symbol: string;
   logo: string;
+  checked?: boolean;
+};
+
+export type ReducerTokensType = {
+  symbol: string;
+  logo: string;
+  checked: boolean;
 };
 
 export interface IHistoryResponse {
@@ -28,8 +35,8 @@ export interface IHistoryResponse {
   token: TokensType;
   cancellableAfter?: number;
   image: string | StaticImageData;
-  method: MethodType | MethodType[];
-  status: `active` | `completed` | `cancelled`;
+  method: 'single' | 'stream' | 'vesting';
+  status: 'active' | 'completed' | 'cancelled';
 }
 
 export interface IProductItemCard {
@@ -39,4 +46,14 @@ export interface IProductItemCard {
   tokens: TokensType[];
   amount: string;
   method: MethodType | MethodType[];
+}
+
+export interface IFilterValues {
+  stream: boolean;
+  single: boolean;
+  vesting: boolean;
+  active: boolean;
+  completed: boolean;
+  cancelled: boolean;
+  selectedTokens: ReducerTokensType[];
 }

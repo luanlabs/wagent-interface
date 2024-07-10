@@ -25,6 +25,7 @@ interface CInputProps {
   clearInputClick?: MouseEventHandler<HTMLImageElement>;
   handlePaste?: MouseEventHandler<HTMLDivElement>;
   enterKeyHint?: 'search' | 'done' | 'enter' | 'go' | 'next' | 'previous' | 'send';
+  onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
 const CInput = ({
@@ -47,6 +48,7 @@ const CInput = ({
   iconClassName,
   inputClassName,
   clearInputClick,
+  onKeyPress,
   ...props
 }: CInputProps) => {
   return (
@@ -97,6 +99,7 @@ const CInput = ({
           placeholder={placeholder}
           enterKeyHint={enterKeyHint}
           autoComplete="off"
+          onKeyPress={onKeyPress}
           className={cn(
             inputClassName,
             `${icon ? 'px-12' : 'px-4'}

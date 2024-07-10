@@ -30,8 +30,8 @@ const CItemCard = ({ title, image, className, onClick, children }: CItemCardProp
         </div>
       )}
 
-      <div className="flex justify-start w-full text-left">
-        <div className="ml-3 w-[27%] mobile:w-full">
+      <div className="flex items-center w-full text-left">
+        <div className="ml-3 w-[20%] mobile:w-full">
           <h3 className="text-darkBlue text-base">{title}</h3>
         </div>
 

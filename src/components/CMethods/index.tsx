@@ -25,7 +25,7 @@ const CMethods = ({ method }: CMethodsProps) => {
   const methodsArray = Array.isArray(method) ? method : [method];
 
   return (
-    <div className="flex space-x-3">
+    <div className="flex space-x-3 w-full">
       {methodsArray.map((method, index) => (
         <div key={index} className="flex items-center select-none text-cadetBlue text-[14px]">
           <div className="w-6">{getMethodComponent(method)}</div>

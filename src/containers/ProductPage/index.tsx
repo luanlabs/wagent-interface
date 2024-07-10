@@ -60,11 +60,11 @@ const ProductPage = () => {
       className="h-[100%] relative overflow-hidden"
     >
       <h1 className="text-2xl py-4 font-medium">Products list</h1>
-      <ul className="flex justify-between items-center rounded-[10px] bg-lightGray text-cadetBlue h-[42px] px-4 mb-4">
-        <li className="text-black">Product name</li>
-        <li className="mobile:hidden">Method</li>
-        <li className="mobile:hidden">ID</li>
-        <li className="w-1/5 mobile:hidden">Token</li>
+      <ul className="flex  items-center rounded-[10px] bg-lightGray text-cadetBlue h-[42px] px-4 mb-4">
+        <li className="text-black w-[20%]">Product name</li>
+        <li className="mobile:hidden w-[65%] max-w-[28%]">Method</li>
+        <li className="mobile:hidden w-[11%]">ID</li>
+        <li className="w-[36%] mobile:hidden">Token</li>
         <li>Amount</li>
       </ul>
       <div className="space-y-3 pb-3 max-h-[calc(100vh-350px)] desktopMax:max-h-[calc(100vh-330px)] w-full overflow-hidden overflow-y-auto">

@@ -33,15 +33,15 @@ const CProductItemCard = ({ title, image, id, tokens, amount, method }: CProduct
   return (
     <CItemCard title={title} image={image}>
       <div className="w-full flex">
-        <span className="w-[44%] mobile:hidden">
+        <div className="w-[65%] max-w-[35%] mobile:hidden">
           <CMethods method={method} />
-        </span>
-        <p className="w-[35%] mobile:hidden overflow-x-auto">
+        </div>
+        <p className="w-[20%] max-w-[14%] mobile:hidden overflow-x-auto">
           <span className="text-cadetBlue">#</span>
           <span>{id}</span>
         </p>
-        <span className="w-[41%] mobile:hidden flex justify-start space-x-2">{mapTokens}</span>
-        <span className="w-[30%] mobile:w-full mobile:px-3 text-right">{amount}</span>
+        <span className="w-[60%] mobile:hidden flex justify-start space-x-1">{mapTokens}</span>
+        <span className="w-[10%] mobile:w-full mobile:px-3 text-right">${amount}</span>
       </div>
     </CItemCard>
   );

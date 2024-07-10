@@ -5,20 +5,23 @@ import hoodiImage from 'public/images/hoodie.png';
 
 const tokensUser: TokensType[] = [
   {
-    symbol: 'dai',
+    value: 'dai',
+    label: 'Dai',
     logo: '',
   },
   {
-    symbol: 'usdt',
+    value: 'usdt',
+    label: 'Usdt',
     logo: '',
   },
   {
-    symbol: 'xlm',
+    value: 'eth',
+    label: 'Eth',
     logo: '',
   },
 ];
 
-export const products: CProductItemCard[] = [
+export const initialProducts: CProductItemCard[] = [
   {
     title: 'Purple Hoodie',
     method: ['single', 'stream'],
@@ -29,66 +32,10 @@ export const products: CProductItemCard[] = [
   },
   {
     title: 'Purple Hoodie',
-    method: 'vesting',
+    method: ['vesting'],
     id: '345837',
     tokens: tokensUser,
     amount: '$1500',
     image: hoodiImage,
-  },
-  {
-    title: 'Purple Hoodie',
-    method: ['vesting', 'stream'],
-    id: '345',
-    tokens: tokensUser,
-    amount: '$255',
-    image: productImage,
-  },
-  {
-    title: 'Purple Hoodie',
-    method: 'single',
-    id: '54654333355',
-    tokens: tokensUser,
-    amount: '$34510',
-    image: hoodiImage,
-  },
-  {
-    title: 'Purple Hoodie',
-    method: 'vesting',
-    id: '54654',
-    tokens: tokensUser,
-    amount: '$15',
-    image: productImage,
-  },
-  {
-    title: 'Purple Hoodie',
-    method: 'single',
-    id: '54654',
-    tokens: tokensUser,
-    amount: '$15',
-    image: hoodiImage,
-  },
-  {
-    title: 'Purple Hoodie',
-    method: 'single',
-    id: '54654',
-    tokens: tokensUser,
-    amount: '$15',
-    image: productImage,
-  },
-  {
-    title: 'Purple Hoodie',
-    method: 'vesting',
-    id: '54654',
-    tokens: tokensUser,
-    amount: '$15',
-    image: hoodiImage,
-  },
-  {
-    title: 'Purple Hoodie',
-    method: 'stream',
-    id: '54654',
-    tokens: tokensUser,
-    amount: '$15',
-    image: productImage,
   },
 ];

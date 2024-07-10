@@ -34,6 +34,7 @@ const DonutChartContainer = () => {
                 key={data.name}
                 symbol={data.name}
                 logo={require(`/public/images/tokens/${data.name.toLowerCase()}.svg`)}
+                rounded
               />
             ))}
           </div>

@@ -1,6 +1,9 @@
 export { default as Bell } from './Bell';
 export { default as Home } from './Home';
+export { default as Failed } from './Failed';
 export { default as Basket } from './Basket';
+export { default as Loading } from './Loading';
+export { default as Success } from './Success';
 export { default as Settings } from './Settings';
 export { default as Calender } from './Calender';
 export { default as CareRight } from './CareRight';

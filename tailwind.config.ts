@@ -27,6 +27,7 @@ const config: Config = {
         darkGray: '#101323',
         success: '#039855',
         lightGreen: '#A6F4C5',
+        smokyBlue: '#667085',
       },
       screens: {
         mobile: { max: '1023px' },

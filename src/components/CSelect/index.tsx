@@ -39,6 +39,7 @@ const CSelect = ({ placeholder, className, onChange, options, value = null }: CS
       }
     }
   };
+
   const Option = (props: OptionProps<OptionType>) => (
     <components.Option {...props}>
       <Image

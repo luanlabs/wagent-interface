@@ -47,3 +47,17 @@ export const initialProducts: CProductItemCard[] = [
     image: hoodiImage,
   },
 ];
+
+export const methodTabs = [
+  { value: 'stream', label: 'Stream' },
+  { value: 'single', label: 'Single' },
+  { value: 'vesting', label: 'Vesting' },
+];
+
+export const tokensList = [
+  { value: 'eth', label: 'Ethereum', logo: 'public/images/tokens/eth.svg' },
+  { value: 'xlm', label: 'Stellar', logo: 'public/images/tokens/xlm.svg' },
+  { value: 'dai', label: 'Dai', logo: 'public/images/tokens/dai.svg' },
+  { value: 'usdc', label: 'USD Coin', logo: 'public/images/tokens/usdc.svg' },
+  { value: 'usdt', label: 'Tether', logo: 'public/images/tokens/usdt.svg' },
+];

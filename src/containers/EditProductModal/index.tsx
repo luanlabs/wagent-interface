@@ -8,6 +8,7 @@ import CButtonGroup from '@/components/CButtonGroup';
 import CProductItemCard from '@/components/CProductItemCard';
 
 import { MultiSelectType } from '@/models';
+import { methodTabs, tokensList } from '@/constants/productsList';
 
 interface EditProductModalProps {
   onClose: () => void;
@@ -15,20 +16,6 @@ interface EditProductModalProps {
   onSaveProduct: (product: any) => void;
   product: CProductItemCard;
 }
-
-const methodTabs = [
-  { value: 'stream', label: 'Stream' },
-  { value: 'single', label: 'Single' },
-  { value: 'vesting', label: 'Vesting' },
-];
-
-const tokens = [
-  { value: 'eth', label: 'Ethereum', logo: 'public/images/tokens/eth.svg' },
-  { value: 'xlm', label: 'Stellar', logo: 'public/images/tokens/xlm.svg' },
-  { value: 'dai', label: 'Dai', logo: 'public/images/tokens/dai.svg' },
-  { value: 'usdc', label: 'USD Coin', logo: 'public/images/tokens/usdc.svg' },
-  { value: 'usdt', label: 'Tether', logo: 'public/images/tokens/usdt.svg' },
-];
 
 const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProductModalProps) => {
   const [selectedMethod, setSelectedMethod] = useState<string[]>([]);
@@ -99,8 +86,8 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
       <div>
         <p className="text-sm select-none font-normal text-offBlack mb-[6px]">Method</p>
         <CButtonGroup
-          tabs={methodTabs}
-          defaultSelectedTabs={['single']}
+          value={methodTabs}
+          defaultValue={['single']}
           selectedMethod={selectedMethod}
           onChange={handleSelectedMethod}
         />
@@ -109,7 +96,7 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
         <p className="text-sm select-none font-normal text-offBlack mb-[6px]">Tokens</p>
         <CSelect
           placeholder="Select tokens"
-          options={tokens}
+          options={tokensList}
           onChange={handleSelectChange}
           value={selectedTokens}
         />

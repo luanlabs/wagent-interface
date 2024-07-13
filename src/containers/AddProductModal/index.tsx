@@ -6,28 +6,17 @@ import CSelect from '@/components/CSelect';
 import CButton from '@/components/CButton';
 import CButtonGroup from '@/components/CButtonGroup';
 
-import { MultiSelectType } from '@/models';
 import { forceInputNumber } from '@/utils/forceInputNumber';
+import { TokensType } from '@/components/CProductItemCard';
+
+import { methodTabs, tokensList } from '@/constants/productsList';
+import { MultiSelectType } from '@/models';
 
 interface ProductModalProps {
   onClose: () => void;
   isOpen: boolean;
   onAddProduct: (product: any) => void;
 }
-
-const methodTabs = [
-  { value: 'stream', label: 'Stream' },
-  { value: 'single', label: 'Single' },
-  { value: 'vesting', label: 'Vesting' },
-];
-
-const tokens = [
-  { value: 'eth', label: 'Ethereum', logo: 'public/images/tokens/eth.svg' },
-  { value: 'xlm', label: 'Stellar', logo: 'public/images/tokens/xlm.svg' },
-  { value: 'dai', label: 'Dai', logo: 'public/images/tokens/dai.svg' },
-  { value: 'usdc', label: 'USD Coin', logo: 'public/images/tokens/usdc.svg' },
-  { value: 'usdt', label: 'Tether', logo: 'public/images/tokens/usdt.svg' },
-];
 
 const AddProductModal = ({ isOpen, onClose, onAddProduct }: ProductModalProps) => {
   const [selectedMethod, setSelectedMethod] = useState(['single']);
@@ -65,7 +54,7 @@ const AddProductModal = ({ isOpen, onClose, onAddProduct }: ProductModalProps) =
         title: productName,
         method: selectedMethod,
         id: '1',
-        tokens: selectedTokens.map((e) => ({
+        tokens: selectedTokens.map((e: TokensType) => ({
           value: e.value,
           label: e.label,
           logo: e.logo,
@@ -105,8 +94,8 @@ const AddProductModal = ({ isOpen, onClose, onAddProduct }: ProductModalProps) =
       <div>
         <p className="text-sm select-none font-normal text-offBlack mb-[6px]">Method</p>
         <CButtonGroup
-          tabs={methodTabs}
-          defaultSelectedTabs={['single']}
+          value={methodTabs}
+          defaultValue={['single']}
           selectedMethod={selectedMethod}
           onChange={handleSelectedMethod}
         />
@@ -115,7 +104,7 @@ const AddProductModal = ({ isOpen, onClose, onAddProduct }: ProductModalProps) =
         <p className="text-sm select-none font-normal text-offBlack mb-[6px]">Tokens</p>
         <CSelect
           placeholder="Select tokens"
-          options={tokens}
+          options={tokensList}
           onChange={handleSelectChange}
           value={selectedTokens}
         />

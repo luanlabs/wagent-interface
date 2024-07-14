@@ -49,7 +49,7 @@ const DashboardContainer = () => {
         ) : (
           <>
             <HistoryListHeader />
-            <div className="space-y-2 pb-3 mobile:space-y-[6px] w-full overflow-y-auto bigScreen:max-h-fit bigScreen:pb-0 desktop:max-h-[150px] short:h-[100px]">
+            <div className="space-y-2 pb-3 mobile:space-y-[6px] w-full overflow-y-auto bigScreen:max-h-fit bigScreen:pb-0 desktop:max-h-[150px] short:h-[80px]">
               {history.slice(0, 5).map((item) => (
                 <HistoryItemCard
                   key={item.id}

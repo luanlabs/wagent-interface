@@ -1,5 +1,6 @@
 export { default as Bell } from './Bell';
 export { default as Home } from './Home';
+export { default as Check } from './Check';
 export { default as Basket } from './Basket';
 export { default as Filter } from './Filter';
 export { default as Settings } from './Settings';

@@ -13,9 +13,9 @@ const Icon = ({ fill }: SvgProps) => (
       cy="50"
       fill="none"
       stroke={fill}
-      stroke-width="9"
+      strokeWidth="9"
       r="38"
-      stroke-dasharray="179.0707812546182 61.690260418206066"
+      strokeDasharray="179.0707812546182 61.690260418206066"
     >
       <animateTransform
         attributeName="transform"

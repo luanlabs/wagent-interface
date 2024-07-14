@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import cn from 'classnames';
 
@@ -6,9 +6,21 @@ import CCard from '@/components/CCard';
 import { Bell, Typography } from '@/assets';
 import ExternalLinks from '@/constants/externalLinks';
 
+import Notification from '../Notification';
+
 type HeaderProps = { className: string };
 
 const Header = ({ className }: HeaderProps) => {
+  const [isOpenNotification, setIsOpenNotification] = useState(false);
+
+  const toggleNotification = () => {
+    setIsOpenNotification(!isOpenNotification);
+  };
+
+  const closeNotification = () => {
+    setIsOpenNotification(false);
+  };
+
   return (
     <CCard
       className={cn(
@@ -25,11 +37,14 @@ const Header = ({ className }: HeaderProps) => {
         </Link>
         <CCard
           borderColor="#F2F4F7"
-          className="cursor-pointer size-10 flex justify-center items-center hover:bg-lightGray active:bg-lightGray/20 transition"
+          className="cursor-pointer size-10 flex justify-center items-center"
+          onClick={toggleNotification}
         >
           <Bell />
         </CCard>
       </header>
+
+      <Notification isOpen={isOpenNotification} onClose={closeNotification} />
     </CCard>
   );
 };

@@ -14,13 +14,13 @@ export type SvgProps = {
 };
 
 export type TokensType = {
-  symbol: string;
+  value: string;
   logo: string;
   checked?: boolean;
 };
 
 export type ReducerTokensType = {
-  symbol: string;
+  value: string;
   logo: string;
   checked: boolean;
 };

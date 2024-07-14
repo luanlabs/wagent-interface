@@ -13,7 +13,7 @@ const filterHistoryByValues = (history: IHistoryResponse[], values: IFilterValue
       (values.cancelled && tx.status === 'cancelled');
 
     const tokenMatch = values.selectedTokens.some(
-      (token) => token.checked && token.symbol === tx.token.symbol,
+      (token) => token.checked && token.value === tx.token.value,
     );
 
     return methodMatch && statusMatch && tokenMatch;

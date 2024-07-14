@@ -9,12 +9,12 @@ import CTokenLabel from '@/components/CTokenLabel';
 import useOutsideClickHandler from '@/hooks/useOutsideClickHandler';
 
 import { ArrowDown, Filter } from '@/assets';
-import close from '../../../public/images/close.svg';
-import searchLogo from '../../../public/images/search.svg';
+import close from 'public/images/close.svg';
+import searchLogo from 'public/images/search.svg';
 
+import { ReducerTokensType } from '@/constants/types';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { IChangeCheckbox, setCheckBox, setTokenCheckBox } from '@/reducers/transactions';
-import { ReducerTokensType } from '@/constants/types';
 
 const FilterHistory = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,11 +29,11 @@ const FilterHistory = () => {
   };
 
   const filteredTokensBySearch = filteredValues.selectedTokens.filter((item) =>
-    item.symbol.toLowerCase().startsWith(inputValue.toLowerCase()),
+    item.value.toLowerCase().startsWith(inputValue.toLowerCase()),
   );
 
   const handleTokenCheckBoxChange = (token: ReducerTokensType) => {
-    dispatch(setTokenCheckBox(token.symbol));
+    dispatch(setTokenCheckBox(token.value));
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,12 +103,12 @@ const FilterHistory = () => {
                   {filteredTokensBySearch.map((token, index) => (
                     <li key={index}>
                       <CCheckbox
-                        value={token.symbol}
+                        value={token.value}
                         checked={token.checked}
                         onChange={() => {
                           handleTokenCheckBoxChange(token);
                         }}
-                        label={<CTokenLabel symbol={token.symbol} logo={token.logo} />}
+                        label={<CTokenLabel symbol={token.value} logo={token.logo} />}
                       />
                     </li>
                   ))}

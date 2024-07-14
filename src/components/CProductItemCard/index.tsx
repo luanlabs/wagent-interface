@@ -4,8 +4,8 @@ import { IProductItemCard } from '@/constants/types';
 
 const CProductItemCard = ({ title, image, id, tokens, amount, method }: IProductItemCard) => {
   const mapTokens = tokens.map((item) => (
-    <div key={item.symbol}>
-      <p>{item.symbol.toUpperCase()}</p>
+    <div key={item.value}>
+      <p>{item.value.toUpperCase()}</p>
     </div>
   ));
 

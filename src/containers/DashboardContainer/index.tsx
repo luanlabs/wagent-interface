@@ -6,14 +6,14 @@ import CCard from '@/components/CCard';
 import CPageCard from '@/components/CPageCard';
 import CBarChart from '@/components/Charts/CBarChart';
 
-import HistoryItemCard from '@/containers/HistoryItemCard';
-import DonutChartContainer from '@/containers/DonutChartContainer';
+import DonutChartContainer from '@/containers/DashboardContainer/DonutChart';
+import HistoryItem from '@/containers/HistoryContainer/HistoryItem';
 
-import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
-import { history as historyMock } from '@/constants/mockLists';
-
-import { HistoryListHeader } from '../HistoryContainer';
 import { loadHistory } from '@/reducers/transactions';
+import { history as historyMock } from '@/constants/mockLists';
+import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
+
+import { HistoryListHeader } from '../HistoryContainer/ListHeader';
 
 const DashboardContainer = () => {
   const dispatch = useAppDispatch();
@@ -51,20 +51,7 @@ const DashboardContainer = () => {
             <HistoryListHeader />
             <div className="space-y-2 pb-3 mobile:space-y-[6px] w-full overflow-y-auto bigScreen:max-h-fit bigScreen:pb-0 desktop:max-h-[150px] short:h-[80px]">
               {history.slice(0, 5).map((item) => (
-                <HistoryItemCard
-                  key={item.id}
-                  id={item.id}
-                  title={item.title}
-                  method={item.method}
-                  status={item.status}
-                  token={item.token}
-                  date={item.date}
-                  amount={item.amount}
-                  image={item.image}
-                  sender={item.sender}
-                  progress={item.progress}
-                  cancellableAfter={item.cancellableAfter}
-                />
+                <HistoryItem key={item.id} data={item} />
               ))}
             </div>
           </>

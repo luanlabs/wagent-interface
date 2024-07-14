@@ -4,31 +4,31 @@ import hoodie from 'public/images/hoodie.png';
 import { IProductItemCard, IHistoryResponse, TokensType } from './types';
 
 const usdc: TokensType = {
-  symbol: 'usdc',
+  value: 'usdc',
   logo: require(`/public/images/tokens/usdc.svg`),
 };
 
 const dai: TokensType = {
-  symbol: 'dai',
+  value: 'dai',
   logo: require(`/public/images/tokens/dai.svg`),
 };
 
 const xlm: TokensType = {
-  symbol: 'xlm',
+  value: 'xlm',
   logo: require(`/public/images/tokens/xlm.svg`),
 };
 
 export const tokenList: TokensType[] = [
   {
-    symbol: 'usdc',
+    value: 'usdc',
     logo: require(`/public/images/tokens/usdc.svg`),
   },
   {
-    symbol: 'xlm',
+    value: 'xlm',
     logo: require(`/public/images/tokens/xlm.svg`),
   },
   {
-    symbol: 'dai',
+    value: 'dai',
     logo: require(`/public/images/tokens/dai.svg`),
   },
 ];

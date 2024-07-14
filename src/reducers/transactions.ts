@@ -45,7 +45,7 @@ export const transactions = createSlice({
     },
     setTokenCheckBox: (state, action: PayloadAction<string>) => {
       const tokenIndex = state.filterValues.selectedTokens.findIndex(
-        (token) => token.symbol === action.payload,
+        (token) => token.value === action.payload,
       );
       if (tokenIndex !== -1) {
         state.filterValues.selectedTokens[tokenIndex].checked =

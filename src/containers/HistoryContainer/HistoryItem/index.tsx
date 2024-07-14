@@ -6,23 +6,16 @@ import Image from 'next/image';
 import CMethods from '@/components/CMethods';
 import CStatusCard from '@/components/CStatusCard';
 import CTokenLabel from '@/components/CTokenLabel';
+
 import { formatDate } from '@/utils/formatDate';
+import humanizeAmount from '@/utils/humanizeAmount';
 import { IHistoryResponse } from '@/constants/types';
+
 import HistoryDetailsModal from './Modal';
 
-const HistoryItemCard = ({
-  id,
-  date,
-  title,
-  token,
-  image,
-  method,
-  status,
-  amount,
-  sender,
-  progress,
-  cancellableAfter,
-}: IHistoryResponse) => {
+type HistoryItemProps = { data: IHistoryResponse };
+
+const HistoryItem = ({ data }: HistoryItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleItemClick = () => {
@@ -41,42 +34,34 @@ const HistoryItemCard = ({
         onClick={handleItemClick}
       >
         <div className="inline-flex whitespace-nowrap gap-3 items-center desktop:w-[40%]">
-          {image && (
-            <Image src={image} alt={title} className="rounded-[50px]" width={30} height={30} />
+          {data.image && (
+            <Image
+              src={data.image}
+              alt={data.title}
+              className="rounded-[50px]"
+              width={30}
+              height={30}
+            />
           )}
-          <span className="mobile:w-full text-darkBlue text-base">{title}</span>
+          <span className="mobile:w-full text-darkBlue text-base">{data.title}</span>
         </div>
         <div className="inline-flex items-center w-full mobile:hidden whitespace-nowrap">
           <span className="w-1/4">
-            <CMethods method={method} />
+            <CMethods method={data.method} />
           </span>
-          <span className="w-1/4">{CStatusCard(status)}</span>
-          <span className="w-1/4">{formatDate(date)}</span>
+          <span className="w-1/4">{CStatusCard(data.status)}</span>
+          <span className="w-1/4">{formatDate(data.date)}</span>
           <span className="w-1/4 ml-2">
-            <CTokenLabel symbol={token.symbol} logo={token.logo} />
+            <CTokenLabel symbol={data.token.value} logo={data.token.logo} />
           </span>
         </div>
 
-        <span className="mobile:w-full text-right w-1/6">{amount}</span>
+        <span className="mobile:w-full text-right w-1/6">${humanizeAmount(data.amount)}</span>
       </div>
 
-      <HistoryDetailsModal
-        id={id}
-        date={date}
-        title={title}
-        token={token}
-        image={image}
-        amount={amount}
-        method={method}
-        status={status}
-        isOpen={isOpen}
-        sender={sender}
-        progress={progress}
-        onClose={handleCloseModal}
-        cancellableAfter={cancellableAfter}
-      />
+      <HistoryDetailsModal data={data} isOpen={isOpen} onClose={handleCloseModal} />
     </>
   );
 };
 
-export default HistoryItemCard;
+export default HistoryItem;

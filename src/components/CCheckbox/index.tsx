@@ -1,10 +1,8 @@
 import React from 'react';
-import Image from 'next/image';
 import cn from 'classnames';
 
-import check from '../../../public/images/check.svg';
-import { getCheckBoxStyle } from './getCheckBoxStyle';
 import { Check } from '@/assets';
+import { getCheckBoxStyle } from './getCheckBoxStyle';
 
 export type CCheckboxType = 'primary' | 'secondary';
 
@@ -39,14 +37,19 @@ const CCheckbox = ({
       <div
         className={cn(
           getCheckBoxStyle(type, checked, disabled),
-          `flex items-center justify-center rounded-md transition-all duration-300 ease-in-out transform
-          `,
+          `flex items-center justify-center rounded-md transition duration-300 ease-in-out transform`,
         )}
       >
         {checked && <Check fill={type === 'secondary' && !disabled ? '#073834' : '#EAECF0'} />}
       </div>
       {label && (
-        <div className={`text-sm ${checked ? 'text-black' : '!text-[#888888]'}}`}>{label}</div>
+        <div
+          className={`text-sm select-none transition-colors duration-300 ${
+            !checked || disabled ? '!text-gray' : 'text-black'
+          }`}
+        >
+          {label}
+        </div>
       )}
     </label>
   );

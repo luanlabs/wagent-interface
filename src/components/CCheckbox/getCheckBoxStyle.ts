@@ -3,8 +3,8 @@ import { CCheckboxType } from '.';
 export const getCheckBoxStyle = (type: CCheckboxType, checked: boolean, disabled: boolean) => {
   switch (type) {
     case 'primary': {
-      return `w-6 h-6 ${disabled ? 'pointer-events-none opacity-60' : 'cursor-pointer'}
-      ${checked ? 'bg-[#073834] border !border-[#073834]' : 'bg-white border border-[#8D8E92]'}`;
+      return `w-6 h-6 ${disabled ? 'pointer-events-none opacity-70' : 'cursor-pointer'}
+      ${checked ? 'bg-[#073834] border !border-[#073834]' : 'bg-white border border-gray'}`;
     }
 
     case 'secondary': {

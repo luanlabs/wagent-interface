@@ -117,10 +117,9 @@ const FilterHistory = () => {
             </div>
           )}
           <div className="space-y-2">
-            <p className="text-base">Filter by Method</p>
+            <p className="text-base select-none">Filter by Method</p>
             <CCheckbox
               value="stream"
-              disabled
               label="Stream"
               checked={filteredValues.stream}
               onChange={handleCheckBoxChange}
@@ -139,24 +138,20 @@ const FilterHistory = () => {
             />
           </div>
           <div className="space-y-2">
-            <p className="text-base">Filter by Status</p>
+            <p className="text-base select-none">Filter by Status</p>
             <CCheckbox
-              type="secondary"
               value="active"
               label="Active"
               checked={filteredValues.active}
               onChange={handleCheckBoxChange}
             />
             <CCheckbox
-              type="secondary"
-              disabled
               value="completed"
               label="Completed"
               checked={filteredValues.completed}
               onChange={handleCheckBoxChange}
             />
             <CCheckbox
-              type="secondary"
               value="cancelled"
               label="Cancelled"
               checked={filteredValues.cancelled}

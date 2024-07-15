@@ -5,16 +5,16 @@ import CModal from '@/components/CModal';
 import CSelect from '@/components/CSelect';
 import CButton from '@/components/CButton';
 import CButtonGroup from '@/components/CButtonGroup';
-import CProductItemCard from '@/components/CProductItemCard';
 
 import { MultiSelectType } from '@/models';
-import { methodTabs, tokensList } from '@/constants/productsList';
+import { methodTabs, tokensList } from '@/constants/mockLists';
+import { IProductItemCard } from '@/constants/types';
 
 interface EditProductModalProps {
   onClose: () => void;
   isOpen: boolean;
   onSaveProduct: (product: any) => void;
-  product: CProductItemCard;
+  product: IProductItemCard;
 }
 
 const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProductModalProps) => {

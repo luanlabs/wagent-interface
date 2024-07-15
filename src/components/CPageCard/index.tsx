@@ -9,7 +9,7 @@ interface CPageCard {
   className?: string;
   dividerClassName?: string;
   childrenClassName?: string;
-  borderStatus: 'bordered' | 'borderless';
+  borderStatus?: 'bordered' | 'borderless';
   children: JSX.Element | React.ReactNode;
 }
 
@@ -19,7 +19,7 @@ const CPageCard = ({
   children,
   className = '',
   childrenClassName = '',
-  borderStatus,
+  borderStatus = 'borderless',
   dividerClassName,
   ...props
 }: CPageCard) => {
@@ -27,7 +27,7 @@ const CPageCard = ({
     <CCard
       className={cn(
         className,
-        `flex flex-col !bg-white w-full h-full mobile:overflow-hidden py-4 px-2 ${
+        `flex flex-col !bg-white w-full h-full mobile:overflow-hidden mobile:pb-0 pt-4 pb-2 px-2 ${
           borderStatus === 'borderless'
             ? 'mobile:!border-transparent mobile:!border-none mobile:!rounded-none'
             : ''
@@ -38,13 +38,17 @@ const CPageCard = ({
       {...props}
     >
       <div>
-        {title && <div className="w-full font-medium text-2xl mobile:mt-1 px-4">{title}</div>}
+        {title && (
+          <div className="w-full font-medium text-2xl mobile:mt-1 px-4 mobile:px-2">{title}</div>
+        )}
         {divider && (
-          <hr className={cn(dividerClassName, ` border-[#0501421A] my-4 desktop:mx-4`)} />
+          <hr className={cn(dividerClassName, ` border-[#0501421A] my-3 mobile:mx-2 mx-4`)} />
         )}
       </div>
 
-      <div className={`${cn(childrenClassName, `h-full overflow-y-auto px-4`)}`}>{children}</div>
+      <div className={`${cn(childrenClassName, `h-full overflow-y-auto mobile:px-2 px-4`)}`}>
+        {children}
+      </div>
     </CCard>
   );
 };

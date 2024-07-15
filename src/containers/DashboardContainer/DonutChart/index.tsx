@@ -5,7 +5,7 @@ import { useState } from 'react';
 import CCard from '@/components/CCard';
 import CTokenLabel from '@/components/CTokenLabel';
 import CDonutChart from '@/components/Charts/CDonutChart';
-import CStatusCard from '@/components/CStatusCard';
+import CChartSummery from '@/components/CChartSummery';
 
 import { DonutChartDataType } from '@/models';
 
@@ -41,7 +41,7 @@ const DonutChartContainer = () => {
 
           <div className="flex flex-col space-y-5 text-[14px]">
             {chartData.map((data) => (
-              <CStatusCard
+              <CChartSummery
                 key={data.name}
                 text={`${data.value}%`}
                 className="w-8 font-medium"

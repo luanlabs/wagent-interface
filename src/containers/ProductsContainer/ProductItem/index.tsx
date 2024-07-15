@@ -1,25 +1,11 @@
-import { StaticImageData } from 'next/image';
+import CItemCard from '@/components/CItemCard';
+import CMethods from '@/components/CMethods';
+import CTokenLabel from '@/components/CTokenLabel';
 
-import CItemCard from '../CItemCard';
-import CMethods, { MethodType } from '../CMethods';
-import CTokenLabel from '../CTokenLabel';
+import { IProductItemCard } from '@/constants/types';
+import humanizeAmount from '@/utils/humanizeAmount';
 
-export type TokensType = {
-  value: string;
-  label: string;
-  logo: string;
-};
-
-interface CProductItemCard {
-  title: string;
-  image: string | StaticImageData;
-  id: string;
-  tokens: TokensType[];
-  amount: string;
-  method: MethodType[];
-}
-
-const CProductItemCard = ({ title, image, id, tokens, amount, method }: CProductItemCard) => {
+const ProductItem = ({ title, image, id, tokens, amount, method }: IProductItemCard) => {
   const mapTokens = tokens.map((item) => (
     <div key={item.value}>
       <CTokenLabel
@@ -41,10 +27,12 @@ const CProductItemCard = ({ title, image, id, tokens, amount, method }: CProduct
           <span>{id}</span>
         </p>
         <span className="w-[60%] mobile:hidden flex justify-start space-x-1">{mapTokens}</span>
-        <span className="w-[10%] mobile:w-full mobile:px-3 text-right">${amount}</span>
+        <span className="w-[10%] mobile:w-full mobile:px-3 text-right">
+          ${humanizeAmount(amount)}
+        </span>
       </div>
     </CItemCard>
   );
 };
 
-export default CProductItemCard;
+export default ProductItem;

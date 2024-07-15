@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 import tokensStyles from '@/components/CTokenLabel/tokensStyles';
 
-import close from 'public/images/close.svg';
+import { Close } from '@/assets';
 
 export interface CTokenLabelProps {
   symbol: string;
@@ -37,7 +37,9 @@ const CTokenLabel = ({ symbol, logo, rounded, onRemove, className }: CTokenLabel
       </div>
 
       {onRemove && (
-        <Image src={close} alt="close" onClick={onRemove} className="cursor-pointer ml-4 " />
+        <span onClick={onRemove} className="cursor-pointer ml-4 ">
+          <Close fill={style.textColor} />
+        </span>
       )}
     </div>
   );

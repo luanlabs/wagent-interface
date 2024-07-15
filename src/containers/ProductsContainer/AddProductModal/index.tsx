@@ -7,9 +7,9 @@ import CButton from '@/components/CButton';
 import CButtonGroup from '@/components/CButtonGroup';
 
 import { forceInputNumber } from '@/utils/forceInputNumber';
-import { TokensType } from '@/components/CProductItemCard';
+import { TokensType } from '@/constants/types';
 
-import { methodTabs, tokensList } from '@/constants/productsList';
+import { methodTabs, tokensList } from '@/constants/mockLists';
 import { MultiSelectType } from '@/models';
 
 interface ProductModalProps {

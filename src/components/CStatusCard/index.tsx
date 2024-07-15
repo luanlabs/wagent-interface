@@ -1,59 +1,27 @@
 import React from 'react';
-import BN from 'src/utils/BN';
-import classNames from 'classnames';
 
-import getPercentageColor from './getPercentageColor';
+import capitalizeFirstLetter from '@/utils/capitalizeFirstLetter';
 
-import Arrow from '@/assets/Arrow';
+type status = 'active' | 'completed' | 'cancelled';
 
-interface CStatusCardProps {
-  text?: string | number;
-  percentage?: number;
-  className?: string;
-  transparent?: boolean;
-}
-
-const CStatusCard = ({ text, percentage, className, transparent }: CStatusCardProps) => {
-  let displayValue = '';
-  let arrowColor = '';
-  let arrowClass = '';
-
-  if (percentage) {
-    const bnPercentage = new BN(percentage);
-    const isPositive = bnPercentage.isGreaterThan(0);
-    displayValue = isPositive ? bnPercentage.toFixed() : bnPercentage.abs().toFixed();
-    arrowColor = isPositive ? '#027A48' : 'red';
-    arrowClass = isPositive ? '' : 'rotate-180';
+const getStatusStyle = (status: status) => {
+  if (status === 'active') {
+    return 'text-warning border-lightOrange bg-lightestOrange';
+  } else if (status === 'completed') {
+    return 'text-success border-lightGreen bg-lightestGreen';
+  } else {
+    return 'text-error border-lightRed bg-lightestRed';
   }
+};
 
+const CStatusCard = (status: status) => {
   return (
     <div
-      className={classNames(
-        'w-fit rounded-md text-center',
-        className,
-        {
-          'bg-transparent': transparent,
-        },
-        { 'bg-[#F2F4F7]': !transparent },
-      )}
+      className={`${getStatusStyle(
+        status,
+      )} flex justify-center items-center w-[113px] h-7 border rounded-[50px]`}
     >
-      {text ? (
-        <div className="text-[#101828]">{text}</div>
-      ) : (
-        percentage && (
-          <div
-            className={classNames(
-              ' flex items-center justify-center space-x-1 px-3',
-              getPercentageColor(new BN(percentage)),
-            )}
-          >
-            <label className={arrowClass}>
-              <Arrow fill={arrowColor} />
-            </label>
-            <span style={{ color: arrowColor }}>%{displayValue}</span>
-          </div>
-        )
-      )}
+      {capitalizeFirstLetter(status)}
     </div>
   );
 };

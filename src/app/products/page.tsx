@@ -1,16 +1,15 @@
-import ProductPage from '@/containers/ProductPage';
 import { Metadata } from 'next';
+
+import ProductsContainer from '@/containers/ProductsContainer';
 
 export const metadata: Metadata = {
   title: 'Wagent - Products',
 };
 
-const Products = () => {
+export default function Products() {
   return (
     <>
-      <ProductPage />
+      <ProductsContainer />
     </>
   );
-};
-
-export default Products;
+}

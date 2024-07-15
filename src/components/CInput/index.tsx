@@ -25,6 +25,7 @@ interface CInputProps {
   handlePaste?: MouseEventHandler<HTMLDivElement>;
   enterKeyHint?: 'search' | 'done' | 'enter' | 'go' | 'next' | 'previous' | 'send';
   onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>;
+  maxLength?: number;
 }
 
 const CInput = ({
@@ -48,6 +49,7 @@ const CInput = ({
   inputClassName,
   clearInputClick,
   onKeyPress,
+  maxLength,
   ...props
 }: CInputProps) => {
   return (
@@ -93,6 +95,7 @@ const CInput = ({
           enterKeyHint={enterKeyHint}
           autoComplete="off"
           onKeyPress={onKeyPress}
+          maxLength={maxLength}
           className={cn(
             inputClassName,
             `${icon ? 'pl-10' : 'px-4'}

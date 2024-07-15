@@ -11,6 +11,7 @@ import { TokensType } from '@/constants/types';
 
 import { methodTabs, tokensList } from '@/constants/mockLists';
 import { MultiSelectType } from '@/models';
+import { kMaxLength } from 'buffer';
 
 interface ProductModalProps {
   onClose: () => void;
@@ -90,6 +91,7 @@ const AddProductModal = ({ isOpen, onClose, onAddProduct }: ProductModalProps) =
         label="Product name"
         onChange={handleProductNameChange}
         value={productName}
+        maxLength={11}
       />
       <div>
         <p className="text-sm select-none font-normal text-offBlack mb-[6px]">Method</p>

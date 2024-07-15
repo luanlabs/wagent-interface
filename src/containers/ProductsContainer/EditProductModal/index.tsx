@@ -82,6 +82,7 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
         label="Product name"
         onChange={handleProductNameChange}
         value={productName}
+        maxLength={11}
       />
       <div>
         <p className="text-sm select-none font-normal text-offBlack mb-[6px]">Method</p>

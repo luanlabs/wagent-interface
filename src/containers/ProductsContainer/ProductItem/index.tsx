@@ -18,7 +18,7 @@ const ProductItem = ({ title, image, id, tokens, amount, method }: IProductItemC
 
   return (
     <CItemCard title={title} image={image}>
-      <div className="w-full flex">
+      <div className="w-full flex items-center">
         <div className="w-[65%] max-w-[35%] mobile:hidden">
           <CMethods method={method} />
         </div>

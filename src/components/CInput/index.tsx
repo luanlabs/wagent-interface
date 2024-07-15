@@ -2,8 +2,7 @@ import React, { MouseEventHandler } from 'react';
 import cn from 'classnames';
 import Image from 'next/image';
 
-// import alertLogo from 'public/images/error.png';
-// import clearInputLogo from 'public/images/x.svg';
+import clearInputLogo from 'public/images/close.svg';
 
 interface CInputProps {
   value?: any;
@@ -54,14 +53,8 @@ const CInput = ({
       <p className="text-sm select-none font-normal mb-[6px] text-offBlack">{label}</p>
       <div className="relative w-full">
         {icon && (
-          <div className={cn(iconClassName, `absolute bottom-4 left-3.5`)}>
+          <div className={cn(iconClassName, `absolute bottom-4 left-3`)}>
             <Image src={icon} width={22} height={22} alt="inputIcon" />
-          </div>
-        )}
-
-        {error && alertLogo && (
-          <div className="absolute bottom-3.5 right-3.5">
-            <Image src={alertLogo} width={30} height={30} alt="alert" />
           </div>
         )}
 
@@ -99,7 +92,7 @@ const CInput = ({
           autoComplete="off"
           className={cn(
             inputClassName,
-            `${icon ? 'px-12' : 'px-4'}
+            `${icon ? 'pl-10' : 'px-4'}
             self-stretch rounded-lg placeholder-mutedBlue text-darkGray text-base w-full h-10 py-[10px] px-[14px]
             justify-start items-center inline-flex outline-none border hover:bg-offWhite transition-colors duration-300
             ${border ? 'border border-gray' : 'border-transparent'}  

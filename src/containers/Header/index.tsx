@@ -26,7 +26,7 @@ const Header = ({ className }: HeaderProps) => {
       className={cn(
         className,
         `!w-full mobile:fixed mobile:top-0 mobile:right-0 mobile:left-0 mobile:h-16
-        desktop:mb-[10px] mobile:rounded-none mobile:!border-t-0 z-[999] block relative`,
+        desktop:mb-[10px] mobile:rounded-none mobile:!border-t-0 z-40 block`,
       )}
       borderColor="rgba(5, 1, 66, 0.10)"
       bgColor="white"

@@ -33,6 +33,7 @@ const config: Config = {
         lightOrange: '#FEDF89',
         lightestOrange: '#FFFAEB',
         lightGreen: '#A6F4C5',
+        smokyBlue: '#667085',
         lightestGreen: '#ECFDF3',
       },
       screens: {

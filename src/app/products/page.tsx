@@ -8,6 +8,6 @@ export const metadata: Metadata = {
 
 const Products = () => {
   return <ProductPage />;
-};
+}
 
 export default Products;

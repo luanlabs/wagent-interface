@@ -1,26 +1,11 @@
-import { StaticImageData } from 'next/image';
-
 import CItemCard from '../CItemCard';
-import CMethods, { MethodType } from '../CMethods';
+import CMethods from '../CMethods';
+import { IProductItemCard } from '@/constants/types';
 
-export type TokensType = {
-  symbol: string;
-  logo: string;
-};
-
-interface CProductItemCard {
-  title: string;
-  image: string | StaticImageData;
-  id: string;
-  tokens: TokensType[];
-  amount: string;
-  method: MethodType | MethodType[];
-}
-
-const CProductItemCard = ({ title, image, id, tokens, amount, method }: CProductItemCard) => {
+const CProductItemCard = ({ title, image, id, tokens, amount, method }: IProductItemCard) => {
   const mapTokens = tokens.map((item) => (
-    <div key={item.symbol}>
-      <p>{item.symbol.toUpperCase()}</p>
+    <div key={item.value}>
+      <p>{item.value.toUpperCase()}</p>
     </div>
   ));
 
@@ -35,7 +20,7 @@ const CProductItemCard = ({ title, image, id, tokens, amount, method }: CProduct
           <span>{id}</span>
         </p>
         <span className="w-[41%] mobile:hidden flex space-x-2">{mapTokens}</span>
-        <span className="w-[30%] mobile:w-full mobile:px-3 text-right">{amount}</span>
+        <span className="w-[30%] mobile:w-full text-right">{amount}</span>
       </div>
     </CItemCard>
   );

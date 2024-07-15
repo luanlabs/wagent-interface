@@ -16,7 +16,7 @@ const CTokenLabel = ({ symbol, logo }: CTokenLabelProps) => {
         className={`w-[90px] text-[14px] font-medium flex px-3 mobile:w-[80px] mobile:space-x-1 space-x-2 items-center py-[2px] rounded-[50px]`}
         style={{
           backgroundColor: style.bgColor,
-          border: `2px solid ${style.borderColor}`,
+          border: `1px solid ${style.borderColor}`,
           color: style.textColor,
         }}
         key={symbol}

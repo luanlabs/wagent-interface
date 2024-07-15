@@ -2,6 +2,7 @@ export type ErrorType = {
   title: string;
   message: string;
 };
+
 export type DonutChartDataType = {
   value: number;
   name: string;

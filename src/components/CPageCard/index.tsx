@@ -6,6 +6,8 @@ import cn from 'classnames';
 import CCard from '../CCard';
 import CErrorCard from '../CErrorCard';
 
+import { ErrorType } from '@/models';
+
 interface CPageCardProps {
   title?: string | React.ReactNode;
   divider?: boolean;
@@ -15,8 +17,7 @@ interface CPageCardProps {
   borderStatus: 'bordered' | 'borderless';
   dividerResponsiveClassName?: string;
   children: JSX.Element | React.ReactNode;
-  errorTitle?: string;
-  errorMessage?: string;
+  error?: ErrorType | null;
 }
 
 const CPageCard = ({
@@ -27,17 +28,16 @@ const CPageCard = ({
   childrenClassName = '',
   borderStatus,
   dividerClassName,
-  errorTitle,
-  errorMessage,
+  error,
   ...props
 }: CPageCardProps) => {
-  const [errorVisible, setErrorVisible] = useState(true);
+  const [errorVisible, setErrorVisible] = useState(!!error);
 
   useEffect(() => {
-    if (errorTitle && errorMessage) {
+    if (error) {
       setErrorVisible(true);
     }
-  }, [errorMessage, errorTitle]);
+  }, [error]);
 
   const handleErrorClose = () => {
     setErrorVisible(false);
@@ -62,15 +62,12 @@ const CPageCard = ({
       <div>
         {title && <div className={titleClass}>{title}</div>}
         {divider && <hr className={cn(dividerClassName, dividerClass)} />}
-        <div className="px-4">
-          {errorTitle && errorMessage && errorVisible && (
-            <CErrorCard
-              title={errorVisible && errorTitle}
-              message={errorVisible && errorMessage}
-              onClose={handleErrorClose}
-            />
-          )}
-        </div>
+
+        {error && errorVisible && (
+          <div className="px-4">
+            <CErrorCard error={error} onClose={handleErrorClose} />
+          </div>
+        )}
       </div>
 
       <div

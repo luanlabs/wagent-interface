@@ -43,25 +43,26 @@ const CPageCard = ({
     setErrorVisible(false);
   };
 
-  const baseClass = 'flex flex-col !bg-white w-full h-full mobile:overflow-hidden py-4 px-2';
-  const borderClass =
-    borderStatus === 'borderless'
-      ? 'mobile:!border-transparent mobile:!border-none mobile:!rounded-none'
-      : '';
-  const titleClass = 'w-full font-medium text-2xl mobile:mt-1 px-4';
-  const dividerClass = 'border-[#0501421A] my-4 desktop:mx-4';
-  const childrenClass = 'h-full overflow-y-auto px-4';
-
   return (
     <CCard
-      className={cn(className, baseClass, borderClass)}
+      className={cn(
+        className,
+        `flex flex-col !bg-white w-full h-full mobile:overflow-hidden mobile:pb-0 pt-4 pb-2 px-2 ${
+          borderStatus === 'borderless'
+            ? 'mobile:!border-transparent mobile:!border-none mobile:!rounded-none'
+            : ''
+        }`,
+      )}
       bgColor="#fff"
       borderColor="rgba(5, 1, 66, 0.10)"
       {...props}
     >
       <div>
-        {title && <div className={titleClass}>{title}</div>}
-        {divider && <hr className={cn(dividerClassName, dividerClass)} />}
+        {title && <div className="w-full font-medium text-2xl mobile:mt-1 px-4">{title}</div>}
+
+        {divider && (
+          <hr className={cn(dividerClassName, ` border-[#0501421A] my-3 mobile:mx-2 mx-4`)} />
+        )}
 
         {error && errorVisible && (
           <div className="px-4">
@@ -71,9 +72,9 @@ const CPageCard = ({
       </div>
 
       <div
-        className={cn(childrenClassName, childrenClass, {
+        className={`${cn(childrenClassName, `h-full overflow-y-auto mobile:px-2 px-4`, {
           'pointer-events-none opacity-50 select-none': errorVisible,
-        })}
+        })}`}
       >
         {children}
       </div>

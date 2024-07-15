@@ -6,3 +6,4 @@ export { default as Calender } from './Calender';
 export { default as CareRight } from './CareRight';
 export { default as SquareHalf } from './SquareHalf';
 export { default as Typography } from './Typography';
+export { default as ErrorIcon } from './ErrorIcon';

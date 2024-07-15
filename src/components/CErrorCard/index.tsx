@@ -1,10 +1,10 @@
-import ErrorIcon from '@/assets/ErrorIcon';
 import React from 'react';
 import Image from 'next/image';
 
 import { ErrorType } from '@/models';
 
 import close from 'public/images/close.svg';
+import { ErrorIcon } from '@/assets';
 
 interface ErrorProps {
   error: ErrorType;

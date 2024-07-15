@@ -17,6 +17,7 @@ export type TokensType = {
   value: string;
   logo: string;
   checked?: boolean;
+  label?: string;
 };
 
 export type ReducerTokensType = {
@@ -45,7 +46,7 @@ export interface IProductItemCard {
   id: string;
   tokens: TokensType[];
   amount: string;
-  method: MethodType | MethodType[];
+  method: MethodType[];
 }
 
 export interface IFilterValues {

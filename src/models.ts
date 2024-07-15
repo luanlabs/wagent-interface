@@ -1,3 +1,5 @@
+import { MultiValue } from 'react-select';
+
 export type DonutChartDataType = {
   value: number;
   name: string;
@@ -20,3 +22,11 @@ export interface TooltipProps {
     dataKey: string;
   }[];
 }
+
+export interface OptionType {
+  value: string;
+  label: string;
+  logo: string;
+}
+
+export type MultiSelectType = MultiValue<OptionType> | null;

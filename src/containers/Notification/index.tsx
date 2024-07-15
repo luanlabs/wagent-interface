@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import Image from 'next/image';
 
-import hoodiImage from 'public/images/hoodie.png';
+import hoodieImage from 'public/images/hoodie.png';
 
 interface NotificationProps {
   isOpen: boolean;
@@ -53,12 +53,12 @@ const Notification = ({ isOpen, onClose }: NotificationProps) => {
       )}
       style={{ visibility: show ? 'visible' : 'hidden' }}
     >
-      <div className="absolute top-[65px] right-6 px-4 pb-1 divide-y-[1px] divide-[#EBEBEB] w-80 border border-customGray bg-white shadow-lg rounded-[10px] ">
+      <div className="absolute top-[65px] right-6 px-4 pb-1 divide-y-[1px] divide-[#EBEBEB] w-80 mobile:w-[280px] border border-customGray bg-white shadow-lg rounded-[10px] ">
         {notificationData.map((item) => (
           <div key={item.title} className="flex flex-col text-[14px] mb-3">
             <p className="text-darkBlue/50 py-3">New order received</p>
             <div className="flex items-center space-x-3 hover:bg-offWhite cursor-pointer rounded transition">
-              <Image src={hoodiImage} alt="Purple Hoodie" className="w-9 rounded-full" />
+              <Image src={hoodieImage} alt="Purple Hoodie" className="w-9 rounded-full" />
               <div className="flex justify-between w-full">
                 <p>{item.title}</p>
                 <p>{item.amount}</p>

@@ -40,8 +40,8 @@ const DashboardContainer = () => {
           <CBarChart />
         </CCard>
       </div>
-      <div className="mt-[31px] overflow-hidden">
-        <h1 className="text-2xl mb-4 font-medium">Recent transactions</h1>
+      <div className="mt-5 overflow-hidden">
+        <h1 className="text-2xl mb-[10px] font-medium">Recent transactions</h1>
         {history.length === 0 ? (
           <p className="text-cadetBlue mt-4 bigScreen:mt-24 text-center text-lg">
             No transactions found

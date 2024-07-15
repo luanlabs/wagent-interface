@@ -28,7 +28,7 @@ const CMethods = ({ method, className }: CMethodsProps) => {
   const methodsArray = Array.isArray(method) ? method : [method];
 
   return (
-    <div className="flex space-x-3">
+    <div className="flex space-x-3 w-full">
       {methodsArray.map((method, index) => (
         <div
           key={index}

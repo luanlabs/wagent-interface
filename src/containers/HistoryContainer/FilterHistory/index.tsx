@@ -21,6 +21,9 @@ const FilterHistory = () => {
   const [inputValue, setInputValue] = useState('');
   const [isListVisible, setIsListVisible] = useState(false);
 
+  const modalRef = useRef<HTMLDivElement | null>(null);
+  const secondModalRef = useRef<HTMLDivElement>(null);
+
   const dispatch = useAppDispatch();
   const filteredValues = useAppSelector((state) => state.transactions.filterValues);
 
@@ -48,9 +51,6 @@ const FilterHistory = () => {
   const onClose = () => {
     setIsOpen(false);
   };
-
-  const modalRef = useRef<HTMLDivElement | null>(null);
-  const secondModalRef = useRef<HTMLDivElement>(null);
 
   useOutsideClickHandler(isOpen, onClose, modalRef);
 
@@ -108,7 +108,7 @@ const FilterHistory = () => {
                         onChange={() => {
                           handleTokenCheckBoxChange(token);
                         }}
-                        label={<CTokenLabel symbol={token.value} logo={token.logo} />}
+                        label={<CTokenLabel symbol={token.value} logo={token.logo} rounded />}
                       />
                     </li>
                   ))}

@@ -1,4 +1,5 @@
 'use client';
+
 import { useEffect } from 'react';
 import { PieChart, Pie, Cell } from 'recharts';
 
@@ -33,7 +34,14 @@ const CDonutChart = ({ chartData }: CDonutChartProps) => {
   return (
     <div>
       <PieChart width={170} height={170}>
-        <Pie data={pieData} innerRadius={60} outerRadius={80} paddingAngle={3} dataKey="value">
+        <Pie
+          data={pieData}
+          innerRadius={60}
+          outerRadius={80}
+          cornerRadius={3}
+          paddingAngle={3}
+          dataKey="value"
+        >
           {pieData.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}

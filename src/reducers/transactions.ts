@@ -1,6 +1,6 @@
 'use client';
 
-import { tokenList } from '@/constants/mockLists';
+import { tokensList } from '@/constants/mockLists';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { IFilterValues, IHistoryResponse } from 'src/constants/types';
@@ -19,7 +19,7 @@ const initialState: ITransactions = {
     active: true,
     completed: true,
     cancelled: true,
-    selectedTokens: tokenList.map((token) => ({
+    selectedTokens: tokensList.map((token) => ({
       ...token,
       checked: true,
     })),

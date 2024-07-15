@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 import CButton from '@/components/CButton';
 import CPageCard from '@/components/CPageCard';
-import { products } from '@/constants/productsList';
+import { products } from '@/constants/mockLists';
 import CProductItemCard from '@/components/CProductItemCard';
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const pageTitle = (
-  <div className="flex justify-between items-center w-full">
+  <div className="flex justify-between items-center w-full -my-1">
     <h1>Products</h1>
     <CButton variant="add" text="Add product" className="!w-[145px] text-base" />
   </div>
@@ -18,13 +18,7 @@ const pageTitle = (
 
 const Products = () => {
   return (
-    <CPageCard
-      borderStatus="bordered"
-      title={pageTitle}
-      className="h-[100%] relative overflow-hidden"
-    >
-      <h1 className="text-2xl py-4 font-medium">Products list</h1>
-
+    <CPageCard title={pageTitle} className="h-[100%] relative overflow-hidden">
       <ul className="flex justify-between items-center rounded-[10px] bg-lightGray text-cadetBlue h-[42px] px-4 mb-4">
         <li className="text-black">Product name</li>
         <li className="mobile:hidden">Method</li>
@@ -33,7 +27,7 @@ const Products = () => {
         <li>Amount</li>
       </ul>
 
-      <div className="space-y-3 pb-3 max-h-[calc(100vh-350px)] desktopMax:max-h-[calc(100vh-330px)] w-full overflow-hidden overflow-y-auto">
+      <div className="space-y-2 mobile:space-y-[6px] pb-3 max-h-[calc(100vh-200px)] desktopMax:max-h-[calc(100vh-265px)] w-full overflow-hidden overflow-y-auto">
         {products.map((item) => (
           <CProductItemCard
             key={item.id}
@@ -47,7 +41,7 @@ const Products = () => {
         ))}
       </div>
 
-      <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-full h-10 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
     </CPageCard>
   );
 };

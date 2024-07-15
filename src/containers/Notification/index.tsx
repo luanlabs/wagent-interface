@@ -53,7 +53,7 @@ const Notification = ({ isOpen, onClose }: NotificationProps) => {
       )}
       style={{ visibility: show ? 'visible' : 'hidden' }}
     >
-      <div className="absolute top-[65px] right-6 px-4 pb-1 divide-y-[1px] divide-[#EBEBEB] w-80 border border-customGray bg-white shadow-lg rounded-[10px] ">
+      <div className="absolute top-[65px] right-6 px-4 pb-1 divide-y-[1px] divide-[#EBEBEB] w-80 mobile:w-[280px] border border-customGray bg-white shadow-lg rounded-[10px] ">
         {notificationData.map((item) => (
           <div key={item.title} className="flex flex-col text-[14px] mb-3">
             <p className="text-darkBlue/50 py-3">New order received</p>

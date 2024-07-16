@@ -7,9 +7,6 @@ export const metadata: Metadata = {
 };
 
 export default function Products() {
-  return (
-    <>
-      <ProductsContainer />
-    </>
-  );
+  return <ProductsContainer />
+  
 }

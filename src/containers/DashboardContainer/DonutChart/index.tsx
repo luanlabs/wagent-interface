@@ -1,13 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 
 import CCard from '@/components/CCard';
 import CTokenLabel from '@/components/CTokenLabel';
-import CDonutChart from '@/components/Charts/CDonutChart';
+
 import CChartSummery from '@/components/CChartSummery';
 
 import { DonutChartDataType } from '@/models';
+const CDonutChart = dynamic(() => import('@/components/Charts/CDonutChart'), { ssr: false });
 
 const DonutChartContainer = () => {
   const [chartData, setChartData] = useState<DonutChartDataType[]>([]);

@@ -11,7 +11,7 @@ import AddProductModal from './AddProductModal';
 import EditProductModal from './EditProductModal';
 import { IProductItemCard } from '@/constants/types';
 
-const ProductPage = () => {
+const ProductsContainer = () => {
   const [AddProductIsOpen, setAddProductIsOpen] = useState(false);
   const [EditProductIsOpen, setEditProductIsOpen] = useState(false);
   const [products, setProducts] = useState<IProductItemCard[]>(productsList);
@@ -93,4 +93,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default ProductsContainer;

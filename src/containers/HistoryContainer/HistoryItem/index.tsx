@@ -52,7 +52,7 @@ const HistoryItem = ({ data }: HistoryItemProps) => {
           <span className="w-1/4">{CStatusCard(data.status)}</span>
           <span className="w-1/4">{formatDate(data.date)}</span>
           <span className="w-1/4 ml-2">
-            <CTokenLabel symbol={data.token.value} logo={data.token.logo} rounded />
+            <CTokenLabel symbol={data.token.value} rounded />
           </span>
         </div>
 

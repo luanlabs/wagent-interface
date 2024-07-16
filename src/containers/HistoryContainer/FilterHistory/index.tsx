@@ -91,24 +91,29 @@ const FilterHistory = () => {
                 ref={secondModalRef}
                 className={`absolute min-h-10 max-h-[115px] overflow-auto z-30 top-0 right-0 left-0 p-[10px] shadow-input shadow-[#00000033] rounded-lg mt-1 bg-white`}
               >
-                <Image
-                  src={close}
-                  alt="close"
-                  onClick={() => {
-                    setIsListVisible(false);
-                  }}
-                  className="absolute top-2 right-3 select-none cursor-pointer w-5 h-5"
-                />
+                <span className="relative flex w-full justify-end">
+                  <Image
+                    src={close}
+                    alt="close"
+                    onClick={() => {
+                      setIsListVisible(false);
+                    }}
+                    height={20}
+                    width={20}
+                    className="fixed select-none cursor-pointer"
+                  />
+                </span>
                 <ul className="space-y-2">
                   {filteredTokensBySearch.map((token, index) => (
                     <li key={index}>
                       <CCheckbox
+                        type="secondary"
                         value={token.value}
                         checked={token.checked}
                         onChange={() => {
                           handleTokenCheckBoxChange(token);
                         }}
-                        label={<CTokenLabel symbol={token.value} logo={token.logo} rounded />}
+                        label={<CTokenLabel symbol={token.value} rounded />}
                       />
                     </li>
                   ))}

@@ -15,7 +15,7 @@ interface CMethodsProps {
 }
 
 const CMethods = ({ method, className, suffix = '' }: CMethodsProps) => {
-  const getMethodComponent = (method: MethodType) => {
+  const getMethodImage = (method: MethodType) => {
     switch (method) {
       case 'stream':
         return <Stream />;
@@ -33,9 +33,12 @@ const CMethods = ({ method, className, suffix = '' }: CMethodsProps) => {
       {methodsArray.map((method, index) => (
         <div
           key={index}
-          className={cn(className, `flex items-center select-none text-cadetBlue text-[14px]`)}
+          className={cn(
+            className,
+            `flex items-center select-none gap-1 text-cadetBlue text-[14px]`,
+          )}
         >
-          <div className="w-6">{getMethodComponent(method)}</div>
+          <div>{getMethodImage(method)}</div>
           <span>
             {capitalizeFirstLetter(method)} {suffix && suffix}
           </span>

@@ -1,6 +1,6 @@
 const Metadata = () => {
   return (
-    <head>
+    <>
       <meta
         name="keywords"
         content="Wagent, Stellar, Payment gateway, cryptocurrency, blockchain, finance, digital payments, smart contracts"
@@ -33,7 +33,7 @@ const Metadata = () => {
       <meta name="coverage" content="Worldwide" />
       <meta name="distribution" content="Global" />
       <meta name="rating" content="General" />
-    </head>
+    </>
   );
 };
 export default Metadata;

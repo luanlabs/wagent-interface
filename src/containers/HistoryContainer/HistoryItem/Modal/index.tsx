@@ -53,7 +53,7 @@ const HistoryDetailsModal = ({ isOpen, onClose, data }: IDetailProps) => {
         />
       )}
       <LabelValue label="Token">
-        <CTokenLabel symbol={data.token.value} logo={data.token.logo} rounded />
+        <CTokenLabel symbol={data.token.value} rounded />
       </LabelValue>
       <LabelValue label="Sender" value={data.sender} />
       {data.progress && (

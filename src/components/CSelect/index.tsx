@@ -24,10 +24,14 @@ type CSelectProps = {
 
 const CSelect = ({ placeholder, className, onChange, options, value = null }: CSelectProps) => {
   const [selectValue, setSelectValue] = useState<MultiSelectType>(null);
+  const [isMounted, setIsMounted] = useState(false);
+  const id = Date.now().toString();
 
   useEffect(() => {
     setSelectValue(value);
   }, [value]);
+
+  useEffect(() => setIsMounted(true), []);
 
   const handleChange = (newValue: MultiValue<OptionType> | SingleValue<OptionType>) => {
     const multiValue = newValue as MultiValue<OptionType>;
@@ -58,12 +62,7 @@ const CSelect = ({ placeholder, className, onChange, options, value = null }: CS
     return (
       <div {...innerProps}>
         {data.value ? (
-          <CTokenLabel
-            symbol={data.value}
-            logo={require(`/public/images/tokens/${data.value.toLowerCase()}.svg`)}
-            onRemove={removeProps.onClick}
-            className="mr-1 h-7"
-          />
+          <CTokenLabel symbol={data.value} onRemove={removeProps.onClick} className="mr-1 h-7" />
         ) : null}
       </div>
     );
@@ -71,21 +70,24 @@ const CSelect = ({ placeholder, className, onChange, options, value = null }: CS
 
   return (
     <div className={`w-full ${className}`}>
-      <Select
-        options={options}
-        autoFocus={false}
-        value={selectValue}
-        isSearchable={false}
-        onChange={handleChange}
-        placeholder={selectValue?.length ? '' : placeholder}
-        components={{
-          Option: Option,
-          DropdownIndicator,
-          MultiValue,
-        }}
-        isMulti
-        styles={customStyles()}
-      />
+      {isMounted ? (
+        <Select
+          id={id}
+          options={options}
+          autoFocus={false}
+          value={selectValue}
+          isSearchable={false}
+          onChange={handleChange}
+          placeholder={selectValue?.length ? '' : placeholder}
+          components={{
+            Option: Option,
+            DropdownIndicator,
+            MultiValue,
+          }}
+          isMulti
+          styles={customStyles()}
+        />
+      ) : null}
     </div>
   );
 };

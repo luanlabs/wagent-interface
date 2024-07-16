@@ -32,12 +32,7 @@ const DonutChartContainer = () => {
         <div className="flex justify-center space-x-4 mobile:space-x-2 lg:space-x-2 items-center mb-3">
           <div className="space-y-3 ">
             {chartData.map((data) => (
-              <CTokenLabel
-                key={data.name}
-                symbol={data.name}
-                logo={require(`/public/images/tokens/${data.name.toLowerCase()}.svg`)}
-                rounded
-              />
+              <CTokenLabel key={data.name} symbol={data.name} rounded />
             ))}
           </div>
 

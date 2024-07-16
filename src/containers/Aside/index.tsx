@@ -18,7 +18,7 @@ const Aside = () => {
     <CCard
       className={`desktop:relative mobile:fixed mobile:bottom-0 
         mobile:h-16 mobile:right-0 mobile:left-0 overflow-hidden 
-        mobile:rounded-none mobile:border-b-0 z-[999] px-[15px] py-[19px] mobile:p-0
+        mobile:rounded-none mobile:border-b-0 z-30 px-[15px] py-[19px] mobile:p-0
         transition-all duration-300 ease-in-out transform                   
         ${isMinimized ? 'basis-[80px]' : 'basis-[24%] lg:basis-[20%]'}`}
       borderColor="rgba(5, 1, 66, 0.10)"

@@ -12,21 +12,21 @@ import { store } from 'src/store';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={myFont.className}>
-      <head>
-        <meta charSet="UTF-8" />
-        <link rel="icon" href="/images/favicon.ico" />
-        <Metadata />
-      </head>
+    <Provider store={store}>
+      <html lang="en" className={myFont.className}>
+        <head>
+          <meta charSet="UTF-8" />
+          <link rel="icon" href="/images/favicon.ico" />
+          <Metadata />
+        </head>
 
-      <body className={`overflow-hidden mobile:bg-white desktop:bg-alabaster`}>
-        <Provider store={store}>
-          <main className="relative mobile:overflow-hidden">
+        <body className="overflow-hidden mobile:bg-white desktop:bg-alabaster">
+          <main className="relative mobile:overflow-hidden h-full w-full">
             {children}
             <Toaster position="bottom-center" />
           </main>
-        </Provider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </Provider>
   );
 }

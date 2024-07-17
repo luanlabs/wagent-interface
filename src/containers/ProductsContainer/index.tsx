@@ -10,7 +10,7 @@ import { products } from '@/constants/mockLists';
 import { ErrorType } from '@/models';
 
 const ProductPage = () => {
-  const [error, setError] = useState<ErrorType | null>(null);
+  const [error, setError] = useState<ErrorType>();
 
   const handleError = () => {
     setError({ title: 'Error', message: 'Something went wrong' });

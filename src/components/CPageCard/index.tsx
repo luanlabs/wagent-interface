@@ -16,7 +16,6 @@ interface CPageCardProps {
   childrenClassName?: string;
   borderStatus: 'bordered' | 'borderless';
   dividerResponsiveClassName?: string;
-  borderStatus?: 'bordered' | 'borderless';
   children: JSX.Element | React.ReactNode;
   error?: ErrorType | null;
 }
@@ -77,10 +76,6 @@ const CPageCard = ({
           'pointer-events-none opacity-50 select-none': errorVisible,
         })}`}
       >
-        )}
-      </div>
-
-      <div className={`${cn(childrenClassName, `h-full overflow-y-auto mobile:px-2 px-4`)}`}>
         {children}
       </div>
     </CCard>

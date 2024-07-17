@@ -5,8 +5,8 @@ import { useState } from 'react';
 import CButton from '@/components/CButton';
 import CPageCard from '@/components/CPageCard';
 import CProductItemCard from '@/components/CProductItemCard';
-import { products } from '@/constants/productsList';
 
+import { products } from '@/constants/mockLists';
 import { ErrorType } from '@/models';
 
 const ProductPage = () => {

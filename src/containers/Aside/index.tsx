@@ -1,31 +1,26 @@
 'use client';
-import cn from 'classnames';
+
+import { useState } from 'react';
 
 import CCard from '@/components/CCard';
 import SquareHalf from '@/assets/SquareHalf';
 import CNavLink from '@/components/CNavLink';
 import { navLinks } from '@/constants/navbarLinks';
 
-type AsideProps = {
-  className: string;
-  isMinimized: boolean;
-  onMinimized: () => void;
-};
+const Aside = () => {
+  const [isMinimized, setIsMinimized] = useState(false);
 
-const Aside = ({ isMinimized, onMinimized, className }: AsideProps) => {
+  const onMinimized = () => {
+    setIsMinimized(!isMinimized);
+  };
+
   return (
     <CCard
-      className={cn(
-        className,
-        `desktop:relative mobile:fixed mobile:bottom-0 
+      className={`desktop:relative mobile:fixed mobile:bottom-0 
         mobile:h-16 mobile:right-0 mobile:left-0 overflow-hidden 
-        mobile:rounded-none mobile:border-b-0 z-[999] px-[15px] py-[19px] mobile:p-0                     
-        ${
-          isMinimized
-            ? 'basis-[80px] transition-all duration-500'
-            : 'basis-[24%] lg:basis-[20%] transition-all duration-500'
-        }`,
-      )}
+        mobile:rounded-none mobile:border-b-0 z-30 px-[15px] py-[19px] mobile:p-0
+        transition-all duration-300 ease-in-out transform                   
+        ${isMinimized ? 'basis-[80px]' : 'basis-[24%] lg:basis-[20%]'}`}
       borderColor="rgba(5, 1, 66, 0.10)"
       bgColor="white"
     >

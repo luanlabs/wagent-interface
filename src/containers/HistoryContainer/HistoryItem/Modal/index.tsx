@@ -42,7 +42,7 @@ const HistoryDetailsModal = ({ isOpen, onClose, data }: IDetailProps) => {
       </LabelValue>
       <LabelValue label="Status" value={CStatusCard(data.status)} />
       <LabelValue label="Method">
-        <CMethods method={data.method} className="!text-base" />
+        <CMethods method={data.method} className="!text-base w-full flex justify-end" />
       </LabelValue>
       <LabelValue label="Date & Time" value={formatDate(data.date)} className="text-cadetBlue" />
       {data.cancellableAfter && (
@@ -53,7 +53,7 @@ const HistoryDetailsModal = ({ isOpen, onClose, data }: IDetailProps) => {
         />
       )}
       <LabelValue label="Token">
-        <CTokenLabel symbol={data.token.value} logo={data.token.logo} rounded />
+        <CTokenLabel symbol={data.token.value} rounded />
       </LabelValue>
       <LabelValue label="Sender" value={data.sender} />
       {data.progress && (

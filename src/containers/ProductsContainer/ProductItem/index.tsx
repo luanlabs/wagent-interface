@@ -8,17 +8,13 @@ import humanizeAmount from '@/utils/humanizeAmount';
 const ProductItem = ({ title, image, id, tokens, amount, method }: IProductItemCard) => {
   const mapTokens = tokens.map((item) => (
     <div key={item.value}>
-      <CTokenLabel
-        symbol={item.value.toUpperCase()}
-        logo={require(`/public/images/tokens/${item.value.toLowerCase()}.svg`)}
-        rounded
-      />
+      <CTokenLabel symbol={item.value.toUpperCase()} rounded />
     </div>
   ));
 
   return (
     <CItemCard title={title} image={image}>
-      <div className="w-full flex">
+      <div className="w-full flex items-center">
         <div className="w-[65%] max-w-[35%] mobile:hidden">
           <CMethods method={method} />
         </div>

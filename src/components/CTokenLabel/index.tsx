@@ -7,13 +7,12 @@ import { Close } from '@/assets';
 
 export interface CTokenLabelProps {
   symbol: string;
-  logo: string;
   rounded?: boolean;
   onRemove?: React.MouseEventHandler<HTMLDivElement>;
   className?: string;
 }
 
-const CTokenLabel = ({ symbol, logo, rounded, onRemove, className }: CTokenLabelProps) => {
+const CTokenLabel = ({ symbol, rounded, onRemove, className }: CTokenLabelProps) => {
   const style = tokensStyles[symbol.toLowerCase()];
 
   return (
@@ -32,7 +31,13 @@ const CTokenLabel = ({ symbol, logo, rounded, onRemove, className }: CTokenLabel
       key={symbol}
     >
       <div className="flex">
-        <Image src={logo} width={20} height={20} alt={symbol} />
+        <Image
+          src={require(`/public/images/tokens/${symbol.toLowerCase()}.svg`)}
+          width={20}
+          height={20}
+          alt={symbol}
+          style={{ width: 'auto', height: 'auto' }}
+        />
         <span className="ml-1">{symbol.toUpperCase()}</span>
       </div>
 

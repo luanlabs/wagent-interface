@@ -24,7 +24,7 @@ const CCheckbox = ({
   type = 'primary',
 }: CCheckboxProps) => {
   return (
-    <label className={`flex items-center space-x-[6px]`}>
+    <label className={`flex items-center space-x-[7px]`}>
       <input
         type="checkbox"
         className="hidden"

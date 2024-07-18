@@ -9,7 +9,9 @@ type LabelValue = {
 };
 
 const LabelValue = ({ label, value, children, className }: LabelValue) => (
-  <div className={cn(`flex justify-between items-center whitespace-nowrap`, className)}>
+  <div
+    className={cn(`inline-flex w-full justify-between items-center whitespace-nowrap`, className)}
+  >
     <span className="text-base text-cadetBlue">{label} </span>
     {value ? value : children}
   </div>

@@ -7,7 +7,7 @@ import { CNavLinkProps as Type } from 'src/constants/types';
 
 import useIsActive from './useIsActive';
 
-const CNavLink = ({ title, icon, activeIcon, url, isMinimized }: Type) => {
+const CNavLink = ({ title, icon, activeIcon, url, isMinimized = false }: Type) => {
   const isActive = useIsActive(url);
 
   return (

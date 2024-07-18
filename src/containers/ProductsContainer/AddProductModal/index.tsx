@@ -11,7 +11,6 @@ import { TokensType } from '@/constants/types';
 
 import { methodTabs, tokensList } from '@/constants/mockLists';
 import { MultiSelectType } from '@/models';
-import { kMaxLength } from 'buffer';
 
 interface ProductModalProps {
   onClose: () => void;

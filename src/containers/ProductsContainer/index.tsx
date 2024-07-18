@@ -11,7 +11,7 @@ import AddProductModal from './AddProductModal';
 import EditProductModal from './EditProductModal';
 import { IProductItemCard } from '@/constants/types';
 
-const ProductPage = () => {
+const ProductsContainer = () => {
   const [AddProductIsOpen, setAddProductIsOpen] = useState(false);
   const [EditProductIsOpen, setEditProductIsOpen] = useState(false);
   const [products, setProducts] = useState<IProductItemCard[]>(productsList);
@@ -63,7 +63,7 @@ const ProductPage = () => {
         <li className="w-[36%] mobile:hidden">Token</li>
         <li>Amount</li>
       </ul>
-      <div className="space-y-2 mobile:space-y-[6px] pb-3 max-h-[calc(100vh-200px)] desktopMax:max-h-[calc(100vh-265px)] w-full overflow-hidden overflow-y-auto">
+      <div className="space-y-2 mobile:space-y-[6px] pb-3 max-h-[calc(100vh-270px)] desktopMax:max-h-[calc(100vh-265px)] w-full overflow-hidden overflow-y-auto">
         {products.map((item) => (
           <div key={item.id} onClick={() => openEditModal(item)}>
             <CProductItemCard
@@ -93,4 +93,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default ProductsContainer;

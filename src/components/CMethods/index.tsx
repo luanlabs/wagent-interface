@@ -1,12 +1,9 @@
 import cn from 'classnames';
 
-import Single from '@/assets/Single';
-import Stream from '@/assets/Stream';
-import Vesting from '@/assets/Vesting';
-
+import { MethodType } from '@/constants/types';
 import capitalizeFirstLetter from '@/utils/capitalizeFirstLetter';
 
-export type MethodType = 'single' | 'stream' | 'vesting';
+import { getMethodImage } from './getMethodImage';
 
 interface CMethodsProps {
   method: MethodType | MethodType[];
@@ -15,17 +12,6 @@ interface CMethodsProps {
 }
 
 const CMethods = ({ method, className, suffix = '' }: CMethodsProps) => {
-  const getMethodImage = (method: MethodType) => {
-    switch (method) {
-      case 'stream':
-        return <Stream />;
-      case 'vesting':
-        return <Vesting />;
-      default:
-        return <Single />;
-    }
-  };
-
   const methodsArray = Array.isArray(method) ? method : [method];
 
   return (

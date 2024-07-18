@@ -1,5 +1,4 @@
 import { StaticImageData } from 'next/image';
-import { MethodType } from '@/components/CMethods';
 
 export interface CNavLinkProps {
   url: string;
@@ -25,6 +24,8 @@ export type ReducerTokensType = {
   logo: string;
   checked: boolean;
 };
+
+export type MethodType = 'single' | 'stream' | 'vesting';
 
 export interface IHistoryResponse {
   id?: string;

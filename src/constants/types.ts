@@ -1,5 +1,4 @@
 import { StaticImageData } from 'next/image';
-import { MethodType } from '@/components/CMethods';
 
 export interface CNavLinkProps {
   url: string;
@@ -17,6 +16,7 @@ export type TokensType = {
   value: string;
   logo: string;
   checked?: boolean;
+  label?: string;
 };
 
 export type ReducerTokensType = {
@@ -24,6 +24,8 @@ export type ReducerTokensType = {
   logo: string;
   checked: boolean;
 };
+
+export type MethodType = 'single' | 'stream' | 'vesting';
 
 export interface IHistoryResponse {
   id?: string;
@@ -45,7 +47,7 @@ export interface IProductItemCard {
   id: string;
   tokens: TokensType[];
   amount: string;
-  method: MethodType | MethodType[];
+  method: MethodType[];
 }
 
 export interface IFilterValues {

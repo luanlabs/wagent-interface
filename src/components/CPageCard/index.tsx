@@ -58,7 +58,9 @@ const CPageCard = ({
       {...props}
     >
       <div>
-        {title && <div className="w-full font-medium text-2xl mobile:mt-1 px-4">{title}</div>}
+        {title && (
+          <div className="w-full font-medium text-2xl mobile:mt-1 px-4 mobile:px-2">{title}</div>
+        )}
 
         {divider && (
           <hr className={cn(dividerClassName, ` border-[#0501421A] my-3 mobile:mx-2 mx-4`)} />

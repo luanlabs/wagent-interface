@@ -6,8 +6,8 @@ export const metadata: Metadata = {
   title: 'Wagent - History',
 };
 
-const History = () => {
+export default function History() {
   return <HistoryContainer />;
-};
+}
 
-export default History;
+History;

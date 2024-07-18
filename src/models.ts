@@ -1,3 +1,5 @@
+import { MultiValue } from 'react-select';
+
 export type ErrorType = {
   title: string;
   message: string;
@@ -25,3 +27,11 @@ export interface TooltipProps {
     dataKey: string;
   }[];
 }
+
+export interface OptionType {
+  value: string;
+  label: string;
+  logo: string;
+}
+
+export type MultiSelectType = MultiValue<OptionType> | null;

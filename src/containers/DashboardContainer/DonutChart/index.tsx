@@ -1,13 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 
 import CCard from '@/components/CCard';
 import CTokenLabel from '@/components/CTokenLabel';
-import CDonutChart from '@/components/Charts/CDonutChart';
+
 import CChartSummery from '@/components/CChartSummery';
 
 import { DonutChartDataType } from '@/models';
+const CDonutChart = dynamic(() => import('@/components/Charts/CDonutChart'), { ssr: false });
 
 const DonutChartContainer = () => {
   const [chartData, setChartData] = useState<DonutChartDataType[]>([]);
@@ -30,11 +32,7 @@ const DonutChartContainer = () => {
         <div className="flex justify-center space-x-4 mobile:space-x-2 lg:space-x-2 items-center mb-3">
           <div className="space-y-3 ">
             {chartData.map((data) => (
-              <CTokenLabel
-                key={data.name}
-                symbol={data.name}
-                logo={require(`/public/images/tokens/${data.name.toLowerCase()}.svg`)}
-              />
+              <CTokenLabel key={data.name} symbol={data.name} rounded />
             ))}
           </div>
 

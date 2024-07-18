@@ -40,8 +40,8 @@ const DashboardContainer = () => {
           <CBarChart />
         </CCard>
       </div>
-      <div className="mt-[31px] overflow-hidden">
-        <h1 className="text-2xl mb-4 font-medium">Recent transactions</h1>
+      <div className="mt-5 overflow-hidden">
+        <h1 className="text-2xl mb-[10px] font-medium">Recent transactions</h1>
         {history.length === 0 ? (
           <p className="text-cadetBlue mt-4 bigScreen:mt-24 text-center text-lg">
             No transactions found
@@ -49,8 +49,11 @@ const DashboardContainer = () => {
         ) : (
           <>
             <HistoryListHeader />
-            <div className="space-y-2 pb-3 mobile:space-y-[6px] w-full overflow-y-auto bigScreen:max-h-fit bigScreen:pb-0 desktop:max-h-[150px] short:h-[80px]">
-              {history.slice(0, 5).map((item) => (
+            <div
+              className="space-y-2 pb-3 mobile:space-y-[6px] w-full overflow-y-auto
+              bigScreen:max-h-fit bigScreen:pb-0 desktop:min-h-[100px] short:h-[80px]"
+            >
+              {history.slice(0, 4).map((item) => (
                 <HistoryItem key={item.id} data={item} />
               ))}
             </div>

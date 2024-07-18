@@ -1,26 +1,22 @@
 import { SvgProps } from 'src/constants/types';
 
-const Icon = ({ fill }: SvgProps) => {
+const Icon = ({ fill = '#667085' }: SvgProps) => {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g id="Group 35">
-        <path
-          id="Vector"
-          d="M6.16638 17.834L17.8336 6.16672"
-          stroke={fill}
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          id="Vector_2"
-          d="M6.16638 6.16602L17.8336 17.8333"
-          stroke={fill}
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </g>
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M5.81641 5.81836L12.1804 12.1823"
+        stroke={fill}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M5.81963 12.1823L12.1836 5.81836"
+        stroke={fill}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 };

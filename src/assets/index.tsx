@@ -13,3 +13,4 @@ export { default as CareRight } from './CareRight';
 export { default as ArrowDown } from './ArrowDown';
 export { default as SquareHalf } from './SquareHalf';
 export { default as Typography } from './Typography';
+export { default as ErrorIcon } from './ErrorIcon';

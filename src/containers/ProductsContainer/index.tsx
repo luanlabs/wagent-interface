@@ -4,18 +4,25 @@ import React, { useState } from 'react';
 
 import CButton from '@/components/CButton';
 import CPageCard from '@/components/CPageCard';
-import { products as productsList } from '@/constants/mockLists';
-import CProductItemCard from './ProductItem';
 
+import { ErrorType } from '@/models';
+import { IProductItemCard } from '@/constants/types';
+import { products as productsList } from '@/constants/mockLists';
+
+import CProductItemCard from './ProductItem';
 import AddProductModal from './AddProductModal';
 import EditProductModal from './EditProductModal';
-import { IProductItemCard } from '@/constants/types';
 
 const ProductsContainer = () => {
   const [AddProductIsOpen, setAddProductIsOpen] = useState(false);
   const [EditProductIsOpen, setEditProductIsOpen] = useState(false);
   const [products, setProducts] = useState<IProductItemCard[]>(productsList);
   const [selectedProduct, setSelectedProduct] = useState<IProductItemCard>();
+  const [error, setError] = useState<ErrorType>();
+
+  const handleError = () => {
+    setError({ title: 'Error', message: 'Something went wrong' });
+  };
 
   const ModalOnClose = () => {
     setAddProductIsOpen(false);
@@ -43,19 +50,29 @@ const ProductsContainer = () => {
   };
 
   const pageTitle = (
-    <div className="flex justify-between items-center w-full -my-1">
+    <div className="flex justify-between items-center w-full">
       <h1>Products</h1>
-      <CButton
-        variant="add"
-        text="Add product"
-        className="!w-[145px] text-base"
-        onClick={() => setAddProductIsOpen(true)}
-      />
+      <div className="flex space-x-4">
+        <CButton
+          variant="add"
+          text="Add product"
+          className="w-[145px] text-base"
+          onClick={() => setAddProductIsOpen(true)}
+        />
+        <CButton variant="outline" onClick={handleError} className="w-[145px]">
+          Show Error
+        </CButton>
+      </div>
     </div>
   );
 
   return (
-    <CPageCard title={pageTitle} className="h-[100%] relative overflow-hidden">
+    <CPageCard
+      borderStatus="bordered"
+      title={pageTitle}
+      className="h-[100%] relative overflow-hidden"
+      error={error}
+    >
       <ul className="flex mobile:justify-between items-center rounded-[10px] bg-lightGray text-cadetBlue h-[42px] px-4 mb-4">
         <li className="text-black w-[20%] whitespace-nowrap">Product name</li>
         <li className="mobile:hidden w-[65%] max-w-[28%]">Method</li>

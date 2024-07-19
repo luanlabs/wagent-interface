@@ -32,7 +32,7 @@ const CModal = ({ title, children, isOpen, width, onClose, className }: CModalPr
   return (
     <div
       ref={backdropRef}
-      className={`fixed -inset-2 z-40 flex items-center justify-center bg-black transition-opacity duration-500 ease-in-out ${
+      className={`fixed -inset-2 z-50 flex items-center justify-center bg-black transition-opacity duration-500 ease-in-out ${
         isOpen ? 'bg-opacity-30' : 'bg-opacity-0 pointer-events-none'
       }`}
     >

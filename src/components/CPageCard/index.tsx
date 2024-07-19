@@ -1,28 +1,48 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 
 import CCard from '../CCard';
+import CErrorCard from '../CErrorCard';
 
-interface CPageCard {
+import { ErrorType } from '@/models';
+
+interface CPageCardProps {
   title?: string | React.ReactNode;
   divider?: boolean;
   className?: string;
   dividerClassName?: string;
   childrenClassName?: string;
-  borderStatus?: 'bordered' | 'borderless';
+  borderStatus: 'bordered' | 'borderless';
+  dividerResponsiveClassName?: string;
   children: JSX.Element | React.ReactNode;
+  error?: ErrorType;
 }
 
 const CPageCard = ({
-  divider = true,
   title,
+  divider = true,
   children,
   className = '',
   childrenClassName = '',
   borderStatus = 'borderless',
   dividerClassName,
+  error,
   ...props
-}: CPageCard) => {
+}: CPageCardProps) => {
+  const [errorVisible, setErrorVisible] = useState(!!error);
+
+  useEffect(() => {
+    if (error) {
+      setErrorVisible(true);
+    }
+  }, [error]);
+
+  const handleErrorClose = () => {
+    setErrorVisible(false);
+  };
+
   return (
     <CCard
       className={cn(
@@ -39,14 +59,31 @@ const CPageCard = ({
     >
       <div>
         {title && (
-          <div className="w-full font-medium text-2xl mobile:mt-1 px-4 mobile:px-2">{title}</div>
+          <div
+            className={cn(`w-full font-medium text-2xl mobile:mt-1 px-4 mobile:px-2`, {
+              'pointer-events-none  select-none': errorVisible,
+            })}
+          >
+            {title}
+          </div>
         )}
+
         {divider && (
           <hr className={cn(dividerClassName, ` border-[#0501421A] my-3 mobile:mx-2 mx-4`)} />
         )}
+
+        {error && errorVisible && (
+          <div className="px-4">
+            <CErrorCard error={error} onClose={handleErrorClose} />
+          </div>
+        )}
       </div>
 
-      <div className={`${cn(childrenClassName, `h-full overflow-y-auto mobile:px-2 px-4`)}`}>
+      <div
+        className={`${cn(childrenClassName, `h-full overflow-y-auto mobile:px-2 px-4`, {
+          'pointer-events-none opacity-50 select-none': errorVisible,
+        })}`}
+      >
         {children}
       </div>
     </CCard>

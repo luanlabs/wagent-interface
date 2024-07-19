@@ -59,7 +59,13 @@ const CPageCard = ({
     >
       <div>
         {title && (
-          <div className="w-full font-medium text-2xl mobile:mt-1 px-4 mobile:px-2">{title}</div>
+          <div
+            className={cn(`w-full font-medium text-2xl mobile:mt-1 px-4 mobile:px-2`, {
+              'pointer-events-none  select-none': errorVisible,
+            })}
+          >
+            {title}
+          </div>
         )}
 
         {divider && (

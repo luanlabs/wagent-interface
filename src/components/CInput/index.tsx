@@ -1,8 +1,9 @@
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import cn from 'classnames';
 import Image from 'next/image';
 
 import clearInputLogo from 'public/images/close.svg';
+import { Copy, Eye, EyeSlash, SquareHalf } from '@/assets';
 
 interface CInputProps {
   value?: any;
@@ -26,6 +27,8 @@ interface CInputProps {
   enterKeyHint?: 'search' | 'done' | 'enter' | 'go' | 'next' | 'previous' | 'send';
   onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>;
   maxLength?: number;
+  copy?: boolean;
+  hideCharacter?: boolean;
 }
 
 const CInput = ({
@@ -50,8 +53,16 @@ const CInput = ({
   clearInputClick,
   onKeyPress,
   maxLength,
+  copy,
+  hideCharacter,
   ...props
 }: CInputProps) => {
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+
+  const toggleShowPassword = () => {
+    setShowPassword((prevState) => !prevState);
+  };
+
   return (
     <div className={className}>
       <p className="text-sm select-none font-normal mb-[6px] text-offBlack">{label}</p>
@@ -71,6 +82,22 @@ const CInput = ({
           </div>
         )}
 
+        {copy && (
+          <div className="bg-white flex justify-center items-center select-none space-x-2 px-3 border border-gray rounded-r-lg hover:bg-[#eee]/90 active:bg-[#eee]/70  text-smokyBlue h-10 text-[16px] absolute bottom-0 right-0 cursor-pointer transition">
+            <Copy />
+            <span>Copy</span>
+          </div>
+        )}
+
+        {hideCharacter && (
+          <div
+            className="absolute bottom-[11.3px] left-3 cursor-pointer"
+            onClick={toggleShowPassword}
+          >
+            {showPassword ? <EyeSlash /> : <Eye />}
+          </div>
+        )}
+
         {!error && clearInput && (
           <div className="absolute bottom-3.5 right-3.5">
             <Image
@@ -86,6 +113,7 @@ const CInput = ({
 
         <input
           {...props}
+          type={showPassword ? 'text' : 'password'}
           value={value}
           onClick={onClick}
           disabled={disabled}
@@ -98,13 +126,16 @@ const CInput = ({
           maxLength={maxLength}
           className={cn(
             inputClassName,
-            `${icon ? 'pl-10' : 'px-4'}
-            self-stretch rounded-lg placeholder-mutedBlue text-darkGray text-base w-full h-10 py-[10px] px-[14px]
-            justify-start items-center inline-flex outline-none border hover:bg-offWhite transition-colors duration-300
-            ${border ? 'border border-gray' : 'border-transparent'}  
-            ${error && 'border !border-error'}
-            ${disabled && 'cursor-not-allowed !select-none text-mutedBlue'}
-          `,
+            {
+              'pl-10': icon,
+              'px-4': !icon,
+              'border border-gray': border,
+              'border-transparent': !border,
+              'border !border-error': error,
+              'cursor-not-allowed !select-none text-mutedBlue': disabled,
+              'pl-8': hideCharacter,
+            },
+            'self-stretch rounded-lg placeholder-mutedBlue text-darkGray text-base w-full h-10 py-[10px] px-[14px] justify-start items-center inline-flex outline-none border hover:bg-offWhite transition-colors duration-300',
           )}
         />
 

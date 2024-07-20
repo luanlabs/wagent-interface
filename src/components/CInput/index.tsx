@@ -1,9 +1,9 @@
 import React, { MouseEventHandler, useState } from 'react';
-import cn from 'classnames';
 import Image from 'next/image';
+import cn from 'classnames';
 
+import { Copy, Eye, EyeSlash } from '@/assets';
 import clearInputLogo from 'public/images/close.svg';
-import { Copy, Eye, EyeSlash, SquareHalf } from '@/assets';
 
 interface CInputProps {
   value?: any;
@@ -57,7 +57,7 @@ const CInput = ({
   hideCharacter,
   ...props
 }: CInputProps) => {
-  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);

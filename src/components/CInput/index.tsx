@@ -29,6 +29,7 @@ interface CInputProps {
   maxLength?: number;
   copy?: boolean;
   hideCharacter?: boolean;
+  copyOnClick?: () => void;
 }
 
 const CInput = ({
@@ -55,12 +56,13 @@ const CInput = ({
   maxLength,
   copy,
   hideCharacter,
+  copyOnClick,
   ...props
 }: CInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => {
-    setShowPassword((prevState) => !prevState);
+    if (hideCharacter) setShowPassword(!showPassword);
   };
 
   return (
@@ -83,7 +85,10 @@ const CInput = ({
         )}
 
         {copy && (
-          <div className="bg-white flex justify-center items-center select-none space-x-2 px-3 border border-gray rounded-r-lg hover:bg-[#eee]/90 active:bg-[#eee]/70  text-smokyBlue h-10 text-[16px] absolute bottom-0 right-0 cursor-pointer transition">
+          <div
+            className="bg-white flex justify-center items-center select-none space-x-2 px-3 border border-gray rounded-r-lg hover:bg-[#eee]/90 active:bg-[#eee]/70  text-smokyBlue h-10 text-[16px] absolute bottom-0 right-0 cursor-pointer transition"
+            onClick={copyOnClick}
+          >
             <Copy />
             <span>Copy</span>
           </div>
@@ -113,7 +118,7 @@ const CInput = ({
 
         <input
           {...props}
-          type={showPassword ? 'text' : 'password'}
+          type={hideCharacter ? (showPassword ? 'text' : 'password') : 'text'}
           value={value}
           onClick={onClick}
           disabled={disabled}

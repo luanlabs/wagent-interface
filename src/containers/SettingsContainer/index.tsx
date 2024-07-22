@@ -7,8 +7,7 @@ import CButton from '@/components/CButton';
 import CCheckbox from '@/components/CCheckbox';
 import CPageCard from '@/components/CPageCard';
 import CMethods from '@/components/CMethods';
-import CInput from '@/components/CInput';
-import copyText from '@/utils/copyText';
+import CInputCopy from '@/components/CInputCopy';
 
 const pageTitle = (
   <div className="flex justify-between items-center w-full -my-1">
@@ -27,19 +26,13 @@ const SettingsContainer = () => {
   };
 
   const handleApiKey = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setApiKeyValue(e.target.value);
+    setApiKeyValue(e.target.value.trim());
+    console.log(apiKeyValue);
   };
 
   const handleWalletAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setWalletAddress(e.target.value);
-  };
-
-  const handleCopyApi = () => {
-    copyText(apiKeyValue);
-  };
-
-  const handleCopyWalletAddress = () => {
-    copyText(walletAddress);
+    setWalletAddress(e.target.value.trim());
+    console.log(walletAddress);
   };
 
   return (
@@ -83,13 +76,7 @@ const SettingsContainer = () => {
           </div>
           <div className="inline-flex gap-2">
             <div className="w-[356px]">
-              <CInput
-                inputClassName="!border-gray"
-                placeholder="Enter Wallet Address"
-                onChange={handleWalletAddress}
-                copyOnClick={handleCopyWalletAddress}
-                copy
-              />
+              <CInputCopy placeholder="Enter Wallet Address" onChange={handleWalletAddress} />
             </div>
           </div>
         </CCard>
@@ -103,14 +90,7 @@ const SettingsContainer = () => {
           </div>
           <div className="inline-flex gap-2">
             <div className="w-[356px]">
-              <CInput
-                inputClassName="!border-gray"
-                placeholder="Your Api Key"
-                onChange={handleApiKey}
-                copyOnClick={handleCopyApi}
-                copy
-                hideCharacter
-              />
+              <CInputCopy placeholder="Your Api Key" onChange={handleApiKey} />
             </div>
           </div>
         </CCard>

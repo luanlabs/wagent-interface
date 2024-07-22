@@ -2,7 +2,7 @@ import React, { MouseEventHandler, useState } from 'react';
 import Image from 'next/image';
 import cn from 'classnames';
 
-import { Copy, Eye, EyeSlash } from '@/assets';
+import { Eye, EyeSlash } from '@/assets';
 import clearInputLogo from 'public/images/close.svg';
 
 interface CInputProps {
@@ -27,9 +27,7 @@ interface CInputProps {
   enterKeyHint?: 'search' | 'done' | 'enter' | 'go' | 'next' | 'previous' | 'send';
   onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>;
   maxLength?: number;
-  copy?: boolean;
   hideCharacter?: boolean;
-  copyOnClick?: () => void;
 }
 
 const CInput = ({
@@ -54,9 +52,7 @@ const CInput = ({
   clearInputClick,
   onKeyPress,
   maxLength,
-  copy,
   hideCharacter,
-  copyOnClick,
   ...props
 }: CInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -81,16 +77,6 @@ const CInput = ({
             onClick={handlePaste}
           >
             <span>Paste</span>
-          </div>
-        )}
-
-        {copy && (
-          <div
-            className="bg-white flex justify-center items-center select-none space-x-2 px-3 border border-gray rounded-r-lg hover:bg-[#eee]/90 active:bg-[#eee]/70  text-smokyBlue h-10 text-[16px] absolute bottom-0 right-0 cursor-pointer transition"
-            onClick={copyOnClick}
-          >
-            <Copy />
-            <span>Copy</span>
           </div>
         )}
 

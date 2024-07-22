@@ -7,6 +7,7 @@ import CButton from '@/components/CButton';
 import CCheckbox from '@/components/CCheckbox';
 import CPageCard from '@/components/CPageCard';
 import CMethods from '@/components/CMethods';
+import CRadioButtonGroup from '@/components/CRadioButtonGroup';
 
 const pageTitle = (
   <div className="flex justify-between items-center w-full -my-1">
@@ -14,6 +15,11 @@ const pageTitle = (
     <CButton variant="add" text="Edit profile" className="!w-[130px] text-base" />
   </div>
 );
+
+const SwitchValue = [
+  { value: 'on', label: 'ON' },
+  { value: 'off', label: 'OFF' },
+];
 
 const SettingsContainer = () => {
   const isChecked = true;
@@ -51,6 +57,20 @@ const SettingsContainer = () => {
             checked={isChecked}
             onChange={handleCheckBoxChange}
           />
+        </div>
+      </CCard>
+
+      <CCard className="flex justify-between p-6">
+        <div className="flex flex-col">
+          <p className="text-lg">Email Notifications</p>
+          <p className="text-cadetBlue text-sm">
+            We will send extra notifications for you in your email.
+          </p>
+        </div>
+        <div className="inline-flex gap-2">
+          <div className="w-[150px]">
+            <CRadioButtonGroup value={SwitchValue} defaultSelectedTab="off" />
+          </div>
         </div>
       </CCard>
     </CPageCard>

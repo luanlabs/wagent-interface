@@ -1,3 +1,5 @@
+export { default as Eye } from './Eye';
+export { default as Copy } from './Copy';
 export { default as Bell } from './Bell';
 export { default as Home } from './Home';
 export { default as Check } from './Check';
@@ -8,9 +10,10 @@ export { default as Failed } from './Failed';
 export { default as Loading } from './Loading';
 export { default as Success } from './Success';
 export { default as Settings } from './Settings';
+export { default as EyeSlash } from './EyeSlash';
 export { default as Calender } from './Calender';
 export { default as CareRight } from './CareRight';
+export { default as ErrorIcon } from './ErrorIcon';
 export { default as ArrowDown } from './ArrowDown';
 export { default as SquareHalf } from './SquareHalf';
 export { default as Typography } from './Typography';
-export { default as ErrorIcon } from './ErrorIcon';

@@ -3,23 +3,23 @@ import cn from 'classnames';
 
 import { BasicOptionType } from '@/models';
 
-interface CRadioButtonGroupProps<T extends BasicOptionType> {
-  options: T[];
-  defaultOption: T;
-  onChange?: (option: T) => void;
-}
+type Option = BasicOptionType<string>;
 
-const CRadioButtonGroup = <T extends BasicOptionType>({
-  options,
-  defaultOption,
-  onChange,
-}: CRadioButtonGroupProps<T>) => {
-  const [selectedTab, setSelectedTab] = useState<T>(defaultOption);
+type CRadioButtonGroupProps = {
+  options: Option[];
+  defaultOption: Option;
+  onChange?: (option: Option) => void;
+};
+
+const CRadioButtonGroup = ({ options, defaultOption, onChange }: CRadioButtonGroupProps) => {
+  const [selectedTab, setSelectedTab] = useState(defaultOption);
 
   const handleTabChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedOption = options.find((option) => option.value === event.target.id);
+
     if (selectedOption) {
       setSelectedTab(selectedOption);
+
       if (onChange) {
         onChange(selectedOption);
       }

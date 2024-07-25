@@ -14,7 +14,7 @@ interface CPageCardProps {
   className?: string;
   dividerClassName?: string;
   childrenClassName?: string;
-  borderStatus: 'bordered' | 'borderless';
+  borderStatus?: 'bordered' | 'borderless';
   dividerResponsiveClassName?: string;
   children: JSX.Element | React.ReactNode;
   error?: ErrorType;

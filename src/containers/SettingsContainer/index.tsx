@@ -4,13 +4,12 @@ import React, { useState } from 'react';
 
 import CCard from '@/components/CCard';
 import CButton from '@/components/CButton';
+import { BasicOptionType } from '@/models';
 import CMethods from '@/components/CMethods';
 import CCheckbox from '@/components/CCheckbox';
 import CPageCard from '@/components/CPageCard';
 import CInputCopy from '@/components/CInputCopy';
 import CRadioButtonGroup from '@/components/CRadioButtonGroup';
-
-import { BasicOptionType } from '@/models';
 
 const pageTitle = (
   <div className="flex justify-between items-center w-full -my-1">
@@ -41,7 +40,7 @@ const SettingsContainer = () => {
     setWalletAddress(e.target.value.trim());
   };
 
-  const handleCRadioButtons = (e: BasicOptionType) => {
+  const handleCRadioButtons = (e: BasicOptionType<string>) => {
     console.log(e);
   };
 

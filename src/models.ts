@@ -28,15 +28,13 @@ export interface TooltipProps {
   }[];
 }
 
-export interface OptionType {
-  value: string;
+export interface BasicOptionType<T> {
+  value: T;
   label: string;
+}
+
+export interface OptionType extends BasicOptionType<string> {
   logo: string;
 }
 
 export type MultiSelectType = MultiValue<OptionType> | null;
-
-export type BasicOptionType = {
-  value: string;
-  label: string;
-};

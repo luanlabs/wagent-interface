@@ -9,6 +9,7 @@ import CMethods from '@/components/CMethods';
 import CCheckbox from '@/components/CCheckbox';
 import CPageCard from '@/components/CPageCard';
 import CInputCopy from '@/components/CInputCopy';
+import CNumberInput from '@/components/CNumberInput';
 import CRadioButtonGroup from '@/components/CRadioButtonGroup';
 
 const pageTitle = (
@@ -92,6 +93,36 @@ const SettingsContainer = () => {
 
         <CCard className="flex justify-between p-6">
           <div className="flex flex-col">
+            <p className="text-lg">Minimum cancellable duration</p>
+            <p className="text-cadetBlue text-sm">
+              We will send extra notifications for you in your email.
+            </p>
+          </div>
+          <div className="inline-flex gap-2">
+            <div className="w-[100px]">
+              <CNumberInput defaultValue="45" placeholder="45" />
+            </div>
+          </div>
+        </CCard>
+
+        <CCard className="flex justify-between p-6">
+          <div className="flex flex-col">
+            <p className="text-lg">Email Notifications</p>
+            <p className="text-cadetBlue text-sm">
+              We will send extra notifications for you in your email.
+            </p>
+          </div>
+          <div className="w-[150px]">
+            <CRadioButtonGroup
+              options={switchOptions}
+              defaultOption={switchOptions[1]}
+              onChange={handleCRadioButtons}
+            />
+          </div>
+        </CCard>
+
+        <CCard className="flex justify-between p-6">
+          <div className="flex flex-col">
             <p className="text-lg">API Key</p>
             <p className="text-cadetBlue text-sm">
               We will send extra notifications for you in your email.
@@ -100,23 +131,6 @@ const SettingsContainer = () => {
           <div className="inline-flex gap-2">
             <div className="w-[356px]">
               <CInputCopy placeholder="Your Api Key" onChange={handleApiKey} />
-            </div>
-          </div>
-        </CCard>
-        <CCard className="flex justify-between p-6">
-          <div className="flex flex-col">
-            <p className="text-lg">Email Notifications</p>
-            <p className="text-cadetBlue text-sm">
-              We will send extra notifications for you in your email.
-            </p>
-          </div>
-          <div className="inline-flex gap-2">
-            <div className="w-[150px]">
-              <CRadioButtonGroup
-                options={switchOptions}
-                defaultOption={switchOptions[1]}
-                onChange={handleCRadioButtons}
-              />
             </div>
           </div>
         </CCard>

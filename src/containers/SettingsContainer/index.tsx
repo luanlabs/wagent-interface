@@ -8,7 +8,7 @@ import CCheckbox from '@/components/CCheckbox';
 import CPageCard from '@/components/CPageCard';
 import CMethods from '@/components/CMethods';
 import CInputCopy from '@/components/CInputCopy';
-import CInputLabel from '@/components/CInputLabel';
+import CNumberInput from '@/components/CNumberInput';
 
 const pageTitle = (
   <div className="flex justify-between items-center w-full -my-1">
@@ -105,7 +105,7 @@ const SettingsContainer = () => {
           </div>
           <div className="inline-flex gap-2">
             <div className="w-[100px]">
-              <CInputLabel placeholder="45" />
+              <CNumberInput defaultValue="45" placeholder="45" />
             </div>
           </div>
         </CCard>

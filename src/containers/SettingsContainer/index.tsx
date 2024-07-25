@@ -10,6 +10,8 @@ import CPageCard from '@/components/CPageCard';
 import CInputCopy from '@/components/CInputCopy';
 import CRadioButtonGroup from '@/components/CRadioButtonGroup';
 
+import { BasicOptionType } from '@/models';
+
 const pageTitle = (
   <div className="flex justify-between items-center w-full -my-1">
     <h1>Settings</h1>
@@ -17,7 +19,7 @@ const pageTitle = (
   </div>
 );
 
-const SwitchValue = [
+const switchOptions = [
   { value: 'on', label: 'ON' },
   { value: 'off', label: 'OFF' },
 ];
@@ -33,12 +35,14 @@ const SettingsContainer = () => {
 
   const handleApiKey = (e: React.ChangeEvent<HTMLInputElement>) => {
     setApiKeyValue(e.target.value.trim());
-    console.log(apiKeyValue);
   };
 
   const handleWalletAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     setWalletAddress(e.target.value.trim());
-    console.log(walletAddress);
+  };
+
+  const handleCRadioButtons = (e: BasicOptionType) => {
+    console.log(e);
   };
 
   return (
@@ -109,7 +113,11 @@ const SettingsContainer = () => {
           </div>
           <div className="inline-flex gap-2">
             <div className="w-[150px]">
-              <CRadioButtonGroup value={SwitchValue} defaultSelectedTab="off" />
+              <CRadioButtonGroup
+                options={switchOptions}
+                defaultOption={switchOptions[1]}
+                onChange={handleCRadioButtons}
+              />
             </div>
           </div>
         </CCard>

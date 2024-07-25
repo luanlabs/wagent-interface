@@ -1,51 +1,48 @@
 import { useState } from 'react';
 import cn from 'classnames';
 
-export type CRadioButtonGroupType = {
-  value: string;
-  label: string;
-};
+import { BasicOptionType } from '@/models';
 
-interface CRadioButtonGroupProps {
-  value: CRadioButtonGroupType[];
-  defaultSelectedTab: string;
-  onChange?: (value: string) => void;
+interface CRadioButtonGroupProps<T extends BasicOptionType> {
+  options: T[];
+  defaultOption: T;
+  onChange?: (option: T) => void;
 }
 
-const CRadioButtonGroup = ({ value, defaultSelectedTab, onChange }: CRadioButtonGroupProps) => {
-  const [selectedTab, setSelectedTab] = useState<string>(defaultSelectedTab);
+const CRadioButtonGroup = <T extends BasicOptionType>({
+  options,
+  defaultOption,
+  onChange,
+}: CRadioButtonGroupProps<T>) => {
+  const [selectedTab, setSelectedTab] = useState<T>(defaultOption);
 
-  const handleTabChange = (value: React.ChangeEvent<HTMLInputElement>) => {
-    const { id } = value.target;
-    setSelectedTab(id);
-
-    if (onChange) {
-      onChange(id);
+  const handleTabChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedOption = options.find((option) => option.value === event.target.id);
+    if (selectedOption) {
+      setSelectedTab(selectedOption);
+      if (onChange) {
+        onChange(selectedOption);
+      }
     }
   };
 
   return (
     <div>
-      <div
-        className={`relative w-full py-2 bg-lightGray px-2 flex space-x-2 rounded-[55px] border border-[#E4E7EC]`}
-      >
-        {value.map((tab) => (
+      <div className="relative w-full py-2 bg-lightGray px-2 flex space-x-2 rounded-[55px] border border-[#E4E7EC]">
+        {options.map((tab) => (
           <label key={tab.value} className="flex-1 text-center">
             <input
               type="radio"
               id={tab.value}
               name="tabs"
               className="hidden"
-              aria-checked
+              aria-checked={selectedTab.value === tab.value}
               onChange={handleTabChange}
             />
-
             <div
               className={cn(
-                ' h-[28px] rounded-[63px] font-medium cursor-pointer transition-all duration-300 select-none text-base border border-transparent',
-                {
-                  'bg-[#F0EFFF] transition-all duration-300': selectedTab === tab.value,
-                },
+                'h-[28px] rounded-[63px] font-medium cursor-pointer transition-all duration-300 select-none text-base border border-transparent',
+                { 'bg-[#F0EFFF] transition-all duration-300': selectedTab.value === tab.value },
               )}
             >
               {tab.label}

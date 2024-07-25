@@ -35,3 +35,8 @@ export interface OptionType {
 }
 
 export type MultiSelectType = MultiValue<OptionType> | null;
+
+export type BasicOptionType = {
+  value: string;
+  label: string;
+};

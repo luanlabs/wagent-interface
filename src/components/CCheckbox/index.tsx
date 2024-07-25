@@ -13,7 +13,7 @@ type CCheckboxProps = {
   value: string;
   disabled?: boolean;
   type?: CCheckboxType;
-  className: string;
+  className?: string;
 };
 
 const CCheckbox = ({

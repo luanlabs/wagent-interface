@@ -99,7 +99,7 @@ const CInput = ({
           className={cn(
             inputClassName,
             `${icon ? 'pl-10' : 'px-4'}
-            self-stretch rounded-lg placeholder-mutedBlue text-darkGray text-base w-full h-10 py-[10px] px-[14px]
+            self-stretch rounded-lg placeholder-mutedBlue text-darkGreen text-base w-full h-10 py-[10px] px-[14px]
             justify-start items-center inline-flex outline-none border hover:bg-offWhite transition-colors duration-300
             ${border ? 'border border-gray' : 'border-transparent'}  
             ${error && 'border !border-error'}

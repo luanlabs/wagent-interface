@@ -4,11 +4,15 @@ import React, { useState } from 'react';
 
 import CCard from '@/components/CCard';
 import CButton from '@/components/CButton';
+import CMethods from '@/components/CMethods';
 import CCheckbox from '@/components/CCheckbox';
 import CPageCard from '@/components/CPageCard';
-import CMethods from '@/components/CMethods';
 import CInputCopy from '@/components/CInputCopy';
+import CNumberInput from '@/components/CNumberInput';
+import CRadioButtonGroup from '@/components/CRadioButtonGroup';
 import CSelectSearchable, { OptionType } from '@/components/CSelectSearchable';
+
+import { BasicOptionType } from '@/models';
 
 const pageTitle = (
   <div className="flex justify-between items-center w-full -my-1">
@@ -23,6 +27,11 @@ const options: OptionType[] = [
   { value: 'dai', label: 'DAI' },
 ];
 
+const switchOptions = [
+  { value: 'on', label: 'ON' },
+  { value: 'off', label: 'OFF' },
+];
+
 const SettingsContainer = () => {
   const [apiKeyValue, setApiKeyValue] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
@@ -34,12 +43,14 @@ const SettingsContainer = () => {
 
   const handleApiKey = (e: React.ChangeEvent<HTMLInputElement>) => {
     setApiKeyValue(e.target.value.trim());
-    console.log(apiKeyValue);
   };
 
   const handleWalletAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     setWalletAddress(e.target.value.trim());
-    console.log(walletAddress);
+  };
+
+  const handleCRadioButtons = (e: BasicOptionType<string>) => {
+    console.log(e);
   };
 
   return (
@@ -76,6 +87,7 @@ const SettingsContainer = () => {
             />
           </div>
         </CCard>
+
         <CCard className="flex justify-between p-6">
           <div className="flex flex-col">
             <p className="text-lg">Connect your stellar wallet</p>
@@ -85,6 +97,36 @@ const SettingsContainer = () => {
             <div className="w-[356px]">
               <CInputCopy placeholder="Enter Wallet Address" onChange={handleWalletAddress} />
             </div>
+          </div>
+        </CCard>
+
+        <CCard className="flex justify-between p-6">
+          <div className="flex flex-col">
+            <p className="text-lg">Minimum cancellable duration</p>
+            <p className="text-cadetBlue text-sm">
+              We will send extra notifications for you in your email.
+            </p>
+          </div>
+          <div className="inline-flex gap-2">
+            <div className="w-[100px]">
+              <CNumberInput defaultValue="45" placeholder="45" />
+            </div>
+          </div>
+        </CCard>
+
+        <CCard className="flex justify-between p-6">
+          <div className="flex flex-col">
+            <p className="text-lg">Email Notifications</p>
+            <p className="text-cadetBlue text-sm">
+              We will send extra notifications for you in your email.
+            </p>
+          </div>
+          <div className="w-[150px]">
+            <CRadioButtonGroup
+              options={switchOptions}
+              defaultOption={switchOptions[1]}
+              onChange={handleCRadioButtons}
+            />
           </div>
         </CCard>
 

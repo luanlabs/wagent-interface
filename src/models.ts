@@ -28,9 +28,12 @@ export interface TooltipProps {
   }[];
 }
 
-export interface OptionType {
-  value: string;
+export interface BasicOptionType<T> {
+  value: T;
   label: string;
+}
+
+export interface OptionType extends BasicOptionType<string> {
   logo: string;
 }
 

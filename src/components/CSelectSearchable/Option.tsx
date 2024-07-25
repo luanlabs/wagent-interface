@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { components, OptionProps, GroupBase } from 'react-select';
+
 import { OptionType } from '@/models';
 
 const SelectOption: React.ComponentType<OptionProps<OptionType, boolean, GroupBase<OptionType>>> = (

@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import Select, { MultiValue, ActionMeta, SingleValue } from 'react-select';
 
-import DropdownIndicator from '../CSelect/DropdownIndicator';
-import customStyles from '../CSelect/selectCustomStyles';
-import ValueContainer from './ValueContainer';
-import CTokenLabel from '../CTokenLabel';
 import SelectOption from './Option';
+import CTokenLabel from '../CTokenLabel';
+import ValueContainer from './ValueContainer';
+import customStyles from '../CSelect/selectCustomStyles';
+import DropdownIndicator from '../CSelect/DropdownIndicator';
 
-export interface OptionType {
-  value: string;
-  label: string;
-}
+import { OptionType } from '@/models';
 
 type CSelectSearchableProps = {
   placeholder?: string;

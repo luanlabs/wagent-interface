@@ -10,7 +10,7 @@ import CPageCard from '@/components/CPageCard';
 import CInputCopy from '@/components/CInputCopy';
 import CNumberInput from '@/components/CNumberInput';
 import CRadioButtonGroup from '@/components/CRadioButtonGroup';
-import CSelectSearchable, { OptionType } from '@/components/CSelectSearchable';
+import CSelectSearchable from '@/components/CSelectSearchable';
 
 import { BasicOptionType } from '@/models';
 
@@ -21,7 +21,7 @@ const pageTitle = (
   </div>
 );
 
-const options: OptionType[] = [
+const options: BasicOptionType<string>[] = [
   { value: 'usdt', label: 'USDT' },
   { value: 'usdc', label: 'USDC' },
   { value: 'dai', label: 'DAI' },

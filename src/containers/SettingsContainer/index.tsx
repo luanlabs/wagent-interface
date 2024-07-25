@@ -8,6 +8,7 @@ import CCheckbox from '@/components/CCheckbox';
 import CPageCard from '@/components/CPageCard';
 import CMethods from '@/components/CMethods';
 import CInputCopy from '@/components/CInputCopy';
+import CSelectSearchable, { OptionType } from '@/components/CSelectSearchable';
 
 const pageTitle = (
   <div className="flex justify-between items-center w-full -my-1">
@@ -15,6 +16,12 @@ const pageTitle = (
     <CButton variant="add" text="Edit profile" className="!w-[130px] text-base" />
   </div>
 );
+
+const options: OptionType[] = [
+  { value: 'usdt', label: 'USDT' },
+  { value: 'usdc', label: 'USDC' },
+  { value: 'dai', label: 'DAI' },
+];
 
 const SettingsContainer = () => {
   const [apiKeyValue, setApiKeyValue] = useState('');
@@ -90,7 +97,19 @@ const SettingsContainer = () => {
           </div>
           <div className="inline-flex gap-2">
             <div className="w-[356px]">
-              <CInputCopy placeholder="Your Api Key" onChange={handleApiKey} />
+              <CInputCopy placeholder="Your Api Key" onChange={handleApiKey} hideCharacter />
+            </div>
+          </div>
+        </CCard>
+
+        <CCard className="flex justify-between p-6">
+          <div className="flex flex-col">
+            <p className="text-lg">Acceptable Tokens</p>
+            <p className="text-cadetBlue text-sm">Please Choose one or more tokens. </p>
+          </div>
+          <div className="inline-flex gap-2">
+            <div className="w-[356px]">
+              <CSelectSearchable options={options} />
             </div>
           </div>
         </CCard>

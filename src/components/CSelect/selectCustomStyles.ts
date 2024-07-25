@@ -1,5 +1,5 @@
+import { OptionType } from '@/models';
 import { StylesConfig } from 'react-select';
-import { OptionType } from '.';
 
 const customStyles = (): StylesConfig<OptionType, false> => ({
   option: (provided, state) => ({

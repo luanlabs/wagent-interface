@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { components, DropdownIndicatorProps } from 'react-select';
 
-import { OptionType } from './index';
+import { OptionType } from '@/models';
 
 import arrowLogo from 'public/images/arrow.svg';
 

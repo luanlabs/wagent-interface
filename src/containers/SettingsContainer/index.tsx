@@ -4,11 +4,13 @@ import React, { useState } from 'react';
 
 import CCard from '@/components/CCard';
 import CButton from '@/components/CButton';
+import { BasicOptionType } from '@/models';
+import CMethods from '@/components/CMethods';
 import CCheckbox from '@/components/CCheckbox';
 import CPageCard from '@/components/CPageCard';
-import CMethods from '@/components/CMethods';
 import CInputCopy from '@/components/CInputCopy';
 import CNumberInput from '@/components/CNumberInput';
+import CRadioButtonGroup from '@/components/CRadioButtonGroup';
 
 const pageTitle = (
   <div className="flex justify-between items-center w-full -my-1">
@@ -16,6 +18,11 @@ const pageTitle = (
     <CButton variant="add" text="Edit profile" className="!w-[130px] text-base" />
   </div>
 );
+
+const switchOptions = [
+  { value: 'on', label: 'ON' },
+  { value: 'off', label: 'OFF' },
+];
 
 const SettingsContainer = () => {
   const [apiKeyValue, setApiKeyValue] = useState('');
@@ -28,12 +35,14 @@ const SettingsContainer = () => {
 
   const handleApiKey = (e: React.ChangeEvent<HTMLInputElement>) => {
     setApiKeyValue(e.target.value.trim());
-    console.log(apiKeyValue);
   };
 
   const handleWalletAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     setWalletAddress(e.target.value.trim());
-    console.log(walletAddress);
+  };
+
+  const handleCRadioButtons = (e: BasicOptionType<string>) => {
+    console.log(e);
   };
 
   return (
@@ -84,20 +93,6 @@ const SettingsContainer = () => {
 
         <CCard className="flex justify-between p-6">
           <div className="flex flex-col">
-            <p className="text-lg">API Key</p>
-            <p className="text-cadetBlue text-sm">
-              We will send extra notifications for you in your email.
-            </p>
-          </div>
-          <div className="inline-flex gap-2">
-            <div className="w-[356px]">
-              <CInputCopy placeholder="Your Api Key" onChange={handleApiKey} />
-            </div>
-          </div>
-        </CCard>
-
-        <CCard className="flex justify-between p-6">
-          <div className="flex flex-col">
             <p className="text-lg">Minimum cancellable duration</p>
             <p className="text-cadetBlue text-sm">
               We will send extra notifications for you in your email.
@@ -106,6 +101,36 @@ const SettingsContainer = () => {
           <div className="inline-flex gap-2">
             <div className="w-[100px]">
               <CNumberInput defaultValue="45" placeholder="45" />
+            </div>
+          </div>
+        </CCard>
+
+        <CCard className="flex justify-between p-6">
+          <div className="flex flex-col">
+            <p className="text-lg">Email Notifications</p>
+            <p className="text-cadetBlue text-sm">
+              We will send extra notifications for you in your email.
+            </p>
+          </div>
+          <div className="w-[150px]">
+            <CRadioButtonGroup
+              options={switchOptions}
+              defaultOption={switchOptions[1]}
+              onChange={handleCRadioButtons}
+            />
+          </div>
+        </CCard>
+
+        <CCard className="flex justify-between p-6">
+          <div className="flex flex-col">
+            <p className="text-lg">API Key</p>
+            <p className="text-cadetBlue text-sm">
+              We will send extra notifications for you in your email.
+            </p>
+          </div>
+          <div className="inline-flex gap-2">
+            <div className="w-[356px]">
+              <CInputCopy placeholder="Your Api Key" onChange={handleApiKey} />
             </div>
           </div>
         </CCard>

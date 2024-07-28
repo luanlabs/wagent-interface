@@ -1,11 +1,15 @@
 import Image from 'next/image';
 import { components, DropdownIndicatorProps, GroupBase } from 'react-select';
 
-import { OptionType } from '@/models';
+import { BasicOptionType } from '@/models';
 import arrowLogo from 'public/images/arrow.svg';
 
 const DropdownIndicator = (
-  props: DropdownIndicatorProps<OptionType, boolean, GroupBase<OptionType>>,
+  props: DropdownIndicatorProps<
+    BasicOptionType<string>,
+    boolean,
+    GroupBase<BasicOptionType<string>>
+  >,
 ) => (
   <components.DropdownIndicator {...props}>
     <Image

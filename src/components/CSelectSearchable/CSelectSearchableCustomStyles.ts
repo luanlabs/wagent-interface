@@ -1,7 +1,7 @@
-import { OptionType } from '@/models';
+import { BasicOptionType } from '@/models';
 import { StylesConfig } from 'react-select';
 
-const customStyles = (): StylesConfig<OptionType, false> => ({
+const customStyles = (): StylesConfig<BasicOptionType<string>, false> => ({
   option: (provided, state) => ({
     ...provided,
     color: state.isSelected ? '#039855' : '#6b7280',

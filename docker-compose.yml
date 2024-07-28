@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  wagent-interface:
+    image: wagent-interface:latest
+    pull_policy: never
+    restart: on-failure
+    ports:
+      - '3003:3003'

@@ -1,7 +1,10 @@
-import React, { MouseEventHandler } from 'react';
-import cn from 'classnames';
-import Image from 'next/image';
+'use client';
 
+import React, { MouseEventHandler, useState } from 'react';
+import Image from 'next/image';
+import cn from 'classnames';
+
+import { Eye, EyeSlash } from '@/assets';
 import clearInputLogo from 'public/images/close.svg';
 
 interface CInputProps {
@@ -22,9 +25,10 @@ interface CInputProps {
   placeholder?: string;
   iconClassName?: string;
   inputClassName?: string;
+  hideCharacter?: boolean;
   type?: React.HTMLInputTypeAttribute;
-  handlePaste?: MouseEventHandler<HTMLDivElement>;
   onClick?: MouseEventHandler<HTMLInputElement>;
+  handlePaste?: MouseEventHandler<HTMLDivElement>;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   clearInputClick?: MouseEventHandler<HTMLImageElement>;
   onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>;
@@ -53,11 +57,18 @@ const CInput = ({
   placeholder,
   handlePaste,
   enterKeyHint,
+  hideCharacter,
   iconClassName,
   inputClassName,
   clearInputClick,
   ...props
 }: CInputProps) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    if (hideCharacter) setShowPassword(!showPassword);
+  };
+
   return (
     <div className={className}>
       <p className="text-sm select-none font-normal mb-[6px] text-offBlack">{label}</p>
@@ -74,6 +85,15 @@ const CInput = ({
             onClick={handlePaste}
           >
             <span>Paste</span>
+          </div>
+        )}
+
+        {hideCharacter && (
+          <div
+            className="absolute bottom-[11.3px] left-3 cursor-pointer"
+            onClick={toggleShowPassword}
+          >
+            {showPassword ? <EyeSlash /> : <Eye />}
           </div>
         )}
 
@@ -105,15 +125,19 @@ const CInput = ({
           placeholder={placeholder}
           enterKeyHint={enterKeyHint}
           onKeyPress={onKeyPress}
+          type={hideCharacter ? (showPassword ? 'text' : 'password') : type}
           className={cn(
             inputClassName,
-            `${icon ? 'pl-10' : 'px-4'}
-            self-stretch rounded-lg placeholder-smokyBlue placeholder:select-none text-darkGreen text-base w-full h-10 py-[10px] px-[14px]
-            justify-start items-center inline-flex outline-none border hover:bg-offWhite transition-colors duration-300
-            ${border ? 'border border-gray' : 'border-transparent'}  
-            ${error && 'border !border-[#F97066]'}
-            ${disabled && 'cursor-not-allowed !select-none text-smokyBlue'}
-          `,
+            {
+              'pl-10': icon,
+              'px-4': !icon,
+              'border border-gray': border,
+              'border-transparent': !border,
+              'border !border-error': error,
+              'cursor-not-allowed !select-none text-smokyBlue': disabled,
+              'pl-8': hideCharacter,
+            },
+            'self-stretch rounded-lg placeholder-smokyBlue text-darkGray text-base w-full h-10 py-[10px] px-[14px] justify-start items-center inline-flex outline-none border hover:bg-offWhite transition-colors duration-300',
           )}
         />
         {error && errorMsg && (

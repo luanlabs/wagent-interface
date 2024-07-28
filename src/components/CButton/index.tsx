@@ -12,26 +12,31 @@ interface CButtonProps {
   className?: string;
   children?: React.ReactNode;
   iconClassName?: string;
+  type?: 'submit' | 'reset' | 'button' | undefined;
+  disabled?: boolean;
 }
 
 const CButton = ({
   text,
   icon,
+  type,
   alt,
   onClick,
   variant,
   className,
   children,
   iconClassName,
+  disabled,
 }: CButtonProps) => {
   return (
     <button
+      type={type}
+      disabled={disabled}
       className={cn(
-        `w-full  ${
-          icon ? 'inline-flex justify-center gap-2 items-center' : ''
-        } h-10 px-2 py-2 text-center cursor-pointer rounded-lg transition duration-300`,
+        `w-full  ${icon ? 'inline-flex justify-center gap-2 items-center' : ''} 
+        ${disabled && 'bg-opacity-95 pointer-events-none'}  
+        h-10 px-2 py-2 text-center cursor-pointer rounded-lg transition duration-300 select-none`,
         className,
-
         {
           'border border-1 text-darkBlue border-gray text-base font-medium hover:bg-lightestGray active:shadow':
             variant === 'outline',

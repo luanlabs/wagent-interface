@@ -5,6 +5,8 @@ import Image from 'next/image';
 import clearInputLogo from 'public/images/close.svg';
 
 interface CInputProps {
+  meta?: any;
+  input?: any;
   value?: any;
   icon?: string;
   label?: string;
@@ -13,34 +15,40 @@ interface CInputProps {
   border?: boolean;
   errorMsg?: string;
   disabled?: boolean;
+  maxLength?: number;
   className?: string;
   autoFocus?: boolean;
   clearInput?: boolean;
   placeholder?: string;
   iconClassName?: string;
   inputClassName?: string;
+  type?: React.HTMLInputTypeAttribute;
+  handlePaste?: MouseEventHandler<HTMLDivElement>;
   onClick?: MouseEventHandler<HTMLInputElement>;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   clearInputClick?: MouseEventHandler<HTMLImageElement>;
-  handlePaste?: MouseEventHandler<HTMLDivElement>;
-  enterKeyHint?: 'search' | 'done' | 'enter' | 'go' | 'next' | 'previous' | 'send';
   onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>;
-  maxLength?: number;
+  enterKeyHint?: 'search' | 'done' | 'enter' | 'go' | 'next' | 'previous' | 'send';
 }
 
 const CInput = ({
+  meta,
   icon,
-  error,
+  type,
+  input,
   label,
   paste,
+  error,
   value,
   border,
   onClick,
   disabled,
   onChange,
   errorMsg,
+  maxLength,
   autoFocus,
   className,
+  onKeyPress,
   clearInput,
   placeholder,
   handlePaste,
@@ -48,8 +56,6 @@ const CInput = ({
   iconClassName,
   inputClassName,
   clearInputClick,
-  onKeyPress,
-  maxLength,
   ...props
 }: CInputProps) => {
   return (
@@ -86,31 +92,35 @@ const CInput = ({
 
         <input
           {...props}
+          {...input}
+          type={type}
+          meta={meta}
           value={value}
           onClick={onClick}
+          autoComplete="off"
           disabled={disabled}
           onChange={onChange}
+          maxLength={maxLength}
           autoFocus={autoFocus}
           placeholder={placeholder}
           enterKeyHint={enterKeyHint}
-          autoComplete="off"
           onKeyPress={onKeyPress}
-          maxLength={maxLength}
           className={cn(
             inputClassName,
             `${icon ? 'pl-10' : 'px-4'}
-            self-stretch rounded-lg placeholder-mutedBlue text-darkGreen text-base w-full h-10 py-[10px] px-[14px]
+            self-stretch rounded-lg placeholder-smokyBlue placeholder:select-none text-darkGreen text-base w-full h-10 py-[10px] px-[14px]
             justify-start items-center inline-flex outline-none border hover:bg-offWhite transition-colors duration-300
             ${border ? 'border border-gray' : 'border-transparent'}  
-            ${error && 'border !border-error'}
-            ${disabled && 'cursor-not-allowed !select-none text-mutedBlue'}
+            ${error && 'border !border-[#F97066]'}
+            ${disabled && 'cursor-not-allowed !select-none text-smokyBlue'}
           `,
           )}
         />
-
-        <div className="h-[20px] absolute mt-[6px] ml-1">
-          {error && errorMsg && <span className="text-error text-sm">{errorMsg}</span>}
-        </div>
+        {error && errorMsg && (
+          <div className="h-[16px] ml-1">
+            <span className="text-[#F97066] text-sm">{errorMsg}</span>
+          </div>
+        )}
       </div>
     </div>
   );

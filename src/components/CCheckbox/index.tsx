@@ -14,10 +14,14 @@ type CCheckboxProps = {
   disabled?: boolean;
   type?: CCheckboxType;
   className?: string;
+  input?: any;
+  meta?: any;
 };
 
 const CCheckbox = ({
   checked,
+  input,
+  meta,
   onChange,
   label,
   value,
@@ -29,6 +33,8 @@ const CCheckbox = ({
     <label className={cn(className, `flex items-center space-x-[7px]`)}>
       <input
         type="checkbox"
+        meta={meta}
+        {...input}
         className="hidden"
         name={value}
         value={value}

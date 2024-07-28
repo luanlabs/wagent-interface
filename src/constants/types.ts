@@ -8,6 +8,13 @@ export interface CNavLinkProps {
   activeIcon: JSX.Element | React.ReactNode;
 }
 
+export type FormValues = {
+  store: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
+
 export type SvgProps = {
   fill?: string;
 };

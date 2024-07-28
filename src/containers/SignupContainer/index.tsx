@@ -20,6 +20,7 @@ const SignupContainer = () => {
               src={dashboardGlance}
               alt="dashboardGlance"
               fill
+              priority
               className="!select-none"
               draggable="false"
             />

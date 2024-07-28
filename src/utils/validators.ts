@@ -1,7 +1,7 @@
 export const required = (value: string) => (value ? undefined : 'Required');
 
-export const minLength = (min: number) => (value: string) =>
-  value.length >= min ? undefined : `Should be at least ${min} characters`;
+export const minLength = (min: number) => (value: string | undefined) =>
+  value && value.length >= min ? undefined : `Should be at least ${min} characters`;
 
 export const validateEmail = (email: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

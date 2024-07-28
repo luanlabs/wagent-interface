@@ -48,11 +48,11 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className="flex flex-col bg-white h-full rounded-3xl px-8 py-7 shadow-md mobile:shadow-none mobile:px-4 mobile:py-5 mobile:rounded-none">
+    <div className="flex flex-col bg-white h-full rounded-3xl px-8 py-7 shadow-md mobile:shadow-none mobile:px-0 mobile:py-3 mobile:rounded-none">
       <div className="flex justify-start items-start">
         <Typography />
       </div>
-      <div className="flex justify-center items-center h-full">
+      <div className="flex justify-center mobile:items-start mobile:mt-8 items-center h-full">
         <div className="flex flex-col w-full">
           <div className="my-4 space-y-4">
             <p className="text-2xl font-medium text-darkGreen select-none">Sign Up</p>

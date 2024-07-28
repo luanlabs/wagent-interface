@@ -1,13 +1,13 @@
 import React from 'react';
 import { components, GroupBase, ValueContainerProps } from 'react-select';
 
-import { OptionType } from '@/models';
+import { BasicOptionType, OptionType } from '@/models';
 import { Search } from '@/assets';
 
 const ValueContainer = ({
   children,
   ...props
-}: ValueContainerProps<OptionType, boolean, GroupBase<OptionType>>) => {
+}: ValueContainerProps<BasicOptionType<string>, boolean, GroupBase<BasicOptionType<string>>>) => {
   const { hasValue, selectProps } = props;
 
   const selectValue = (

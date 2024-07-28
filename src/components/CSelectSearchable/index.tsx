@@ -4,15 +4,15 @@ import Select, { MultiValue, ActionMeta, SingleValue } from 'react-select';
 import SelectOption from './Option';
 import CTokenLabel from '../CTokenLabel';
 import ValueContainer from './ValueContainer';
-import customStyles from '../CSelect/selectCustomStyles';
-import DropdownIndicator from '../CSelect/DropdownIndicator';
+import DropdownIndicator from './DropdownIndicator';
+import customStyles from './CSelectSearchableCustomStyles';
 
-import { OptionType } from '@/models';
+import { BasicOptionType, OptionType } from '@/models';
 
 type CSelectSearchableProps = {
   placeholder?: string;
-  options: OptionType[];
-  onChange?: (value: MultiValue<OptionType>) => void;
+  options: BasicOptionType<string>[];
+  onChange?: (value: MultiValue<BasicOptionType<string>>) => void;
 };
 
 const CSelectSearchable = ({
@@ -20,18 +20,20 @@ const CSelectSearchable = ({
   placeholder = 'Search ...',
   options,
 }: CSelectSearchableProps) => {
-  const [selectedOptions, setSelectedOptions] = useState<MultiValue<OptionType>>([]);
+  const [selectedOptions, setSelectedOptions] = useState<
+    MultiValue<BasicOptionType<string> | OptionType>
+  >([]);
 
   const handleChange = (
-    newValue: MultiValue<OptionType> | SingleValue<OptionType>,
-    _actionMeta: ActionMeta<OptionType>,
+    newValue: MultiValue<BasicOptionType<string>> | SingleValue<BasicOptionType<string>>,
+    _actionMeta: ActionMeta<BasicOptionType<string>>,
   ) => {
-    setSelectedOptions(newValue as MultiValue<OptionType>);
+    setSelectedOptions(newValue as MultiValue<BasicOptionType<string>>);
 
     if (onChange) onChange(selectedOptions);
   };
 
-  const handleRemove = (optionToRemove: OptionType) => {
+  const handleRemove = (optionToRemove: BasicOptionType<string>) => {
     setSelectedOptions(selectedOptions.filter((option) => option.value !== optionToRemove.value));
   };
 

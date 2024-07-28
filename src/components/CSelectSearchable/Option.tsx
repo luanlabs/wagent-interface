@@ -2,11 +2,11 @@ import React from 'react';
 import Image from 'next/image';
 import { components, OptionProps, GroupBase } from 'react-select';
 
-import { OptionType } from '@/models';
+import { BasicOptionType, OptionType } from '@/models';
 
-const SelectOption: React.ComponentType<OptionProps<OptionType, boolean, GroupBase<OptionType>>> = (
-  props,
-) => (
+const SelectOption: React.ComponentType<
+  OptionProps<BasicOptionType<string>, boolean, GroupBase<BasicOptionType<string>>>
+> = (props) => (
   <components.Option {...props}>
     <Image
       src={require(`/public/images/tokens/${props.data.value.toLowerCase()}.svg`)}

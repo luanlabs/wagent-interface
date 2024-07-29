@@ -9,7 +9,7 @@ import CButtonGroup from '@/components/CButtonGroup';
 import { forceInputNumber } from '@/utils/forceInputNumber';
 import { TokensType } from '@/constants/types';
 
-import { methodTabs, tokensList } from '@/constants/mockLists';
+import { allTokensList, methodTabs } from '@/constants/mockLists';
 import { MultiSelectType } from '@/models';
 
 interface ProductModalProps {
@@ -105,9 +105,10 @@ const AddProductModal = ({ isOpen, onClose, onAddProduct }: ProductModalProps) =
         <p className="text-sm select-none font-normal text-offBlack mb-[6px]">Tokens</p>
         <CSelect
           placeholder="Select tokens"
-          options={tokensList}
+          options={allTokensList}
           onChange={handleSelectChange}
           value={selectedTokens}
+          isCloseModal={!isOpen}
         />
       </div>
       <CInput

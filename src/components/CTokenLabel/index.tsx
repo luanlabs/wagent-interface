@@ -22,6 +22,7 @@ const CTokenLabel = ({ symbol, rounded, onRemove, className }: CTokenLabelProps)
         className,
         { 'rounded-[50px] text-[14px] px-3': rounded },
         { 'rounded-[6px] text-base px-1 ': !rounded },
+        { 'mobile:w-[90px] ': !rounded && onRemove },
       )}
       style={{
         backgroundColor: style.bgColor,
@@ -42,7 +43,7 @@ const CTokenLabel = ({ symbol, rounded, onRemove, className }: CTokenLabelProps)
       </div>
 
       {onRemove && (
-        <span onClick={onRemove} className="cursor-pointer ml-4 ">
+        <span onClick={onRemove} className="cursor-pointer ml-4">
           <Close fill={style.textColor} />
         </span>
       )}

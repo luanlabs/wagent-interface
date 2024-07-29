@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import CInput from '@/components/CInput';
 import CModal from '@/components/CModal';
@@ -7,7 +7,7 @@ import CButton from '@/components/CButton';
 import CButtonGroup from '@/components/CButtonGroup';
 
 import { MultiSelectType } from '@/models';
-import { methodTabs, tokensList } from '@/constants/mockLists';
+import { allTokensList, methodTabs } from '@/constants/mockLists';
 import { IProductItemCard } from '@/constants/types';
 
 interface EditProductModalProps {
@@ -23,6 +23,8 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
   const [amount, setAmount] = useState('');
   const [productName, setProductName] = useState('');
   const [errorText, setErrorText] = useState('');
+
+  const initialEditProductSelectedLengthRef = useRef<number>(0);
 
   const handleSelectedMethod = (value: string[]) => {
     setSelectedMethod(value);
@@ -62,14 +64,25 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
       setSelectedTokens(product.tokens);
       setAmount(product.amount);
       setProductName(product.title);
+      initialEditProductSelectedLengthRef.current = product.tokens.length;
     } else {
       setSelectedMethod([]);
       setSelectedTokens(null);
       setAmount('');
       setProductName('');
       setErrorText('');
+      initialEditProductSelectedLengthRef.current = 0;
     }
   }, [product]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setSelectedTokens((prevTokens) => {
+        initialEditProductSelectedLengthRef.current = prevTokens?.length || 0;
+        return prevTokens;
+      });
+    }
+  }, [isOpen]);
 
   return (
     <CModal title="Edit Product" isOpen={isOpen} onClose={onClose}>
@@ -97,9 +110,10 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
         <p className="text-sm select-none font-normal text-offBlack mb-[6px]">Tokens</p>
         <CSelect
           placeholder="Select tokens"
-          options={tokensList}
+          options={allTokensList}
           onChange={handleSelectChange}
           value={selectedTokens}
+          initialEditProductSelectedLength={initialEditProductSelectedLengthRef.current}
         />
       </div>
       <CInput

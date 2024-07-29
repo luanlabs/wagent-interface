@@ -28,8 +28,8 @@ export const allTokensList = [
   { value: 'xlm', label: 'Stellar', logo: 'public/images/tokens/xlm.svg' },
   { value: 'dai', label: 'Dai', logo: 'public/images/tokens/dai.svg' },
   { value: 'usdt', label: 'Tether', logo: 'public/images/tokens/usdt.svg' },
-  { value: 'usdc', label: 'Tether', logo: 'public/images/tokens/usdc.svg' },
-  { value: 'eth', label: 'Tether', logo: 'public/images/tokens/eth.svg' },
+  { value: 'usdc', label: 'USDC', logo: 'public/images/tokens/usdc.svg' },
+  { value: 'eth', label: 'ETH', logo: 'public/images/tokens/eth.svg' },
 ];
 
 export const methodTabs = [

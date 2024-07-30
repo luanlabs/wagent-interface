@@ -8,6 +8,8 @@ import { Eye, EyeSlash } from '@/assets';
 import clearInputLogo from 'public/images/close.svg';
 
 interface CInputProps {
+  meta?: any;
+  input?: any;
   value?: any;
   icon?: string;
   label?: string;
@@ -16,45 +18,49 @@ interface CInputProps {
   border?: boolean;
   errorMsg?: string;
   disabled?: boolean;
+  maxLength?: number;
   className?: string;
   autoFocus?: boolean;
   clearInput?: boolean;
   placeholder?: string;
   iconClassName?: string;
   inputClassName?: string;
+  hideCharacter?: boolean;
+  type?: React.HTMLInputTypeAttribute;
   onClick?: MouseEventHandler<HTMLInputElement>;
+  handlePaste?: MouseEventHandler<HTMLDivElement>;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   clearInputClick?: MouseEventHandler<HTMLImageElement>;
-  handlePaste?: MouseEventHandler<HTMLDivElement>;
-  enterKeyHint?: 'search' | 'done' | 'enter' | 'go' | 'next' | 'previous' | 'send';
   onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>;
-  maxLength?: number;
-  hideCharacter?: boolean;
+  enterKeyHint?: 'search' | 'done' | 'enter' | 'go' | 'next' | 'previous' | 'send';
 }
 
 const CInput = ({
+  meta,
   icon,
-  error,
+  type,
+  input,
   label,
   paste,
+  error,
   value,
   border,
   onClick,
   disabled,
   onChange,
   errorMsg,
+  maxLength,
   autoFocus,
   className,
+  onKeyPress,
   clearInput,
   placeholder,
   handlePaste,
   enterKeyHint,
+  hideCharacter,
   iconClassName,
   inputClassName,
   clearInputClick,
-  onKeyPress,
-  maxLength,
-  hideCharacter,
   ...props
 }: CInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -106,17 +112,20 @@ const CInput = ({
 
         <input
           {...props}
-          type={hideCharacter ? (showPassword ? 'text' : 'password') : 'text'}
+          {...input}
+          type={type}
+          meta={meta}
           value={value}
           onClick={onClick}
+          autoComplete="off"
           disabled={disabled}
           onChange={onChange}
+          maxLength={maxLength}
           autoFocus={autoFocus}
           placeholder={placeholder}
           enterKeyHint={enterKeyHint}
-          autoComplete="off"
           onKeyPress={onKeyPress}
-          maxLength={maxLength}
+          type={hideCharacter ? (showPassword ? 'text' : 'password') : type}
           className={cn(
             inputClassName,
             {
@@ -125,16 +134,17 @@ const CInput = ({
               'border border-gray': border,
               'border-transparent': !border,
               'border !border-error': error,
-              'cursor-not-allowed !select-none text-mutedBlue': disabled,
+              'cursor-not-allowed !select-none text-smokyBlue': disabled,
               'pl-8': hideCharacter,
             },
-            'self-stretch rounded-lg placeholder-mutedBlue text-darkGray text-base w-full h-10 py-[10px] px-[14px] justify-start items-center inline-flex outline-none border hover:bg-offWhite transition-colors duration-300',
+            'self-stretch rounded-lg placeholder-smokyBlue text-darkGray text-base w-full h-10 py-[10px] px-[14px] justify-start items-center inline-flex outline-none border hover:bg-offWhite transition-colors duration-300',
           )}
         />
-
-        <div className="h-[20px] absolute mt-[6px] ml-1">
-          {error && errorMsg && <span className="text-error text-sm">{errorMsg}</span>}
-        </div>
+        {error && errorMsg && (
+          <div className="h-[16px] ml-1">
+            <span className="text-[#F97066] text-sm">{errorMsg}</span>
+          </div>
+        )}
       </div>
     </div>
   );

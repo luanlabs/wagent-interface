@@ -13,20 +13,28 @@ type CCheckboxProps = {
   value: string;
   disabled?: boolean;
   type?: CCheckboxType;
+  className?: string;
+  input?: any;
+  meta?: any;
 };
 
 const CCheckbox = ({
   checked,
+  input,
+  meta,
   onChange,
   label,
   value,
   disabled = false,
   type = 'primary',
+  className,
 }: CCheckboxProps) => {
   return (
-    <label className={`flex items-center space-x-[7px]`}>
+    <label className={cn(className, `flex items-center space-x-[7px]`)}>
       <input
         type="checkbox"
+        meta={meta}
+        {...input}
         className="hidden"
         name={value}
         value={value}

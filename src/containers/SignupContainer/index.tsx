@@ -3,7 +3,9 @@
 import React from 'react';
 import Image from 'next/image';
 
+import shop from 'public/images/shop.svg';
 import dashboardGlance from 'public/images/dashboardGlance.svg';
+
 import SignUpForm from './form';
 
 const SignupContainer = () => {
@@ -24,7 +26,16 @@ const SignupContainer = () => {
               className="!select-none"
               draggable="false"
             />
-            <div className="absolute select-none text-xs text-darkGreen bigScreen:text-sm bigScreen:bottom-[5%] bottom-[26px] left-[8%]">
+            <div
+              className="absolute flex gap-2 items-center select-none text-xs text-darkGreen short:text-xs
+              bigScreen:text-sm bigScreen:bottom-[5%] bigScreen:left-[60px] short:left-9 bottom-[26px] left-[46px]"
+            >
+              <Image
+                src={shop}
+                alt="shop icon"
+                className="!select-none w-[18px] h-[18px] short:h-3 short:w-3"
+                draggable="false"
+              />
               XYX
             </div>
           </div>

@@ -1,4 +1,4 @@
-export const required = (value: string) => (value ? undefined : 'Required');
+export const required = (value: string) => (!value ? 'Required' : undefined);
 
 export const minLength = (min: number) => (value: string | undefined) =>
   value && value.length >= min ? undefined : `Should be at least ${min} characters`;

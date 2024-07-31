@@ -62,6 +62,10 @@ const customStyles = (
       width: ItemsSelectedLength >= 3 || editProductSelectedLength >= 3 ? '79%' : '70%',
       height: ItemsSelectedLength >= 3 || editProductSelectedLength >= 3 ? '70px' : '42px',
     },
+    '@media (max-width: 428px)': {
+      width: ItemsSelectedLength >= 2 || editProductSelectedLength >= 2 ? '65%' : '70%',
+      height: ItemsSelectedLength >= 2 || editProductSelectedLength >= 2 ? '100px' : '42px',
+    },
   }),
 
   indicatorSeparator: () => ({

@@ -2,6 +2,7 @@ export { default as Eye } from './Eye';
 export { default as Copy } from './Copy';
 export { default as Bell } from './Bell';
 export { default as Home } from './Home';
+export { default as Edit } from './Edit';
 export { default as Check } from './Check';
 export { default as Search } from './Search';
 export { default as Close } from './Close';

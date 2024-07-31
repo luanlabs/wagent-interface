@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Image, { StaticImageData } from 'next/image';
 
 import CInput from '@/components/CInput';
 import CModal from '@/components/CModal';
@@ -9,6 +10,7 @@ import CButtonGroup from '@/components/CButtonGroup';
 import { MultiSelectType } from '@/models';
 import { methodTabs, tokensList } from '@/constants/mockLists';
 import { IProductItemCard } from '@/constants/types';
+import { Edit } from '@/assets';
 
 interface EditProductModalProps {
   onClose: () => void;
@@ -23,6 +25,8 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
   const [amount, setAmount] = useState('');
   const [productName, setProductName] = useState('');
   const [errorText, setErrorText] = useState('');
+  const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const handleSelectedMethod = (value: string[]) => {
     setSelectedMethod(value);
@@ -41,14 +45,23 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
     setAmount(e.target.value);
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setImage(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
   const handleSave = () => {
-    if (productName && selectedMethod.length && selectedTokens?.length && amount) {
+    if (productName && selectedMethod.length && selectedTokens?.length && amount && image) {
       const updatedProduct = {
         ...product,
         method: selectedMethod,
         title: productName,
         tokens: selectedTokens,
         amount,
+        image: URL.createObjectURL(image),
       };
       onSaveProduct(updatedProduct);
     } else {
@@ -62,12 +75,18 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
       setSelectedTokens(product.tokens);
       setAmount(product.amount);
       setProductName(product.title);
+      setImagePreview(
+        typeof product.image === 'string' ? product.image : product.image?.src || null,
+      );
+      setImage(null);
     } else {
       setSelectedMethod([]);
       setSelectedTokens(null);
       setAmount('');
       setProductName('');
       setErrorText('');
+      setImage(null);
+      setImagePreview(null);
     }
   }, [product]);
 
@@ -76,6 +95,38 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
       <div className={`transition-opacity duration-300 ${errorText ? 'opacity-100' : 'opacity-0'}`}>
         <p className="text-red-600 text-[14px]">{errorText}</p>
       </div>
+
+      <div className="relative">
+        <p className="text-sm select-none font-normal text-offBlack mb-[6px]">Product Image</p>
+
+        {imagePreview ? (
+          <div className="relative w-20 h-20">
+            <Image
+              src={imagePreview}
+              alt="Product"
+              width={0}
+              height={0}
+              className="w-full h-full object-cover"
+            />
+            <label className="cursor-pointer">
+              <div className="absolute bottom-0 right-0 left-[65px] top-[65px]">
+                <Edit />
+              </div>
+              <input type="file" className="hidden" onChange={handleImageChange} />
+            </label>
+          </div>
+        ) : (
+          <div className="relative w-20 h-20 border border-gray-300">
+            <label className="cursor-pointer absolute bottom-0 right-0 left-[65px] top-[65px]">
+              <div>
+                <Edit />
+              </div>
+              <input type="file" className="hidden" onChange={handleImageChange} />
+            </label>
+          </div>
+        )}
+      </div>
+
       <CInput
         border
         placeholder="Product name"

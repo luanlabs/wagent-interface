@@ -28,12 +28,12 @@ const SignupContainer = () => {
             />
             <div
               className="absolute flex gap-2 items-center select-none text-xs text-darkGreen short:text-xs
-              bigScreen:text-sm bigScreen:bottom-[5%] bigScreen:left-[60px] short:left-9 bottom-[26px] left-[46px]"
+              bigScreen:text-sm bigScreen:bottom-[5%] bigScreen:left-[60px] short:left-9 bottom-[26px] left-[48px]"
             >
               <Image
                 src={shop}
                 alt="shop icon"
-                className="!select-none w-[18px] h-[18px] short:h-3 short:w-3"
+                className="!select-none w-[16px] h-[16px] bigScreen:h-[18px] bigScreen:w-[18px] short:h-3 short:w-3"
                 draggable="false"
               />
               XYX

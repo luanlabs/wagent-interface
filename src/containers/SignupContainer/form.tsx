@@ -11,16 +11,20 @@ import CButton from '@/components/CButton';
 import CCheckbox from '@/components/CCheckbox';
 import { required, minLength, validateEmail, validatePassword } from '@/utils/validators';
 
+import FetchAuth from './fetchAuth';
+import CLoadingModal from '@/components/CLoadingModal';
+
 export type FormValues = {
-  store: string;
+  storeName: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 };
 
 const SignUpForm = () => {
   const routes = useRouter();
   const [isRememberChecked, setIsRememberChecked] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleRedirectToSignIn = () => {
     routes.push(Pages.SIGNIN);
@@ -32,8 +36,17 @@ const SignUpForm = () => {
 
   const onSubmit = (values: FormValues) => {
     console.log(isRememberChecked);
+    FetchAuth({ email: values.email, storeName: values.storeName, password: values.password }).then(
+      (data) => {
+        if (data.result?.message === 'Verification email was sent, please check your email.') {
+          setIsOpen(true);
+        }
+      },
+    );
+  };
 
-    console.log(values);
+  const handleCloseModal = () => {
+    setIsOpen(false);
   };
 
   const composeValidators =
@@ -56,7 +69,6 @@ const SignUpForm = () => {
       <div className="flex justify-start items-start">
         <Typography />
       </div>
-
       <div className="flex justify-center mobile:items-start mobile:mt-8 items-center h-full">
         <div className="flex flex-col w-full">
           <div className="my-4 space-y-4">
@@ -70,12 +82,13 @@ const SignUpForm = () => {
               <form onSubmit={handleSubmit} autoComplete="false">
                 <div className="space-y-3 w-full">
                   <Field
-                    name="store"
+                    name="storeName"
                     validate={composeValidators(required, minLength(4))}
                     render={({ input, meta }) => (
                       <CInput
                         {...input}
                         border
+                        type="text"
                         autoFocus
                         placeholder="Store Name"
                         meta={meta}
@@ -92,6 +105,7 @@ const SignUpForm = () => {
                       <CInput
                         {...input}
                         border
+                        type="email"
                         placeholder="Email"
                         meta={meta}
                         error={meta.touched && meta.error}
@@ -161,7 +175,6 @@ const SignUpForm = () => {
           />
         </div>
       </div>
-
       <div className="flex justify-between items-center w-full">
         <p className="text-sm select-none text-smokyBlue">Already have an Account?</p>
 
@@ -172,6 +185,12 @@ const SignUpForm = () => {
           onClick={handleRedirectToSignIn}
         />
       </div>
+      <CLoadingModal
+        success
+        isOpen={isOpen}
+        onClose={handleCloseModal}
+        title="Verification email was sent, please check your email."
+      />
     </div>
   );
 };

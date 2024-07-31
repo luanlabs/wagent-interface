@@ -113,7 +113,6 @@ const CInput = ({
         <input
           {...props}
           {...input}
-          type={type}
           meta={meta}
           value={value}
           onClick={onClick}

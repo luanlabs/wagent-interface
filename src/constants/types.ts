@@ -59,3 +59,27 @@ export interface IFilterValues {
   cancelled: boolean;
   selectedTokens: ReducerTokensType[];
 }
+
+export interface IUserAuth {
+  id: string;
+  email: string;
+  storeName: string;
+  storeImage: string;
+  token: string;
+}
+
+export interface IApiResponse<ResultType, ErrorType = void> {
+  result?: ResultType;
+  error?: ErrorType;
+}
+
+export interface IApiError {
+  code: number;
+  message: string;
+}
+export interface IApiMessage {
+  message: string;
+}
+
+export type IUserAuthResponse = IApiResponse<IUserAuth, IApiError>;
+export type IUserAuthResponseMessage = IApiResponse<IApiMessage, IApiError>;

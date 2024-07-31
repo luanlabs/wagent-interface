@@ -43,6 +43,10 @@ const customStyles = (
       minHeight: ItemsSelectedLength >= 3 || editProductSelectedLength >= 3 ? '90px' : '42px',
     },
 
+    '@media (max-width: 428px)': {
+      minHeight: ItemsSelectedLength >= 2 || editProductSelectedLength >= 3 ? '90px' : '42px',
+    },
+
     boxShadow: 'none',
     '&:hover': {
       borderColor: '#D0D5DD',
@@ -62,9 +66,15 @@ const customStyles = (
       width: ItemsSelectedLength >= 3 || editProductSelectedLength >= 3 ? '79%' : '70%',
       height: ItemsSelectedLength >= 3 || editProductSelectedLength >= 3 ? '70px' : '42px',
     },
+
     '@media (max-width: 428px)': {
-      width: ItemsSelectedLength >= 2 || editProductSelectedLength >= 2 ? '65%' : '70%',
+      width: ItemsSelectedLength >= 2 || editProductSelectedLength >= 2 ? '73%' : '70%',
       height: ItemsSelectedLength >= 2 || editProductSelectedLength >= 2 ? '100px' : '42px',
+    },
+
+    '@media (max-width: 355px)': {
+      width: ItemsSelectedLength >= 2 || editProductSelectedLength >= 2 ? '70%' : '70%',
+      height: ItemsSelectedLength >= 3 || editProductSelectedLength >= 2 ? '150px' : '42px',
     },
   }),
 

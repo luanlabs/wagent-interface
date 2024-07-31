@@ -13,13 +13,7 @@ import CRadioButtonGroup from '@/components/CRadioButtonGroup';
 import CSelectSearchable from '@/components/CSelectSearchable';
 
 import { BasicOptionType } from '@/models';
-
-const pageTitle = (
-  <div className="flex justify-between items-center w-full -my-1">
-    <h1>Settings</h1>
-    <CButton variant="add" text="Edit profile" className="!w-[130px] text-base" />
-  </div>
-);
+import EditProfile from '../EditProfile';
 
 const options: BasicOptionType<string>[] = [
   { value: 'usdt', label: 'USDT' },
@@ -33,6 +27,7 @@ const switchOptions = [
 ];
 
 const SettingsContainer = () => {
+  const [EditProfileIsOpen, setEditProfileIsOpen] = useState(false);
   const [apiKeyValue, setApiKeyValue] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
 
@@ -52,6 +47,22 @@ const SettingsContainer = () => {
   const handleCRadioButtons = (e: BasicOptionType<string>) => {
     console.log(e);
   };
+
+  const ModalOnClose = () => {
+    setEditProfileIsOpen(false);
+  };
+
+  const pageTitle = (
+    <div className="flex justify-between items-center w-full -my-1">
+      <h1>Settings</h1>
+      <CButton
+        variant="add"
+        text="Edit profile"
+        className="!w-[130px] text-base"
+        onClick={() => setEditProfileIsOpen(true)}
+      />
+    </div>
+  );
 
   return (
     <CPageCard title={pageTitle}>
@@ -155,6 +166,8 @@ const SettingsContainer = () => {
             </div>
           </div>
         </CCard>
+
+        <EditProfile isOpen={EditProfileIsOpen} onClose={ModalOnClose} />
       </div>
     </CPageCard>
   );

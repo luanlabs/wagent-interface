@@ -8,11 +8,11 @@ import { Typography } from '@/assets';
 import Pages from '@/constants/pages';
 import CInput from '@/components/CInput';
 import CButton from '@/components/CButton';
-import { FormValues, IApiError } from '@/constants/types';
 import CCheckbox from '@/components/CCheckbox';
+import { FormValues, IApiError } from '@/constants/types';
 import { required, minLength, validateEmail, validatePassword } from '@/utils/validators';
 
-import FetchAuth from './fetchLogin';
+import FetchLogin from './fetchLogin';
 
 const SignUpForm = () => {
   const routes = useRouter();
@@ -30,25 +30,24 @@ const SignUpForm = () => {
   const handleRememberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsRememberChecked(e.target.checked);
   };
+
   const onSubmit = async (values: FormValues) => {
     try {
-      const data = await FetchAuth({ email: values.email, password: values.password });
-      console.log(data.result?.token);
-
+      const data = await FetchLogin({ email: values.email, password: values.password });
       if (data.result?.token) {
         setResMessage({
           status: 'success',
           title: '',
           message: '',
         });
-        console.log(data.result?.token);
-
-        localStorage.setItem('token', data.result?.token);
+        if (isRememberChecked) {
+          localStorage.setItem('token', data.result?.token);
+        } else {
+          sessionStorage.setItem('token', data.result?.token);
+        }
         routes.push(Pages.DASHBOARD);
       }
     } catch (error: IApiError | any) {
-      console.log(error);
-
       if (error.data.message === 'User not exist') {
         setResMessage({
           status: 'error',
@@ -128,18 +127,14 @@ const SignUpForm = () => {
                 </div>
 
                 <div className="w-full mt-2 space-y-3">
-                  <Field
-                    name="remember"
-                    render={() => (
-                      <CCheckbox
-                        label={<p className="!text-smokyBlue">Remember me</p>}
-                        checked={isRememberChecked}
-                        onChange={handleRememberChange}
-                        value="remember"
-                        className="mt-3 -ml-[6px]"
-                      />
-                    )}
+                  <CCheckbox
+                    label={<p className="!text-smokyBlue">Remember me</p>}
+                    checked={isRememberChecked}
+                    onChange={handleRememberChange}
+                    value="remember"
+                    className="mt-3 -ml-[6px]"
                   />
+
                   {resMessage.status === 'error' && (
                     <div className="text-error text-sm my-1">{resMessage.message}</div>
                   )}

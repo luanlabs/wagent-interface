@@ -3,7 +3,6 @@
 import React from 'react';
 import Image from 'next/image';
 
-import shop from 'public/images/shop.svg';
 import settingsGlance from 'public/images/settingsGlance.svg';
 
 import SignUpForm from './form';

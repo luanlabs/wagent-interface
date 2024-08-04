@@ -1,8 +1,8 @@
 import fetch from '@/utils/request';
-import { FormValues, IUserAuthResponseMessage } from '@/constants/types';
+import { FormValues, IUserLoginResponseMessage } from '@/constants/types';
 
-const FetchAuth = async (user: FormValues) => {
-  const { data } = await fetch<IUserAuthResponseMessage>(
+const FetchLogin = async (user: FormValues) => {
+  const { data } = await fetch<IUserLoginResponseMessage>(
     `${process.env.NEXT_PUBLIC_API}/users/auth/login`,
     {
       method: 'POST',
@@ -16,4 +16,4 @@ const FetchAuth = async (user: FormValues) => {
   return data;
 };
 
-export default FetchAuth;
+export default FetchLogin;

@@ -65,6 +65,7 @@ export type FormValues = {
   email: string;
   password: string;
   confirmPassword?: string;
+  remember?: boolean;
 };
 
 export interface IUserAuth {
@@ -85,8 +86,13 @@ export interface IApiError {
   message: string;
 }
 export interface IApiMessage {
-  message: string;
+  message?: string;
+}
+export interface IApiLoginResponse extends IApiMessage {
+  id: string;
+  email?: string;
+  token: string;
 }
 
-export type IUserAuthResponse = IApiResponse<IUserAuth, IApiError>;
 export type IUserAuthResponseMessage = IApiResponse<IApiMessage, IApiError>;
+export type IUserLoginResponseMessage = IApiResponse<IApiLoginResponse, IApiError>;

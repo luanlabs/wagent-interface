@@ -1,52 +1,78 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Form, Field } from 'react-final-form';
+import { Form, Field, useForm } from 'react-final-form';
 
 import { Typography } from '@/assets';
 import Pages from '@/constants/pages';
 import CInput from '@/components/CInput';
+import CModal from '@/components/CModal';
 import CButton from '@/components/CButton';
-import CCheckbox from '@/components/CCheckbox';
+import { FormValues, IApiError } from '@/constants/types';
 import { required, minLength, validateEmail, validatePassword } from '@/utils/validators';
 
 import FetchAuth from './fetchAuth';
-import CLoadingModal from '@/components/CLoadingModal';
 
-export type FormValues = {
-  storeName: string;
-  email: string;
-  password: string;
-  confirmPassword?: string;
-};
+import mailbox from 'public/images/mailbox.png';
 
 const SignUpForm = () => {
-  const routes = useRouter();
-  const [isRememberChecked, setIsRememberChecked] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [resMessage, setResMessage] = useState({
+    status: '',
+    title: '',
+    message: '',
+  });
+  const routes = useRouter();
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
 
   const handleRedirectToSignIn = () => {
     routes.push(Pages.SIGNIN);
   };
 
-  const handleRememberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsRememberChecked(e.target.checked);
-  };
+  const onSubmit = async (values: FormValues) => {
+    try {
+      const data = await FetchAuth({
+        email: values.email,
+        storeName: values.storeName,
+        password: values.password,
+      });
+      if (data.result?.message === 'Verification email was sent, please check your email.') {
+        setResMessage({
+          status: 'success',
+          title: 'Registration Successful',
+          message: 'Please verify your Email address',
+        });
+        setIsOpen(true);
+        setTimeout(() => {
+          handleCloseModal();
+          values.confirmPassword = '';
+          values.email = '';
+          values.password = '';
+          values.storeName = '';
+        }, 2000);
+      }
+    } catch (error: IApiError | any) {
+      if (error.data.message === 'User Already Exist!') {
+        setResMessage({
+          status: 'error',
+          title: 'Registration Failed',
+          message: 'Your Email is already registered, Sign in instead.',
+        });
+      } else {
+        setResMessage({
+          status: 'error',
+          title: 'Registration Failed',
+          message: 'An error occurred during authentication, try again.',
+        });
+        error = error.data.message;
+      }
+    }
 
-  const onSubmit = (values: FormValues) => {
-    console.log(isRememberChecked);
-    FetchAuth({ email: values.email, storeName: values.storeName, password: values.password }).then(
-      (data) => {
-        if (data.result?.message === 'Verification email was sent, please check your email.') {
-          setIsOpen(true);
-        }
-      },
-    );
-  };
-
-  const handleCloseModal = () => {
-    setIsOpen(false);
+    return {};
   };
 
   const composeValidators =
@@ -69,15 +95,15 @@ const SignUpForm = () => {
       <div className="flex justify-start items-start">
         <Typography />
       </div>
-      <div className="flex justify-center mobile:items-start mobile:mt-8 items-center h-full">
+      <div className="flex justify-center mobile:items-start mobile:mt-8 short:items-center short:mt-0 desktop:mt-[25%] bigScreen:mt-[36%] h-full">
         <div className="flex flex-col w-full">
           <div className="my-4 space-y-4">
             <p className="text-2xl font-medium text-darkGreen select-none">Sign Up</p>
           </div>
-
           <Form
-            onSubmit={onSubmit}
             validate={validateForm}
+            onSubmit={onSubmit}
+            keepDirtyOnReinitialize
             render={({ handleSubmit, submitError, submitting, pristine, invalid }) => (
               <form onSubmit={handleSubmit} autoComplete="false">
                 <div className="space-y-3 w-full">
@@ -89,7 +115,6 @@ const SignUpForm = () => {
                         {...input}
                         border
                         type="text"
-                        autoFocus
                         placeholder="Store Name"
                         meta={meta}
                         error={meta.touched && meta.error}
@@ -146,28 +171,16 @@ const SignUpForm = () => {
                     )}
                   />
                 </div>
-
-                <div className="w-full mt-2 space-y-3">
-                  <Field
-                    name="remember"
-                    render={() => (
-                      <CCheckbox
-                        label={<p className="!text-smokyBlue">Remember me</p>}
-                        checked={isRememberChecked}
-                        onChange={handleRememberChange}
-                        value="remember"
-                        className="mt-3 -ml-[6px]"
-                      />
-                    )}
-                  />
-
-                  {submitError && <div className="error">{submitError}</div>}
+                {resMessage.status === 'error' && (
+                  <div className="text-error text-sm my-1">{resMessage.message}</div>
+                )}
+                <div className="w-full">
                   <CButton
                     variant="confirm"
                     text="Sign Up"
-                    className="mt-4"
+                    className="mt-2"
                     type="submit"
-                    disabled={pristine || submitting || invalid}
+                    disabled={pristine || submitError || submitting || invalid}
                   />
                 </div>
               </form>
@@ -185,12 +198,15 @@ const SignUpForm = () => {
           onClick={handleRedirectToSignIn}
         />
       </div>
-      <CLoadingModal
-        success
-        isOpen={isOpen}
-        onClose={handleCloseModal}
-        title="Verification email was sent, please check your email."
-      />
+      <CModal isOpen={isOpen} onClose={handleCloseModal} width="310" className="w-[310px] py-2">
+        <div className="w-full flex flex-col justify-center items-center">
+          <Image src={mailbox} alt="email Icon" width={54} height={54} />
+        </div>
+        <div className={`text-center space-y-2`}>
+          <p className="text-lg text-darkGreen ">{resMessage.title}</p>
+          <p className="text-sm text-[#667085]">{resMessage.message}</p>
+        </div>
+      </CModal>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 
 import shop from 'public/images/shop.svg';
-import dashboardGlance from 'public/images/dashboardGlance.svg';
+import settingsGlance from 'public/images/settingsGlance.svg';
 
 import SignUpForm from './form';
 
@@ -18,8 +18,8 @@ const SignupContainer = () => {
         <div className="flex justify-end items-end h-full">
           <div className="relative flex w-full h-[85%]">
             <Image
-              src={dashboardGlance}
-              alt="dashboardGlance"
+              src={settingsGlance}
+              alt="settingsGlance"
               fill
               priority
               className="!select-none"

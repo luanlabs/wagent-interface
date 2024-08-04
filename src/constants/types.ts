@@ -60,6 +60,13 @@ export interface IFilterValues {
   selectedTokens: ReducerTokensType[];
 }
 
+export type FormValues = {
+  storeName?: string;
+  email: string;
+  password: string;
+  confirmPassword?: string;
+};
+
 export interface IUserAuth {
   id: string;
   email: string;
@@ -74,7 +81,7 @@ export interface IApiResponse<ResultType, ErrorType = void> {
 }
 
 export interface IApiError {
-  code: number;
+  code?: number;
   message: string;
 }
 export interface IApiMessage {

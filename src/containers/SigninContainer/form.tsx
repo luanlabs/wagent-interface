@@ -8,7 +8,7 @@ import { Typography } from '@/assets';
 import Pages from '@/constants/pages';
 import CInput from '@/components/CInput';
 import CButton from '@/components/CButton';
-import { FormValues } from '@/constants/types';
+import { FormValues, IApiError } from '@/constants/types';
 import CCheckbox from '@/components/CCheckbox';
 import { required, minLength, validateEmail, validatePassword } from '@/utils/validators';
 
@@ -17,6 +17,11 @@ import FetchAuth from './fetchLogin';
 const SignUpForm = () => {
   const routes = useRouter();
   const [isRememberChecked, setIsRememberChecked] = useState(false);
+  const [resMessage, setResMessage] = useState({
+    status: '',
+    title: '',
+    message: '',
+  });
 
   const handleRedirectToSignUp = () => {
     routes.push(Pages.SIGNUP);
@@ -25,10 +30,47 @@ const SignUpForm = () => {
   const handleRememberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsRememberChecked(e.target.checked);
   };
+  const onSubmit = async (values: FormValues) => {
+    try {
+      const data = await FetchAuth({ email: values.email, password: values.password });
+      console.log(data.result?.token);
 
-  const onSubmit = (values: FormValues) => {
-    console.log(isRememberChecked);
-    FetchAuth({ email: values.email, password: values.password }).then((data) => {});
+      if (data.result?.token) {
+        setResMessage({
+          status: 'success',
+          title: '',
+          message: '',
+        });
+        console.log(data.result?.token);
+
+        localStorage.setItem('token', data.result?.token);
+        routes.push(Pages.DASHBOARD);
+      }
+    } catch (error: IApiError | any) {
+      console.log(error);
+
+      if (error.data.message === 'User not exist') {
+        setResMessage({
+          status: 'error',
+          title: 'Login Failed',
+          message: 'User with this Email not found, Sign up instead.',
+        });
+      } else if (error.data.message === 'Invalid credentials') {
+        setResMessage({
+          status: 'error',
+          title: 'Login Failed',
+          message: 'Email or password does not match with your information in our database.',
+        });
+      } else {
+        setResMessage({
+          status: 'error',
+          title: 'Login Failed',
+          message: 'An error occurred during authentication, try again.',
+        });
+        error = error.data.message;
+      }
+    }
+    return {};
   };
 
   const composeValidators =
@@ -98,8 +140,9 @@ const SignUpForm = () => {
                       />
                     )}
                   />
-
-                  {submitError && <div className="error">{submitError}</div>}
+                  {resMessage.status === 'error' && (
+                    <div className="text-error text-sm my-1">{resMessage.message}</div>
+                  )}
                   <CButton
                     variant="confirm"
                     text="Sign Up"

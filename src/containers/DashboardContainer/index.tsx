@@ -14,6 +14,7 @@ import { history as historyMock } from '@/constants/mockLists';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 
 import { HistoryListHeader } from '../HistoryContainer/ListHeader';
+import RevenueChart from './RevenueChart';
 
 const DashboardContainer = () => {
   const dispatch = useAppDispatch();
@@ -25,6 +26,16 @@ const DashboardContainer = () => {
 
   return (
     <CPageCard title="Dashboard" className="overflow-y-auto">
+      <div className=" flex mb-[15px] space-x-4 w-full mobile:flex-col mobile:space-x-0 mobile:space-y-2">
+        <RevenueChart title="Total Revenue" amount="32331.93" percentage={12.31} />
+        <RevenueChart
+          title="Monthly Revenue"
+          amount="4312.23"
+          percentage={28.31}
+          summaryText="25 Active Streams"
+        />
+        <RevenueChart title="Monthly Growth" amount="3233193" percentage={-12.31} />
+      </div>
       <div
         className="flex space-x-4 h-[286px] w-full mobile:h-full justify-between
         mobile:justify-center mobile:flex-col mobile:space-x-0 mobile:space-y-3 overflow-hidden"

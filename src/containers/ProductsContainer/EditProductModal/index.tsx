@@ -6,9 +6,9 @@ import CSelect from '@/components/CSelect';
 import CButton from '@/components/CButton';
 import CButtonGroup from '@/components/CButtonGroup';
 
-import { MultiSelectType } from '@/models';
 import { allTokensList, methodTabs } from '@/constants/mockLists';
 import { IProductItemCard } from '@/constants/types';
+import { MultiSelectType } from '@/models';
 
 interface EditProductModalProps {
   onClose: () => void;
@@ -35,8 +35,7 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
   };
 
   const handleProductNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.trim();
-    setProductName(value);
+    setProductName(e.target.value);
   };
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,7 +94,7 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
         label="Product name"
         onChange={handleProductNameChange}
         value={productName}
-        maxLength={11}
+        maxLength={13}
       />
       <div>
         <p className="text-sm select-none font-normal text-offBlack mb-[6px]">Method</p>

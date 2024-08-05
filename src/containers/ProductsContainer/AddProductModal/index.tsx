@@ -34,8 +34,7 @@ const AddProductModal = ({ isOpen, onClose, onAddProduct }: ProductModalProps) =
   };
 
   const handleProductNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.trim();
-    setProductName(value);
+    setProductName(e.target.value);
   };
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {

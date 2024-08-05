@@ -40,8 +40,8 @@ const Aside = () => {
             </div>
           ))}
         </div>
-        <div className="absolute bottom-4 left-6">
-          <Profile />
+        <div className={`absolute bottom-4 left-5 mobile:hidden `}>
+          <Profile isMinimizedAside={isMinimized} />
         </div>
       </aside>
     </CCard>

@@ -15,21 +15,21 @@ interface EditProfileProps {
 const EditProfile = ({ isOpen, onClose }: EditProfileProps) => {
   const profile = useSelector((state) => state.profile);
   const dispatch = useDispatch();
-  const [shopName, setShopName] = useState(profile.shopName);
-  const [shopLogo, setShopLogo] = useState(profile.shopLogo);
+  const [storeName, setStoreName] = useState(profile.storeName);
+  const [storeLogo, setStoreLogo] = useState(profile.storeLogo);
   const [newLogo, setNewLogo] = useState<string | ArrayBuffer | null>(null);
 
   const handleChange = () => {
-    const logoToUpdate = newLogo || shopLogo;
-    dispatch(setProfile({ shopName, shopLogo: logoToUpdate }));
-    setShopLogo(logoToUpdate as string);
+    const logoToUpdate = newLogo || storeLogo;
+    dispatch(setProfile({ storeName, storeLogo: logoToUpdate }));
+    setStoreLogo(logoToUpdate as string);
     onClose();
   };
 
   const handleRemove = () => {
     dispatch(clearProfile());
-    setShopName('');
-    setShopLogo('/images/default.jpg');
+    setStoreName('');
+    setStoreLogo('/images/default.jpg');
     setNewLogo(null);
   };
 
@@ -52,7 +52,7 @@ const EditProfile = ({ isOpen, onClose }: EditProfileProps) => {
           <div className="flex w-full items-center">
             <div className="h-[50px] w-[50px] mr-4">
               <Image
-                src={newLogo ? newLogo : shopLogo}
+                src={newLogo ? newLogo : storeLogo}
                 width={0}
                 height={0}
                 alt="Store Logo"
@@ -60,7 +60,7 @@ const EditProfile = ({ isOpen, onClose }: EditProfileProps) => {
               />
             </div>
 
-            <div className="space-x-2">
+            <div className="flex space-x-2">
               <input
                 type="file"
                 accept="image/*"
@@ -71,13 +71,13 @@ const EditProfile = ({ isOpen, onClose }: EditProfileProps) => {
               <CButton
                 variant="outline"
                 text="Change"
-                className="w-[103px]"
+                className="!w-[103px]"
                 onClick={() => document.getElementById('fileInput')?.click()}
               />
               <CButton
                 variant="outline"
                 text="Remove"
-                className="w-[103px]"
+                className="!w-[103px]"
                 onClick={handleRemove}
               />
             </div>
@@ -88,8 +88,8 @@ const EditProfile = ({ isOpen, onClose }: EditProfileProps) => {
           <p className="text-sm select-none font-normal text-offBlack mb-[6px]">Shop name</p>
           <CInput
             placeholder="Amanda shop"
-            value={shopName}
-            onChange={(e) => setShopName(e.target.value)}
+            value={storeName}
+            onChange={(e) => setStoreName(e.target.value)}
             border
           />
         </div>

@@ -27,7 +27,7 @@ const switchOptions = [
 ];
 
 const SettingsContainer = () => {
-  const [EditProfileIsOpen, setEditProfileIsOpen] = useState(false);
+  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const [apiKeyValue, setApiKeyValue] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
 
@@ -49,7 +49,7 @@ const SettingsContainer = () => {
   };
 
   const ModalOnClose = () => {
-    setEditProfileIsOpen(false);
+    setIsEditProfileOpen(false);
   };
 
   const pageTitle = (
@@ -59,15 +59,13 @@ const SettingsContainer = () => {
         variant="add"
         text="Edit profile"
         className="!w-[130px] text-base"
-        onClick={() => setEditProfileIsOpen(true)}
+        onClick={() => setIsEditProfileOpen(true)}
       />
     </div>
   );
 
   return (
     <CPageCard title={pageTitle}>
-      {/* <p className="text-[#101828] text-2xl mb-3">Payment Preferences</p> */}
-
       <div className="space-y-3">
         <CCard className="flex justify-between p-6">
           <div className="flex flex-col">
@@ -167,7 +165,7 @@ const SettingsContainer = () => {
           </div>
         </CCard>
 
-        <EditProfile isOpen={EditProfileIsOpen} onClose={ModalOnClose} />
+        <EditProfile isOpen={isEditProfileOpen} onClose={ModalOnClose} />
       </div>
     </CPageCard>
   );

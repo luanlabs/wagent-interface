@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface ProfileState {
-  shopLogo: string;
-  shopName: string;
+  storeLogo: string;
+  storeName: string;
 }
 
 const initialState: ProfileState = {
-  shopLogo: '/images/p.jpg',
-  shopName: 'Amanda Shop',
+  storeLogo: '/images/p.jpg',
+  storeName: 'Amanda Shop',
 };
 
 const profileSlice = createSlice({
@@ -15,12 +15,12 @@ const profileSlice = createSlice({
   initialState,
   reducers: {
     setProfile(state, action: PayloadAction<ProfileState>) {
-      state.shopLogo = action.payload.shopLogo;
-      state.shopName = action.payload.shopName;
+      state.storeLogo = action.payload.storeLogo;
+      state.storeName = action.payload.storeName;
     },
     clearProfile(state) {
-      state.shopLogo = '/images/default.jpg';
-      state.shopName = '';
+      state.storeLogo = '/images/default.jpg';
+      state.storeName = '';
     },
   },
 });

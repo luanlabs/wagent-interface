@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
+import Pages from '@/constants/pages';
 import authService from '@/services/authService';
 import { AuthCredentials, IApiError, IUserAuthResponseMessage } from '@/constants/types';
 
@@ -26,6 +28,7 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
     title: '',
     message: '',
   });
+  const router = useRouter();
 
   const handleCloseModal = () => {
     setIsOpen(false);
@@ -44,11 +47,7 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
         setIsOpen(true);
         setTimeout(() => {
           handleCloseModal();
-          // Reset form
-          credentials.confirmPassword = '';
-          credentials.email = '';
-          credentials.password = '';
-          credentials.storeName = '';
+          router.push(Pages.SIGNIN);
         }, 2000);
       }
     } catch (error) {

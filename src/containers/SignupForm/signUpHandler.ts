@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import AuthService from '@/services/authService';
+import authService from '@/services/authService';
 import { AuthCredentials, IApiError, IUserAuthResponseMessage } from '@/constants/types';
 
 interface Response {
@@ -33,7 +33,7 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
 
   const onSubmit = async (credentials: AuthCredentials): Promise<void> => {
     try {
-      const data = await AuthService<IUserAuthResponseMessage>('auth', {
+      const data = await authService<IUserAuthResponseMessage>('auth', {
         email: credentials.email,
         storeName: credentials.storeName,
         password: credentials.password,

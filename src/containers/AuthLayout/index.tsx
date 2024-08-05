@@ -5,10 +5,10 @@ import Image from 'next/image';
 
 type AuthLayoutProps = {
   children: React.ReactNode;
-  ImageSrc: string;
+  imageSrc: string;
 };
 
-const AuthLayout = ({ children, ImageSrc }: AuthLayoutProps) => {
+const AuthLayout = ({ children, imageSrc }: AuthLayoutProps) => {
   return (
     <div className="flex items-center mobile:justify-center justify-between h-screen mobile:bg-white bg-ashGray">
       <div className="w-[35%] mobile:w-full h-full p-6">{children}</div>
@@ -16,7 +16,7 @@ const AuthLayout = ({ children, ImageSrc }: AuthLayoutProps) => {
         <div className="flex justify-end items-end h-full">
           <div className="relative flex w-full h-[85%]">
             <Image
-              src={ImageSrc}
+              src={imageSrc}
               alt="dashboardImage"
               fill
               priority

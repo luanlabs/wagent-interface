@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const SignUp = () => {
   return (
-    <AuthLayout ImageSrc={dashboardGlance}>
+    <AuthLayout imageSrc={dashboardGlance}>
       <SignUpForm />
     </AuthLayout>
   );

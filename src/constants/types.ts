@@ -60,7 +60,7 @@ export interface IFilterValues {
   selectedTokens: ReducerTokensType[];
 }
 
-export type FormValues = {
+export type AuthCredentials = {
   storeName?: string;
   email: string;
   password: string;
@@ -82,17 +82,27 @@ export interface IApiResponse<ResultType, ErrorType = void> {
 }
 
 export interface IApiError {
+  data: {
+    message: string; // Ensure `message` is always present in `data`
+  };
   code?: number;
-  message: string;
 }
+
 export interface IApiMessage {
   message?: string;
 }
+
 export interface IApiLoginResponse extends IApiMessage {
   id: string;
   email?: string;
   token: string;
 }
 
-export type IUserAuthResponseMessage = IApiResponse<IApiMessage, IApiError>;
+export interface IUserAuthResponseMessage
+  extends IApiResponse<
+    {
+      message: string;
+    },
+    IApiError
+  > {}
 export type IUserLoginResponseMessage = IApiResponse<IApiLoginResponse, IApiError>;

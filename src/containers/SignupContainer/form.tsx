@@ -3,85 +3,37 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Form, Field, useForm } from 'react-final-form';
+import { Form, Field } from 'react-final-form';
 
 import { Typography } from '@/assets';
 import Pages from '@/constants/pages';
 import CInput from '@/components/CInput';
 import CModal from '@/components/CModal';
 import CButton from '@/components/CButton';
-import { FormValues, IApiError } from '@/constants/types';
+import { composeValidators } from '@/utils/composeValidators';
+import { AuthCredentials } from '@/constants/types';
 import { required, minLength, validateEmail, validatePassword } from '@/utils/validators';
 
-import FetchAuth from './fetchAuth';
+import SignUpHandler from './signUpHandler';
 
 import mailbox from 'public/images/mailbox.png';
 
 const SignUpForm = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [resMessage, setResMessage] = useState({
-    status: '',
-    title: '',
-    message: '',
-  });
   const routes = useRouter();
+
   const handleCloseModal = () => {
     setIsOpen(false);
   };
+
+  const { onSubmit, response } = SignUpHandler(setIsOpen);
 
   const handleRedirectToSignIn = () => {
     routes.push(Pages.SIGNIN);
   };
 
-  const onSubmit = async (values: FormValues) => {
-    try {
-      const data = await FetchAuth({
-        email: values.email,
-        storeName: values.storeName,
-        password: values.password,
-      });
-      if (data.result?.message === 'Verification email was sent, please check your email.') {
-        setResMessage({
-          status: 'success',
-          title: 'Registration Successful',
-          message: 'Please verify your Email address',
-        });
-        setIsOpen(true);
-        setTimeout(() => {
-          handleCloseModal();
-          values.confirmPassword = '';
-          values.email = '';
-          values.password = '';
-          values.storeName = '';
-        }, 2000);
-      }
-    } catch (error: IApiError | any) {
-      if (error.data.message === 'User Already Exist!') {
-        setResMessage({
-          status: 'error',
-          title: 'Registration Failed',
-          message: 'Your Email is already registered, Sign in instead.',
-        });
-      } else {
-        setResMessage({
-          status: 'error',
-          title: 'Registration Failed',
-          message: 'An error occurred during authentication, try again.',
-        });
-        error = error.data.message;
-      }
-    }
-
-    return {};
-  };
-
-  const composeValidators =
-    (...validators: any[]) =>
-    (value: string) =>
-      validators.reduce((error, validator) => error || validator(value), undefined);
-
-  const validateForm = (values: FormValues) => {
-    const errors: Partial<FormValues> = {};
+  const validateForm = (values: AuthCredentials) => {
+    const errors: Partial<AuthCredentials> = {};
 
     if (values.confirmPassword != values.password) {
       errors.confirmPassword = 'Passwords do not match';
@@ -171,8 +123,8 @@ const SignUpForm = () => {
                     )}
                   />
                 </div>
-                {resMessage.status === 'error' && (
-                  <div className="text-error text-sm my-1">{resMessage.message}</div>
+                {response.status === 'error' && (
+                  <div className="text-error text-sm my-1">{response.message}</div>
                 )}
                 <div className="w-full">
                   <CButton
@@ -203,8 +155,8 @@ const SignUpForm = () => {
           <Image src={mailbox} alt="email Icon" width={54} height={54} />
         </div>
         <div className={`text-center space-y-2`}>
-          <p className="text-lg text-darkGreen ">{resMessage.title}</p>
-          <p className="text-sm text-[#667085]">{resMessage.message}</p>
+          <p className="text-lg text-darkGreen ">{response.title}</p>
+          <p className="text-sm text-[#667085]">{response.message}</p>
         </div>
       </CModal>
     </div>

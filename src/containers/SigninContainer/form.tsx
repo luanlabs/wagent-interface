@@ -9,19 +9,13 @@ import Pages from '@/constants/pages';
 import CInput from '@/components/CInput';
 import CButton from '@/components/CButton';
 import CCheckbox from '@/components/CCheckbox';
-import { FormValues, IApiError } from '@/constants/types';
+import { composeValidators } from '@/utils/composeValidators';
 import { required, minLength, validateEmail, validatePassword } from '@/utils/validators';
-
-import FetchLogin from './fetchLogin';
+import SignInHandler from './signInHandler';
 
 const SignUpForm = () => {
   const routes = useRouter();
   const [isRememberChecked, setIsRememberChecked] = useState(false);
-  const [resMessage, setResMessage] = useState({
-    status: '',
-    title: '',
-    message: '',
-  });
 
   const handleRedirectToSignUp = () => {
     routes.push(Pages.SIGNUP);
@@ -31,51 +25,7 @@ const SignUpForm = () => {
     setIsRememberChecked(e.target.checked);
   };
 
-  const onSubmit = async (values: FormValues) => {
-    try {
-      const data = await FetchLogin({ email: values.email, password: values.password });
-      if (data.result?.token) {
-        setResMessage({
-          status: 'success',
-          title: '',
-          message: '',
-        });
-        if (isRememberChecked) {
-          localStorage.setItem('token', data.result?.token);
-        } else {
-          sessionStorage.setItem('token', data.result?.token);
-        }
-        routes.push(Pages.DASHBOARD);
-      }
-    } catch (error: IApiError | any) {
-      if (error.data.message === 'User not exist') {
-        setResMessage({
-          status: 'error',
-          title: 'Login Failed',
-          message: 'User with this Email not found, Sign up instead.',
-        });
-      } else if (error.data.message === 'Invalid credentials') {
-        setResMessage({
-          status: 'error',
-          title: 'Login Failed',
-          message: 'Email or password does not match with your information in our database.',
-        });
-      } else {
-        setResMessage({
-          status: 'error',
-          title: 'Login Failed',
-          message: 'An error occurred during authentication, try again.',
-        });
-        error = error.data.message;
-      }
-    }
-    return {};
-  };
-
-  const composeValidators =
-    (...validators: any[]) =>
-    (value: string) =>
-      validators.reduce((error, validator) => error || validator(value), undefined);
+  const { onSubmit, response } = SignInHandler(isRememberChecked);
 
   return (
     <div className="flex flex-col bg-white h-full rounded-3xl px-8 py-7 shadow-md mobile:shadow-none mobile:px-0 mobile:py-3 mobile:rounded-none">
@@ -135,8 +85,8 @@ const SignUpForm = () => {
                     className="mt-3 -ml-[6px]"
                   />
 
-                  {resMessage.status === 'error' && (
-                    <div className="text-error text-sm my-1">{resMessage.message}</div>
+                  {response.status === 'error' && (
+                    <div className="text-error text-sm my-1">{response.message}</div>
                   )}
                   <CButton
                     variant="confirm"

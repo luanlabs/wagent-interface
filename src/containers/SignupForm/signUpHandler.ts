@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import AuthService from '@/services/authService';
 import { AuthCredentials, IApiError, IUserAuthResponseMessage } from '@/constants/types';
 
@@ -30,12 +31,12 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
     setIsOpen(false);
   };
 
-  const onSubmit = async (values: AuthCredentials): Promise<void> => {
+  const onSubmit = async (credentials: AuthCredentials): Promise<void> => {
     try {
       const data = await AuthService<IUserAuthResponseMessage>('auth', {
-        email: values.email,
-        storeName: values.storeName,
-        password: values.password,
+        email: credentials.email,
+        storeName: credentials.storeName,
+        password: credentials.password,
       });
 
       if (data.result?.message === 'Verification email was sent, please check your email.') {
@@ -43,16 +44,21 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
         setIsOpen(true);
         setTimeout(() => {
           handleCloseModal();
-          // Reset form fields
-          values.confirmPassword = '';
-          values.email = '';
-          values.password = '';
-          values.storeName = '';
+          // Reset form
+          credentials.confirmPassword = '';
+          credentials.email = '';
+          credentials.password = '';
+          credentials.storeName = '';
         }, 2000);
       }
     } catch (error) {
       const err = error as IApiError;
       let message = ERROR_MESSAGES.REGISTRATION_FAILED;
+
+      setIsOpen(true);
+      setTimeout(() => {
+        handleCloseModal();
+      }, 2000);
 
       if (err.data.message === 'User Already Exist!') {
         message = ERROR_MESSAGES.USER_ALREADY_EXIST;

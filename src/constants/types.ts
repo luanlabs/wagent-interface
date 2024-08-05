@@ -83,7 +83,7 @@ export interface IApiResponse<ResultType, ErrorType = void> {
 
 export interface IApiError {
   data: {
-    message: string; // Ensure `message` is always present in `data`
+    message: string;
   };
   code?: number;
 }

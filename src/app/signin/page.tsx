@@ -1,13 +1,20 @@
 import { Metadata } from 'next';
 
-import SignInContainer from '@/containers/SigninContainer';
+import AuthLayout from '@/containers/AuthLayout';
+import SignInForm from '@/containers/SigninForm';
+
+import settingsGlance from 'public/images/settingsGlance.svg';
 
 export const metadata: Metadata = {
-  title: 'Wagent - Sign up',
+  title: 'Wagent - Sign in',
 };
 
 const SignIn = () => {
-  return <SignInContainer />;
+  return (
+    <AuthLayout ImageSrc={settingsGlance}>
+      <SignInForm />
+    </AuthLayout>
+  );
 };
 
 export default SignIn;

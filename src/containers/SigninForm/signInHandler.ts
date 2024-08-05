@@ -1,8 +1,9 @@
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+import Pages from '@/constants/pages';
 import authService from '@/services/authService';
 import { AuthCredentials, IApiError, IUserLoginResponseMessage } from '@/constants/types';
-import Pages from '@/constants/pages';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 
 interface ResponseMessage {
   status: 'success' | 'error' | '';
@@ -22,13 +23,20 @@ const SUCCESS_MESSAGE: ResponseMessage = {
   message: 'Your login was successful, now we will redirect you to the dashboard.',
 };
 
-const SignInHandler = (isRememberChecked: boolean) => {
+const SignInHandler = (
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  isRememberChecked: boolean,
+) => {
   const router = useRouter();
   const [response, setResponse] = useState<ResponseMessage>({
     status: '',
     title: '',
     message: '',
   });
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
 
   const handleAuthSuccess = (token: string) => {
     setResponse(SUCCESS_MESSAGE);
@@ -37,7 +45,11 @@ const SignInHandler = (isRememberChecked: boolean) => {
     } else {
       sessionStorage.setItem('token', token);
     }
-    router.push(Pages.DASHBOARD);
+    setIsOpen(true);
+    setTimeout(() => {
+      handleCloseModal();
+      router.push(Pages.DASHBOARD);
+    }, 2000);
   };
 
   const handleAuthError = (error: IApiError) => {
@@ -67,6 +79,11 @@ const SignInHandler = (isRememberChecked: boolean) => {
         handleAuthSuccess(data.result.token);
       }
     } catch (error) {
+      setIsOpen(true);
+      setTimeout(() => {
+        handleCloseModal();
+      }, 2000);
+
       handleAuthError(error as IApiError);
     }
   };

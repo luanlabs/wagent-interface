@@ -1,14 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Form, Field } from 'react-final-form';
 
 import { Typography } from '@/assets';
 import Pages from '@/constants/pages';
 import CInput from '@/components/CInput';
-import CModal from '@/components/CModal';
 import CButton from '@/components/CButton';
 import { composeValidators } from '@/utils/composeValidators';
 import { AuthCredentials } from '@/constants/types';
@@ -16,7 +14,7 @@ import { required, minLength, validateEmail, validatePassword } from '@/utils/va
 
 import SignUpHandler from './signUpHandler';
 
-import mailbox from 'public/images/mailbox.png';
+import CLoadingModal from '@/components/CLoadingModal';
 
 const SignUpForm = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -123,9 +121,7 @@ const SignUpForm = () => {
                     )}
                   />
                 </div>
-                {response.status === 'error' && (
-                  <div className="text-error text-sm my-1">{response.message}</div>
-                )}
+
                 <div className="w-full">
                   <CButton
                     variant="confirm"
@@ -150,15 +146,15 @@ const SignUpForm = () => {
           onClick={handleRedirectToSignIn}
         />
       </div>
-      <CModal isOpen={isOpen} onClose={handleCloseModal} width="310" className="w-[310px] py-2">
-        <div className="w-full flex flex-col justify-center items-center">
-          <Image src={mailbox} alt="email Icon" width={54} height={54} />
-        </div>
-        <div className={`text-center space-y-2`}>
-          <p className="text-lg text-darkGreen ">{response.title}</p>
-          <p className="text-sm text-[#667085]">{response.message}</p>
-        </div>
-      </CModal>
+      <CLoadingModal
+        isOpen={isOpen}
+        title={response.title}
+        onClose={handleCloseModal}
+        className="!w-[400px] mobile:!w-[310px]"
+        description={response.message}
+        failed={response.status === 'error'}
+        verifyEmail={response.status === 'success'}
+      />
     </div>
   );
 };

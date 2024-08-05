@@ -11,11 +11,14 @@ import CButton from '@/components/CButton';
 import CCheckbox from '@/components/CCheckbox';
 import { composeValidators } from '@/utils/composeValidators';
 import { required, minLength, validateEmail, validatePassword } from '@/utils/validators';
-import SignInHandler from './signInHandler';
 
-const SignUpForm = () => {
+import SignInHandler from './signInHandler';
+import CLoadingModal from '@/components/CLoadingModal';
+
+const SignInForm = () => {
   const routes = useRouter();
   const [isRememberChecked, setIsRememberChecked] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleRedirectToSignUp = () => {
     routes.push(Pages.SIGNUP);
@@ -25,7 +28,11 @@ const SignUpForm = () => {
     setIsRememberChecked(e.target.checked);
   };
 
-  const { onSubmit, response } = SignInHandler(isRememberChecked);
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
+  const { onSubmit, response } = SignInHandler(setIsOpen, isRememberChecked);
 
   return (
     <div className="flex flex-col bg-white h-full rounded-3xl px-8 py-7 shadow-md mobile:shadow-none mobile:px-0 mobile:py-3 mobile:rounded-none">
@@ -35,7 +42,7 @@ const SignUpForm = () => {
       <div className="flex justify-center mobile:items-start mobile:mt-8 short:items-center short:mt-0 desktop:mt-[25%] bigScreen:mt-[36%] h-full">
         <div className="flex flex-col w-full">
           <div className="my-4 space-y-4">
-            <p className="text-2xl font-medium text-darkGreen select-none">Sign Up</p>
+            <p className="text-2xl font-medium text-darkGreen select-none">Sign In</p>
           </div>
 
           <Form
@@ -85,15 +92,12 @@ const SignUpForm = () => {
                     className="mt-3 -ml-[6px]"
                   />
 
-                  {response.status === 'error' && (
-                    <div className="text-error text-sm my-1">{response.message}</div>
-                  )}
                   <CButton
                     variant="confirm"
                     text="Sign Up"
                     className="mt-4"
                     type="submit"
-                    disabled={pristine || submitting || invalid}
+                    disabled={pristine || submitError || submitting || invalid}
                   />
                 </div>
               </form>
@@ -111,8 +115,17 @@ const SignUpForm = () => {
           onClick={handleRedirectToSignUp}
         />
       </div>
+      <CLoadingModal
+        isOpen={isOpen}
+        title={response.title}
+        onClose={handleCloseModal}
+        className="!w-[400px] mobile:!w-[310px]"
+        description={response.message}
+        failed={response.status === 'error'}
+        success={response.status === 'success'}
+      />
     </div>
   );
 };
 
-export default SignUpForm;
+export default SignInForm;

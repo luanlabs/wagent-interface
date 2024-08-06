@@ -20,27 +20,49 @@ type CSelectProps = {
   options: OptionType[];
   onChange?: (value: MultiSelectType) => void;
   value?: MultiSelectType;
+  initialEditProductSelectedLength?: number;
+  isCloseModal?: boolean;
 };
 
-const CSelect = ({ placeholder, className, onChange, options, value = null }: CSelectProps) => {
+const CSelect = ({
+  placeholder,
+  className,
+  onChange,
+  options,
+  value = null,
+  initialEditProductSelectedLength,
+  isCloseModal,
+}: CSelectProps) => {
   const [selectValue, setSelectValue] = useState<MultiSelectType>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [ItemsSelectedLength, setItemsSelectedLength] = useState<number>(0);
+  const [editProductSelectedLength, setEditProductSelectedLength] = useState(
+    initialEditProductSelectedLength,
+  );
+
   const id = Date.now().toString();
 
   useEffect(() => {
     setSelectValue(value);
-  }, [value]);
+    setEditProductSelectedLength(initialEditProductSelectedLength);
+  }, [value, initialEditProductSelectedLength]);
 
   useEffect(() => setIsMounted(true), []);
 
+  useEffect(() => {
+    if (isCloseModal) {
+      setItemsSelectedLength(0);
+    }
+  }, [isCloseModal]);
+
   const handleChange = (newValue: MultiValue<OptionType> | SingleValue<OptionType>) => {
     const multiValue = newValue as MultiValue<OptionType>;
-    if (multiValue.length <= 3) {
-      setSelectValue(multiValue);
 
-      if (onChange) {
-        onChange(multiValue);
-      }
+    setItemsSelectedLength(multiValue.length);
+    setSelectValue(multiValue);
+
+    if (onChange) {
+      onChange(multiValue);
     }
   };
 
@@ -85,7 +107,7 @@ const CSelect = ({ placeholder, className, onChange, options, value = null }: CS
             MultiValue,
           }}
           isMulti
-          styles={customStyles()}
+          styles={customStyles(ItemsSelectedLength, editProductSelectedLength ?? 0)}
         />
       ) : null}
     </div>

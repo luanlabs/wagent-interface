@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import Pages from '@/constants/pages';
-import authService from '@/services/authService';
+import authRequest from '@/services/authRequest';
 import { AuthCredentials, IApiError, IUserLoginResponseMessage } from '@/constants/types';
 
 interface ResponseMessage {
@@ -70,7 +70,7 @@ const SignInHandler = (
 
   const onSubmit = async (credentials: AuthCredentials): Promise<void> => {
     try {
-      const data: IUserLoginResponseMessage = await authService<IUserLoginResponseMessage>(
+      const data: IUserLoginResponseMessage = await authRequest<IUserLoginResponseMessage>(
         'auth/login',
         credentials,
       );

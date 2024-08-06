@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import Pages from '@/constants/pages';
-import authService from '@/services/authService';
+import authRequest from '@/services/authRequest';
 import { AuthCredentials, IApiError, IUserAuthResponseMessage } from '@/constants/types';
 
 interface Response {
@@ -36,7 +36,7 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
 
   const onSubmit = async (credentials: AuthCredentials): Promise<void> => {
     try {
-      const data = await authService<IUserAuthResponseMessage>('auth', {
+      const data = await authRequest<IUserAuthResponseMessage>('auth', {
         email: credentials.email,
         storeName: credentials.storeName,
         password: credentials.password,

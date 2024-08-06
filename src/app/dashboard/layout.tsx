@@ -5,7 +5,7 @@ import Header from 'src/containers/Header';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="px-8 mobile:p-0 pt-[9px] pb-7 w-full h-screen m-auto">
+    <div className="px-8 short:px-4 mobile:p-0 pt-[9px] pb-7 w-full h-screen m-auto">
       <Header />
       <section className="desktop:inline-flex basis-full gap-4 w-full desktop:h-[90%] mobile:h-full mobile:!overflow-auto">
         <Aside />

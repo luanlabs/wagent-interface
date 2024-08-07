@@ -9,7 +9,7 @@ export const getCheckBoxStyle = (type: CCheckboxType, checked: boolean, disabled
 
     case 'secondary': {
       return `w-5 h-5 ${
-        disabled ? 'pointer-events-none bg-[#F2F4F7] border !border-[#EAECF0]' : 'cursor-pointer'
+        disabled ? 'pointer-events-none !bg-[#F2F4F7] border !border-[#EAECF0]' : 'cursor-pointer'
       }
       ${checked ? 'bg-[#EEFFF9] border !border-[#073834]' : ' bg-white border !border-gray'}`;
     }

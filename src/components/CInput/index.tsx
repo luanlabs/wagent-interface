@@ -113,6 +113,7 @@ const CInput = ({
         <input
           {...props}
           {...input}
+          type={hideCharacter ? (showPassword ? 'text' : 'password') : type}
           meta={meta}
           value={value}
           onClick={onClick}
@@ -124,7 +125,6 @@ const CInput = ({
           placeholder={placeholder}
           enterKeyHint={enterKeyHint}
           onKeyPress={onKeyPress}
-          type={hideCharacter ? (showPassword ? 'text' : 'password') : type}
           className={cn(
             inputClassName,
             {

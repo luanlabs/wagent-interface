@@ -6,6 +6,7 @@ import CCard from '@/components/CCard';
 import SquareHalf from '@/assets/SquareHalf';
 import CNavLink from '@/components/CNavLink';
 import { navLinks } from '@/constants/navbarLinks';
+import Profile from '../Profile';
 
 const Aside = () => {
   const [isMinimized, setIsMinimized] = useState(false);
@@ -38,6 +39,9 @@ const Aside = () => {
               <CNavLink {...item} isMinimized={isMinimized} />
             </div>
           ))}
+        </div>
+        <div className={`absolute bottom-4 left-5 mobile:hidden `}>
+          <Profile isMinimizedAside={isMinimized} />
         </div>
       </aside>
     </CCard>

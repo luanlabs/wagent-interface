@@ -30,13 +30,15 @@ export type MethodType = 'single' | 'stream' | 'vesting';
 export interface IHistoryResponse {
   id?: string;
   date: number;
-  title: string;
+  product: {
+    name: string;
+    image: string | StaticImageData;
+  };
   amount: string;
   sender: string;
-  progress?: number;
   token: TokensType;
+  progress?: number;
   cancellableAfter?: number;
-  image: string | StaticImageData;
   method: 'single' | 'stream' | 'vesting';
   status: 'active' | 'completed' | 'cancelled';
 }

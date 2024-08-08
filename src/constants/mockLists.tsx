@@ -3,21 +3,6 @@ import hoodie from 'public/images/hoodie.png';
 
 import { IProductItemCard, IHistoryResponse, TokensType } from './types';
 
-const usdc: TokensType = {
-  value: 'usdc',
-  logo: 'public/images/tokens/usdc.svg',
-};
-
-const dai: TokensType = {
-  value: 'dai',
-  logo: 'public/images/tokens/dai.svg',
-};
-
-const xlm: TokensType = {
-  value: 'xlm',
-  logo: 'public/images/tokens/xlm.svg',
-};
-
 export const tokensList = [
   { value: 'xlm', label: 'Stellar', logo: 'public/images/tokens/xlm.svg' },
   { value: 'dai', label: 'Dai', logo: 'public/images/tokens/dai.svg' },
@@ -67,36 +52,42 @@ export const products: IProductItemCard[] = [
 
 export const history: IHistoryResponse[] = [
   {
-    title: 'red Hoodie',
+    product: { name: 'red Hoodie', image: productImage },
     method: 'single',
     id: '1',
-    token: usdc,
+    token: {
+      value: 'usdc',
+      logo: 'public/images/tokens/usdc.svg',
+    },
     amount: '15',
-    image: productImage,
     date: Date.now(),
     status: 'active',
     sender: '0x600',
     progress: 90,
   },
   {
-    title: 'XX Hoodie',
+    product: { name: 'xxx Hoodie', image: hoodie },
     method: 'vesting',
     id: '2',
-    token: dai,
+    token: {
+      value: 'dai',
+      logo: 'public/images/tokens/dai.svg',
+    },
     amount: '1500',
-    image: hoodie,
     date: Date.now(),
     status: 'completed',
     sender: '0x600',
     progress: 30,
   },
   {
-    title: 'X Hoodie',
+    product: { name: 'purple Hoodie', image: hoodie },
     method: 'stream',
     id: '3',
-    token: xlm,
+    token: {
+      value: 'xlm',
+      logo: 'public/images/tokens/xlm.svg',
+    },
     amount: '1500000',
-    image: hoodie,
     date: Date.now(),
     status: 'cancelled',
     sender: '0x600',

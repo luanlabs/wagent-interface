@@ -28,16 +28,16 @@ const HistoryDetailsModal = ({ isOpen, onClose, data }: IDetailProps) => {
     <CModal title={Title} isOpen={isOpen} onClose={onClose}>
       <LabelValue label="Product name">
         <div className="inline-flex whitespace-nowrap gap-3 items-center">
-          {data.image && (
+          {data.product.image && (
             <Image
-              src={data.image}
-              alt={data.title}
+              src={data.product.image}
+              alt={data.product.name}
               className="rounded-[50px]"
               width={30}
               height={30}
             />
           )}
-          <span className="mobile:w-full text-darkBlue text-base">{data.title}</span>
+          <span className="mobile:w-full text-darkBlue text-base">{data.product.name}</span>
         </div>
       </LabelValue>
       <LabelValue label="Status" value={CStatusCard(data.status)} />

@@ -91,12 +91,12 @@ const CInput = ({
 
         {hideCharacter && (
           <div
-            className={`absolute bottom-[11.3px] ${
+            className={`absolute ${error ? '' : ''} top-[12px] ${
               eyeIconPosition === 'left' ? 'left-3' : 'right-3'
-            } cursor-pointer`}
+            } cursor-pointer select-none`}
             onClick={toggleShowPassword}
           >
-            {showPassword ? <EyeSlash /> : <Eye />}
+            {showPassword ? <Eye /> : <EyeSlash />}
           </div>
         )}
         {!error && clearInput && (
@@ -138,7 +138,7 @@ const CInput = ({
               'pl-8': eyeIconPosition === 'left',
               'pr-8': eyeIconPosition === 'right',
             },
-            'self-stretch rounded-lg placeholder-smokyBlue text-darkGray text-base w-full h-10 py-[10px] px-[14px] justify-start items-center inline-flex outline-none border hover:bg-offWhite transition-colors duration-300',
+            'self-stretch rounded-lg placeholder:select-none placeholder-smokyBlue text-darkGray text-base w-full h-10 py-[10px] px-[14px] justify-start items-center inline-flex outline-none border hover:bg-offWhite active:bg-offWhite transition-colors duration-300',
           )}
         />
         {error && errorMsg && (

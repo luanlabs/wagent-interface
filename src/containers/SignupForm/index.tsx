@@ -130,7 +130,7 @@ const SignUpForm = () => {
                   <CButton
                     variant="confirm"
                     text="Sign Up"
-                    className="mt-2"
+                    className="mt-3"
                     type="submit"
                     disabled={pristine || submitError || submitting || invalid}
                   />

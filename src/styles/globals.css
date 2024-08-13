@@ -24,3 +24,19 @@ body {
     background-color: white;
   }
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+::-moz-selection {
+  /* Code for Firefox */
+  background: #e4f9f1;
+}
+
+::selection {
+  background: #e4f9f1;
+}

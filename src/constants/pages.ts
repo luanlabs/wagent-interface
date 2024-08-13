@@ -5,5 +5,6 @@ enum Pages {
   SETTINGS = '/dashboard/settings',
   SIGNUP = '/signup',
   SIGNIN = '/signin',
+  FORGOT = '/forgot',
 }
 export default Pages;

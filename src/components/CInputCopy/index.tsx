@@ -35,7 +35,7 @@ const CInputCopy = ({ placeholder, hideCharacter, onChange }: CInputCopy) => {
       />
       <div
         className="bg-white flex justify-center items-center select-none space-x-2 px-3 border border-gray rounded-r-lg hover:bg-[#eee]/90 active:bg-[#eee]/70 
-       text-smokyBlue h-10 text-[16px] absolute bottom-0 right-0 cursor-pointer transition"
+      text-smokyBlue h-10 text-[16px] absolute bottom-0 right-0 cursor-pointer transition"
         onClick={handleCInputCopyClick}
       >
         <Copy />

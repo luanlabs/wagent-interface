@@ -30,6 +30,7 @@ const CInputCopy = ({ placeholder, hideCharacter, onChange }: CInputCopy) => {
         inputClassName="!border-gray"
         placeholder={placeholder}
         hideCharacter={hideCharacter}
+        eyeIconPosition="left"
         onChange={handleCInputCopyChange}
       />
       <div

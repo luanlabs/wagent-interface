@@ -99,6 +99,8 @@ const SignUpForm = () => {
                         type="password"
                         placeholder="Password"
                         meta={meta}
+                        hideCharacter
+                        eyeIconPosition="right"
                         error={meta.touched && meta.error}
                         errorMsg={meta.error}
                       />
@@ -112,6 +114,8 @@ const SignUpForm = () => {
                       <CInput
                         {...input}
                         border
+                        hideCharacter
+                        eyeIconPosition="right"
                         type="password"
                         placeholder="Confirm Password"
                         meta={meta}

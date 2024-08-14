@@ -26,6 +26,7 @@ interface CInputProps {
   iconClassName?: string;
   inputClassName?: string;
   hideCharacter?: boolean;
+  autoComplete?: string | boolean;
   eyeIconPosition?: 'left' | 'right';
   type?: React.HTMLInputTypeAttribute;
   onClick?: MouseEventHandler<HTMLInputElement>;
@@ -63,6 +64,7 @@ const CInput = ({
   inputClassName,
   clearInputClick,
   eyeIconPosition,
+  autoComplete = 'false',
   ...props
 }: CInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -118,7 +120,7 @@ const CInput = ({
           meta={meta}
           value={value}
           onClick={onClick}
-          autoComplete="off"
+          autoComplete={autoComplete}
           disabled={disabled}
           onChange={onChange}
           maxLength={maxLength}

@@ -64,6 +64,7 @@ const SignUpForm = () => {
                       <CInput
                         {...input}
                         border
+                        autoComplete="name"
                         type="text"
                         placeholder="Store Name"
                         meta={meta}

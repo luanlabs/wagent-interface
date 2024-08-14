@@ -36,9 +36,7 @@ const SettingsContainer = () => {
   const router = useRouter();
 
   const isChecked = true;
-  const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name);
-  };
+  const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
   const handleApiKey = (e: React.ChangeEvent<HTMLInputElement>) => {
     setApiKeyValue(e.target.value.trim());
@@ -48,15 +46,13 @@ const SettingsContainer = () => {
     setWalletAddress(e.target.value.trim());
   };
 
-  const handleCRadioButtons = (e: BasicOptionType<string>) => {
-    console.log(e);
-  };
+  const handleCRadioButtons = (e: BasicOptionType<string>) => {};
 
   const handleSignOut = () => {
     if (localStorage.getItem('token') === null) {
-      sessionStorage.removeItem('token');
+      sessionStorage.clear();
     } else {
-      localStorage.removeItem('token');
+      localStorage.clear();
     }
 
     setTimeout(() => {

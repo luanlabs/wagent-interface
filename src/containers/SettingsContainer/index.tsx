@@ -13,13 +13,7 @@ import CRadioButtonGroup from '@/components/CRadioButtonGroup';
 import CSelectSearchable from '@/components/CSelectSearchable';
 
 import { BasicOptionType } from '@/models';
-
-const pageTitle = (
-  <div className="flex justify-between items-center w-full -my-1">
-    <h1>Settings</h1>
-    <CButton variant="add" text="Edit profile" className="!w-[130px] text-base" />
-  </div>
-);
+import EditProfile from '../EditProfile';
 
 const options: BasicOptionType<string>[] = [
   { value: 'usdt', label: 'USDT' },
@@ -33,6 +27,7 @@ const switchOptions = [
 ];
 
 const SettingsContainer = () => {
+  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const [apiKeyValue, setApiKeyValue] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
 
@@ -53,10 +48,24 @@ const SettingsContainer = () => {
     console.log(e);
   };
 
+  const ModalOnClose = () => {
+    setIsEditProfileOpen(false);
+  };
+
+  const pageTitle = (
+    <div className="flex justify-between items-center w-full -my-1">
+      <h1>Settings</h1>
+      <CButton
+        variant="add"
+        text="Edit profile"
+        className="!w-[130px] text-base"
+        onClick={() => setIsEditProfileOpen(true)}
+      />
+    </div>
+  );
+
   return (
     <CPageCard title={pageTitle}>
-      {/* <p className="text-[#101828] text-2xl mb-3">Payment Preferences</p> */}
-
       <div className="space-y-3">
         <CCard className="flex justify-between p-6">
           <div className="flex flex-col">
@@ -155,6 +164,8 @@ const SettingsContainer = () => {
             </div>
           </div>
         </CCard>
+
+        <EditProfile isOpen={isEditProfileOpen} onClose={ModalOnClose} />
       </div>
     </CPageCard>
   );

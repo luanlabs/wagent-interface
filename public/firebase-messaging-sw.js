@@ -4,7 +4,7 @@ self.addEventListener('push', (event) => {
 
   const options = {
     body,
-    icon: 'http://localhost:3000/public/images/wagentLogo.svg',
+    icon: `${process.env.NEXT_PUBLIC_API}/public/images/wagentLogo.svg`,
     data: {},
   };
 
@@ -12,7 +12,6 @@ self.addEventListener('push', (event) => {
 });
 
 self.addEventListener('notificationclick', (event) => {
-  // Handle notification click actions here
   event.notification.close();
   if (event.notification.data && event.notification.data.url) {
     clients.openWindow(event.notification.data.url);

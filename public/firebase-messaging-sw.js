@@ -4,7 +4,7 @@ self.addEventListener('push', (event) => {
 
   const options = {
     body,
-    icon: `${process.env.NEXT_PUBLIC_API}/public/images/wagentLogo.svg`,
+    icon: '../public/icons/icon-64.png',
     data: {},
   };
 

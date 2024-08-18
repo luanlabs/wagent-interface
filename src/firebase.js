@@ -51,4 +51,4 @@ const requestForToken = async () => {
   }
 };
 
-export { messaging, getFirebaseToken, requestForToken };
+export { getFirebaseToken, requestForToken };

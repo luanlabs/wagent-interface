@@ -1,17 +1,23 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import { requestForToken } from '@/firebase';
+import React from 'react';
+import { requestNotificationPermission } from '@/services/firebase';
+import CButton from '@/components/CButton';
 
 const Test = () => {
-  useEffect(() => {
-    requestForToken();
-  }, []);
-  const handleClick = () => {};
+  const handleClick = () => {
+    requestNotificationPermission();
+  };
 
   return (
     <div>
-      <button onClick={handleClick}>Button</button>
+      <CButton
+        onClick={handleClick}
+        variant="simple"
+        className="bg-darkGreen !w-1/4 m-2 text-white"
+      >
+        Subscribe notifications
+      </CButton>
     </div>
   );
 };

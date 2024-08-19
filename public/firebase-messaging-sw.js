@@ -56,12 +56,22 @@ self.addEventListener('push', function (event) {
     const title = data.notification?.title;
     const body = data.notification?.body;
     const iconUrl = './images/wagentLogo.svg';
+    const url = 'https://wagent.app/dashboard/history';
 
     event.waitUntil(
       registration.showNotification(title, {
         body,
+        url,
         icon: iconUrl,
       }),
     );
   }
+});
+
+self.addEventListener('notificationclick', function (event) {
+  event.notification.close();
+
+  const urlToOpen = 'https://wagent.app/dashboard/history';
+
+  event.waitUntil(clients.openWindow(urlToOpen));
 });

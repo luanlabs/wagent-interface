@@ -64,6 +64,7 @@ const SignUpForm = () => {
                       <CInput
                         {...input}
                         border
+                        autoComplete="name"
                         type="text"
                         placeholder="Store Name"
                         meta={meta}
@@ -99,6 +100,8 @@ const SignUpForm = () => {
                         type="password"
                         placeholder="Password"
                         meta={meta}
+                        hideCharacter
+                        eyeIconPosition="right"
                         error={meta.touched && meta.error}
                         errorMsg={meta.error}
                       />
@@ -112,6 +115,8 @@ const SignUpForm = () => {
                       <CInput
                         {...input}
                         border
+                        hideCharacter
+                        eyeIconPosition="right"
                         type="password"
                         placeholder="Confirm Password"
                         meta={meta}
@@ -126,7 +131,7 @@ const SignUpForm = () => {
                   <CButton
                     variant="confirm"
                     text="Sign Up"
-                    className="mt-2"
+                    className="mt-3"
                     type="submit"
                     disabled={pristine || submitError || submitting || invalid}
                   />

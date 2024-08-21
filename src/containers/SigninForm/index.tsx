@@ -14,6 +14,7 @@ import { required, minLength, validateEmail, validatePassword } from '@/utils/va
 
 import SignInHandler from './signInHandler';
 import CLoadingModal from '@/components/CLoadingModal';
+import Link from 'next/link';
 
 const SignInForm = () => {
   const routes = useRouter();
@@ -31,6 +32,8 @@ const SignInForm = () => {
   const handleCloseModal = () => {
     setIsOpen(false);
   };
+
+  const handleForgotPassword = () => {};
 
   const { onSubmit, response } = SignInHandler(setIsOpen, isRememberChecked);
 
@@ -75,6 +78,8 @@ const SignInForm = () => {
                         border
                         type="password"
                         placeholder="Password"
+                        hideCharacter
+                        eyeIconPosition="right"
                         meta={meta}
                         error={meta.touched && meta.error}
                         errorMsg={meta.error}
@@ -84,17 +89,27 @@ const SignInForm = () => {
                 </div>
 
                 <div className="w-full mt-2 space-y-3">
-                  <CCheckbox
-                    label={<p className="!text-smokyBlue">Remember me</p>}
-                    checked={isRememberChecked}
-                    onChange={handleRememberChange}
-                    value="remember"
-                    className="mt-3 -ml-[6px]"
-                  />
+                  <div className="flex justify-between items-center mx-[1px]">
+                    <CCheckbox
+                      label={<p className="!text-smokyBlue">Remember me</p>}
+                      checked={isRememberChecked}
+                      onChange={handleRememberChange}
+                      value="remember"
+                      className="-ml-[6px]"
+                    />
+
+                    <Link
+                      href={Pages.FORGOT}
+                      onClick={handleForgotPassword}
+                      className="border-none hover:bg-transparent text-darkGreen text-sm transition-all duration-300 hover:brightness-100"
+                    >
+                      Forgot Password?
+                    </Link>
+                  </div>
 
                   <CButton
                     variant="confirm"
-                    text="Sign Up"
+                    text="Sign in"
                     className="mt-4"
                     type="submit"
                     disabled={pristine || submitError || submitting || invalid}

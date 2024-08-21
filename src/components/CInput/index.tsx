@@ -26,6 +26,8 @@ interface CInputProps {
   iconClassName?: string;
   inputClassName?: string;
   hideCharacter?: boolean;
+  autoComplete?: string | boolean;
+  eyeIconPosition?: 'left' | 'right';
   type?: React.HTMLInputTypeAttribute;
   onClick?: MouseEventHandler<HTMLInputElement>;
   handlePaste?: MouseEventHandler<HTMLDivElement>;
@@ -61,6 +63,8 @@ const CInput = ({
   iconClassName,
   inputClassName,
   clearInputClick,
+  eyeIconPosition,
+  autoComplete = 'false',
   ...props
 }: CInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -78,7 +82,6 @@ const CInput = ({
             <Image src={icon} width={22} height={22} alt="inputIcon" />
           </div>
         )}
-
         {paste && (
           <div
             className="bg-white text-darkGreen text-sm px-[14px] py-[6px] rounded-lg absolute bottom-3 right-3.5 cursor-pointer transition hover:bg-[#E6E6EC]"
@@ -90,13 +93,14 @@ const CInput = ({
 
         {hideCharacter && (
           <div
-            className="absolute bottom-[11.3px] left-3 cursor-pointer"
+            className={`absolute ${error ? '' : ''} top-[12px] ${
+              eyeIconPosition === 'left' ? 'left-3' : 'right-3'
+            } cursor-pointer select-none`}
             onClick={toggleShowPassword}
           >
-            {showPassword ? <EyeSlash /> : <Eye />}
+            {showPassword ? <Eye /> : <EyeSlash />}
           </div>
         )}
-
         {!error && clearInput && (
           <div className="absolute bottom-3.5 right-3.5">
             <Image
@@ -109,7 +113,6 @@ const CInput = ({
             />
           </div>
         )}
-
         <input
           {...props}
           {...input}
@@ -117,7 +120,7 @@ const CInput = ({
           meta={meta}
           value={value}
           onClick={onClick}
-          autoComplete="off"
+          autoComplete={autoComplete}
           disabled={disabled}
           onChange={onChange}
           maxLength={maxLength}
@@ -134,9 +137,10 @@ const CInput = ({
               'border-transparent': !border,
               'border !border-error': error,
               'cursor-not-allowed !select-none text-smokyBlue': disabled,
-              'pl-8': hideCharacter,
+              'pl-8': eyeIconPosition === 'left',
+              'pr-8': eyeIconPosition === 'right',
             },
-            'self-stretch rounded-lg placeholder-smokyBlue text-darkGray text-base w-full h-10 py-[10px] px-[14px] justify-start items-center inline-flex outline-none border hover:bg-offWhite transition-colors duration-300',
+            'self-stretch rounded-lg placeholder:select-none placeholder-smokyBlue text-darkGray text-base w-full h-10 py-[10px] px-[14px] justify-start items-center inline-flex outline-none border hover:bg-offWhite active:bg-offWhite transition-colors duration-300',
           )}
         />
         {error && errorMsg && (

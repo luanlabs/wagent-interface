@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
+import Pages from '@/constants/pages';
 import CCard from '@/components/CCard';
 import CButton from '@/components/CButton';
 import CMethods from '@/components/CMethods';
@@ -31,10 +33,10 @@ const SettingsContainer = () => {
   const [apiKeyValue, setApiKeyValue] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
 
+  const router = useRouter();
+
   const isChecked = true;
-  const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name);
-  };
+  const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
   const handleApiKey = (e: React.ChangeEvent<HTMLInputElement>) => {
     setApiKeyValue(e.target.value.trim());
@@ -44,8 +46,18 @@ const SettingsContainer = () => {
     setWalletAddress(e.target.value.trim());
   };
 
-  const handleCRadioButtons = (e: BasicOptionType<string>) => {
-    console.log(e);
+  const handleCRadioButtons = (e: BasicOptionType<string>) => {};
+
+  const handleSignOut = () => {
+    if (localStorage.getItem('token') === null) {
+      sessionStorage.clear();
+    } else {
+      localStorage.clear();
+    }
+
+    setTimeout(() => {
+      router.push(Pages.SIGNIN);
+    }, 1000);
   };
 
   const ModalOnClose = () => {
@@ -162,6 +174,20 @@ const SettingsContainer = () => {
             <div className="w-[356px]">
               <CSelectSearchable options={options} />
             </div>
+          </div>
+        </CCard>
+
+        <CCard className="flex w-full justify-between items-center p-6">
+          <div>
+            <p className="text-lg">Sign out of Wagent</p>
+          </div>
+          <div className="w-1/5 mobile:w-[120px]">
+            <CButton
+              onClick={handleSignOut}
+              variant="simple"
+              text="Sign out"
+              className="w-full bg-lightestRed border border-lightRed text-error"
+            />
           </div>
         </CCard>
 

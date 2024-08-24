@@ -17,7 +17,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         data: data,
       });
     }
-    console.log(token);
   }, [token]);
 
   return (

@@ -1,77 +1,51 @@
-function sendMessageToAllClients(command, message) {
-  clients.matchAll({ type: 'window' }).then(function (windowClients) {
-    windowClients.forEach(function (windowClient) {
-      windowClient.postMessage({ command: command, message: message || '' });
-    });
-  });
-}
+importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js');
 
-self.addEventListener('install', function (event) {
-  event.waitUntil(skipWaiting());
-});
+const firebaseConfig = {
+  projectId: 'wagent-29d24',
+  measurementId: 'G-ND3R1GL7J7',
+  messagingSenderId: '435272937099',
+  storageBucket: 'wagent-29d24.appspot.com',
+  authDomain: 'wagent-29d24.firebaseapp.com',
+  apiKey: 'AIzaSyD-MaIEVxb1qdiscYw40c0hrGS6QWFUi7Q',
+  appId: '1:435272937099:web:68855e2302bde0e5002e8e',
+};
 
-self.addEventListener('activate', function (event) {
-  event.waitUntil(clients.claim());
-});
+firebase.initializeApp(firebaseConfig);
 
-self.addEventListener('message', function (event) {
-  switch (event.data.command) {
-    case 'subscribe':
-      let subscriptionOptions = event.data.subscriptionOptions;
-      if (subscriptionOptions.hasOwnProperty('applicationServerKey')) {
-        subscriptionOptions.applicationServerKey = new Uint8Array(
-          subscriptionOptions.applicationServerKey,
-        );
-      }
+const messaging = firebase.messaging();
 
-      registration.pushManager
-        .subscribe(subscriptionOptions)
-        .then(function (subscription) {
-          sendMessageToAllClients('subscribe-success');
-        })
-        .catch(function (error) {
-          sendMessageToAllClients('subscribe-failure', '' + error);
-        });
+messaging.onBackgroundMessage((payload) => {
+  const link = payload.fcmOptions?.link || payload.data?.link;
 
-      break;
-
-    case 'unsubscribe':
-      registration.pushManager
-        .getSubscription()
-        .then(function (subscription) {
-          if (subscription) return subscription.unsubscribe();
-        })
-        .then(function () {
-          sendMessageToAllClients('unsubscribe-success');
-        })
-        .catch(function (error) {
-          sendMessageToAllClients('unsubscribe-failure', '' + error);
-        });
-  }
-});
-
-self.addEventListener('push', function (event) {
-  if (event.data) {
-    const data = event.data.json();
-    const title = data.notification?.title;
-    const body = data.notification?.body;
-    const iconUrl = './images/wagentLogo.svg';
-    const url = 'https://wagent.app/dashboard/history';
-
-    event.waitUntil(
-      registration.showNotification(title, {
-        body,
-        url,
-        icon: iconUrl,
-      }),
-    );
-  }
+  const notificationTitle = payload.notification.title;
+  const notificationOptions = {
+    body: payload.notification.body,
+    icon: 'https://static.wagent.app/icons/wagent.png',
+    data: { url: link },
+  };
+  self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
 self.addEventListener('notificationclick', function (event) {
   event.notification.close();
 
-  const urlToOpen = 'https://wagent.app/dashboard/history';
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (clientList) {
+      const url = event.notification.data.url;
 
-  event.waitUntil(clients.openWindow(urlToOpen));
+      if (!url) return;
+
+      for (const client of clientList) {
+        if (client.url === url && 'focus' in client) {
+          return client.focus();
+        }
+      }
+
+      if (clients.openWindow) {
+        console.log('OPENWINDOW ON CLIENT');
+        return clients.openWindow(url);
+      }
+    }),
+  );
 });

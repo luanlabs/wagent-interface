@@ -1,8 +1,8 @@
-import fetch from '@/utils/request';
+import request from '@/utils/request';
 import { AuthCredentials } from '@/constants/types';
 
 const authRequest = async <T>(endpoint: string, credentials: AuthCredentials): Promise<T> => {
-  const { data } = await fetch<T>(`${process.env.NEXT_PUBLIC_API}/users/${endpoint}`, {
+  const { data } = await request<T>(`${process.env.NEXT_PUBLIC_API}/users/${endpoint}`, {
     method: 'POST',
     body: JSON.stringify(credentials),
     headers: {

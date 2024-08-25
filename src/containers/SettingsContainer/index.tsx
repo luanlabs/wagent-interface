@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
+import Pages from '@/constants/pages';
 import CCard from '@/components/CCard';
 import CButton from '@/components/CButton';
 import CMethods from '@/components/CMethods';
@@ -13,13 +15,7 @@ import CRadioButtonGroup from '@/components/CRadioButtonGroup';
 import CSelectSearchable from '@/components/CSelectSearchable';
 
 import { BasicOptionType } from '@/models';
-
-const pageTitle = (
-  <div className="flex justify-between items-center w-full -my-1">
-    <h1>Settings</h1>
-    <CButton variant="add" text="Edit profile" className="!w-[130px] text-base" />
-  </div>
-);
+import EditProfile from '../EditProfile';
 
 const options: BasicOptionType<string>[] = [
   { value: 'usdt', label: 'USDT' },
@@ -33,10 +29,13 @@ const switchOptions = [
 ];
 
 const SettingsContainer = () => {
+  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const [isCheckedStream, setIsCheckedStream] = useState(false);
   const [isCheckedVesting, setIsCheckedVesting] = useState(false);
   const [apiKeyValue, setApiKeyValue] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
+
+  const router = useRouter();
 
   const handleStreamCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsCheckedStream(e.target.checked);
@@ -54,16 +53,40 @@ const SettingsContainer = () => {
     setWalletAddress(e.target.value.trim());
   };
 
-  const handleCRadioButtons = (e: BasicOptionType<string>) => {
-    console.log(e);
+  const handleCRadioButtons = (e: BasicOptionType<string>) => {};
+
+  const handleSignOut = () => {
+    if (localStorage.getItem('token') === null) {
+      sessionStorage.clear();
+    } else {
+      localStorage.clear();
+    }
+
+    setTimeout(() => {
+      router.push(Pages.SIGNIN);
+    }, 1000);
   };
 
   const vestingStyle = isCheckedVesting ? '#101828' : '#98A2B3';
 
+  const ModalOnClose = () => {
+    setIsEditProfileOpen(false);
+  };
+
+  const pageTitle = (
+    <div className="flex justify-between items-center w-full -my-1">
+      <h1>Settings</h1>
+      <CButton
+        variant="add"
+        text="Edit profile"
+        className="!w-[130px] text-base"
+        onClick={() => setIsEditProfileOpen(true)}
+      />
+    </div>
+  );
+
   return (
     <CPageCard title={pageTitle}>
-      {/* <p className="text-[#101828] text-2xl mb-3">Payment Preferences</p> */}
-
       <div className="space-y-3">
         <CCard className="flex justify-between p-6">
           <div className="flex flex-col">
@@ -177,6 +200,22 @@ const SettingsContainer = () => {
             </div>
           </div>
         </CCard>
+
+        <CCard className="flex w-full justify-between items-center p-6">
+          <div>
+            <p className="text-lg">Sign out of Wagent</p>
+          </div>
+          <div className="w-1/5 mobile:w-[120px]">
+            <CButton
+              onClick={handleSignOut}
+              variant="simple"
+              text="Sign out"
+              className="w-full bg-lightestRed border border-lightRed text-error"
+            />
+          </div>
+        </CCard>
+
+        <EditProfile isOpen={isEditProfileOpen} onClose={ModalOnClose} />
       </div>
     </CPageCard>
   );

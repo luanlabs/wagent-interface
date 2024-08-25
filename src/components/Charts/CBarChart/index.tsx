@@ -19,22 +19,11 @@ import CustomLabel from './CustomLabel';
 import CustomAxisTick from './CustomAxisTick';
 import CustomTooltip, { CustomTooltipProps } from './CustomTooltip';
 
-const data: CBarChartType[] = [
-  { name: 'Jan', amount: 4000 },
-  { name: 'Feb', amount: 3000 },
-  { name: 'Mar', amount: 5000 },
-  { name: 'Apr', amount: 4780 },
-  { name: 'May', amount: 5890 },
-  { name: 'Jun', amount: 4390 },
-  { name: 'Jul', amount: 4490 },
-  { name: 'Aug', amount: 3790 },
-  { name: 'Sep', amount: 3490 },
-  { name: 'Oct', amount: 5490 },
-  { name: 'Nov', amount: 6090 },
-  { name: 'Dec', amount: 7000 },
-];
+interface CBarChartProp {
+  data: CBarChartType[];
+}
 
-const CBarChart = () => {
+const CBarChart = ({ data }: CBarChartProp) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleClick = useCallback(

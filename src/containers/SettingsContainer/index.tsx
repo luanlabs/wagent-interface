@@ -16,6 +16,7 @@ import CSelectSearchable from '@/components/CSelectSearchable';
 
 import { BasicOptionType } from '@/models';
 import EditProfile from '../EditProfile';
+import useCheckboxColors from './useCheckboxColors';
 
 const options: BasicOptionType<string>[] = [
   { value: 'usdt', label: 'USDT' },
@@ -30,19 +31,20 @@ const switchOptions = [
 
 const SettingsContainer = () => {
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
-  const [isCheckedStream, setIsCheckedStream] = useState(false);
-  const [isCheckedVesting, setIsCheckedVesting] = useState(false);
+  const [isStreamChecked, setIsStreamChecked] = useState(false);
+  const [isVestingChecked, setIsVestingChecked] = useState(false);
   const [apiKeyValue, setApiKeyValue] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
 
   const router = useRouter();
+  const checkBoxColors = useCheckboxColors(isStreamChecked, isVestingChecked);
 
   const handleStreamCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsCheckedStream(e.target.checked);
+    setIsStreamChecked(e.target.checked);
   };
 
   const handleVestingCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsCheckedVesting(e.target.checked);
+    setIsVestingChecked(e.target.checked);
   };
 
   const handleApiKey = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,8 +68,6 @@ const SettingsContainer = () => {
       router.push(Pages.SIGNIN);
     }, 1000);
   };
-
-  const vestingStyle = isCheckedVesting ? '#101828' : '#98A2B3';
 
   const ModalOnClose = () => {
     setIsEditProfileOpen(false);
@@ -108,11 +108,11 @@ const SettingsContainer = () => {
                 <CMethods
                   suffix="Method"
                   method="stream"
-                  fill={isCheckedStream ? '#101828' : '#98A2B3'}
-                  className={isCheckedStream ? '!text-[#101828]' : '!text-[#98A2B3]'}
+                  fill={checkBoxColors.streamIconColor}
+                  className={checkBoxColors.streamTextColor}
                 />
               }
-              checked={isCheckedStream}
+              checked={isStreamChecked}
               onChange={handleStreamCheck}
             />
 
@@ -123,11 +123,11 @@ const SettingsContainer = () => {
                 <CMethods
                   suffix="Method"
                   method="vesting"
-                  fill={isCheckedVesting ? '#101828' : '#98A2B3'}
-                  className={isCheckedVesting ? '!text-[#101828]' : '!text-[#98A2B3]'}
+                  fill={checkBoxColors.vestingIconColor}
+                  className={checkBoxColors.vestingTextColor}
                 />
               }
-              checked={isCheckedVesting}
+              checked={isVestingChecked}
               onChange={handleVestingCheck}
             />
           </div>

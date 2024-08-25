@@ -14,8 +14,10 @@
     "bignumber.js": "^9.1.2",
     "classnames": "^2.5.1",
     "final-form": "^4.20.10",
+    "firebase": "^10.12.5",
     "next": "14.2.1",
     "next-auth": "^5.0.0-beta.20",
+    "next-pwa": "^5.6.0",
     "numeral": "^2.0.6",
     "react": "^18",
     "react-dom": "^18",
@@ -24,9 +26,11 @@
     "react-redux": "^9.1.1",
     "react-select": "^5.8.0",
     "recharts": "^2.12.7",
+    "sharp": "^0.33.5",
     "tippy.js": "^6.3.7"
   },
   "devDependencies": {
+    "@types/next-pwa": "^5.6.9",
     "@types/node": "^20",
     "@types/numeral": "^2.0.5",
     "@types/react": "^18",

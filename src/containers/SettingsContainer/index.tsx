@@ -16,6 +16,7 @@ import CSelectSearchable from '@/components/CSelectSearchable';
 
 import { BasicOptionType } from '@/models';
 import EditProfile from '../EditProfile';
+import useCheckboxColors from './useCheckboxColors';
 
 const options: BasicOptionType<string>[] = [
   { value: 'usdt', label: 'USDT' },
@@ -30,13 +31,21 @@ const switchOptions = [
 
 const SettingsContainer = () => {
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
+  const [isStreamChecked, setIsStreamChecked] = useState(false);
+  const [isVestingChecked, setIsVestingChecked] = useState(false);
   const [apiKeyValue, setApiKeyValue] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
 
   const router = useRouter();
+  const checkBoxColors = useCheckboxColors(isStreamChecked, isVestingChecked);
 
-  const isChecked = true;
-  const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  const handleStreamCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsStreamChecked(e.target.checked);
+  };
+
+  const handleVestingCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsVestingChecked(e.target.checked);
+  };
 
   const handleApiKey = (e: React.ChangeEvent<HTMLInputElement>) => {
     setApiKeyValue(e.target.value.trim());
@@ -84,27 +93,42 @@ const SettingsContainer = () => {
             <p className="text-lg">Acceptable payment methods</p>
             <p className="text-cadetBlue text-sm">Please Choose one or more methods.</p>
           </div>
-          <div className="inline-flex gap-2">
-            <CCheckbox
-              type="secondary"
-              value="stream"
-              label={<CMethods suffix="Method" method="stream" />}
-              checked={isChecked}
-              onChange={handleCheckBoxChange}
-            />
+          <div className="inline-flex gap-[12px]">
             <CCheckbox
               type="secondary"
               value="single"
               label={<CMethods suffix="Method" method="single" />}
-              checked={isChecked}
-              onChange={handleCheckBoxChange}
+              checked
+              disabled
             />
             <CCheckbox
               type="secondary"
+              value="stream"
+              label={
+                <CMethods
+                  suffix="Method"
+                  method="stream"
+                  fill={checkBoxColors.streamIconColor}
+                  className={checkBoxColors.streamTextColor}
+                />
+              }
+              checked={isStreamChecked}
+              onChange={handleStreamCheck}
+            />
+
+            <CCheckbox
+              type="secondary"
               value="vesting"
-              label={<CMethods suffix="Method" method="vesting" />}
-              checked={isChecked}
-              onChange={handleCheckBoxChange}
+              label={
+                <CMethods
+                  suffix="Method"
+                  method="vesting"
+                  fill={checkBoxColors.vestingIconColor}
+                  className={checkBoxColors.vestingTextColor}
+                />
+              }
+              checked={isVestingChecked}
+              onChange={handleVestingCheck}
             />
           </div>
         </CCard>

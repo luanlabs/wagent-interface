@@ -8,7 +8,7 @@ export type CCheckboxType = 'primary' | 'secondary';
 
 type CCheckboxProps = {
   checked: boolean;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   label: string | React.JSX.Element;
   value: string;
   disabled?: boolean;
@@ -45,14 +45,14 @@ const CCheckbox = ({
       <div
         className={cn(
           getCheckBoxStyle(type, checked, disabled),
-          `flex items-center justify-center rounded-md transition duration-300 ease-in-out transform`,
+          `flex items-center justify-center rounded-md transition duration-100 ease-in-out transform`,
         )}
       >
-        {checked && <Check fill={type === 'secondary' && !disabled ? '#073834' : '#EAECF0'} />}
+        {checked && <Check fill={type === 'secondary' && !disabled ? '#073834' : '#c9c9c9'} />}
       </div>
       {label && (
         <div
-          className={`text-sm select-none transition-colors duration-300 ${
+          className={`text-sm select-none transition-colors duration-100 ${
             !checked || disabled ? '!text-gray' : 'text-black'
           }`}
         >

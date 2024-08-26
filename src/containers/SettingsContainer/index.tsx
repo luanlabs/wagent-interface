@@ -93,7 +93,7 @@ const SettingsContainer = () => {
           title="Acceptable payment methods"
           description="Please Choose one or more methods."
           component={
-            <div className="inline-flex gap-[12px] w-full">
+            <div className="inline-flex gap-[12px] w-full mobile:flex-col mobile:space-y-2">
               <CCheckbox
                 type="secondary"
                 value="single"

@@ -4,13 +4,18 @@ import Vesting from '@/assets/Vesting';
 
 import { MethodType } from '@/constants/types';
 
-export const getMethodImage = (method: MethodType) => {
+interface getMethodImageProp {
+  method: MethodType;
+  fill: string;
+}
+
+export const getMethodImage = ({ method, fill }: getMethodImageProp) => {
   switch (method) {
     case 'stream':
-      return <Stream />;
+      return <Stream fill={fill} />;
     case 'vesting':
-      return <Vesting />;
+      return <Vesting fill={fill} />;
     default:
-      return <Single />;
+      return <Single fill={fill} />;
   }
 };

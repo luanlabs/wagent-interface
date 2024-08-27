@@ -1,11 +1,13 @@
 'use client';
 
+import profile from './reducers/profile';
 import transactions from './reducers/transactions';
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 const rootReducer = combineReducers({
   transactions,
+  profile,
 });
 
 export const store = configureStore({

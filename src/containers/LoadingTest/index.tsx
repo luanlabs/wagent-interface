@@ -41,7 +41,7 @@ const LoadingTest = () => {
       <CLoadingModal
         isOpen={isOpen}
         onClose={handleOnCloseModal}
-        title="Your order is submited"
+        title="Your order is submitted"
         description="Thanks for your order Please wait while we’re trying redirect back
         you to where you came from!"
         success={successLoading}

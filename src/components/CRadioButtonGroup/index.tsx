@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 import { BasicOptionType } from '@/models';
 
-type Option = BasicOptionType<string>;
+export type Option = BasicOptionType<string>;
 
 type CRadioButtonGroupProps = {
   options: Option[];
@@ -28,7 +28,7 @@ const CRadioButtonGroup = ({ options, defaultOption, onChange }: CRadioButtonGro
 
   return (
     <div>
-      <div className="relative w-full py-2 bg-lightGray px-2 flex space-x-2 rounded-[55px] border border-[#E4E7EC]">
+      <div className="bg-white relative w-full py-2 px-2 flex space-x-2 rounded-[55px] border border-[#E4E7EC]">
         {options.map((tab) => (
           <label key={tab.value} className="flex-1 text-center">
             <input

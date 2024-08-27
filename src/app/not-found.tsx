@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const NotFound = () => {
   return (
     <div className="h-screen w-screen grid place-content-center select-none mobile:px-4">
-      <Image src={notFound} alt="404" />
+      <Image src={notFound} alt="404" priority />
       <div className="-mt-2 text-center space-y-4">
         <p className="text-2xl font-medium mobile:text-xl">Page not found</p>
         <p className="text-lg mobile:text-sm text-[#000000B2]">

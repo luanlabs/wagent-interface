@@ -99,13 +99,13 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
         <p className="text-sm select-none font-normal text-offBlack mb-[6px]">Product Image</p>
 
         {imagePreview ? (
-          <div className="relative w-20 h-20">
+          <div className="relative w-20 h-20 rounded-[10px] border border-[#D0D5DD]">
             <Image
               src={imagePreview}
               alt="Product"
               width={0}
               height={0}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover rounded-[10px]"
             />
             <label className="cursor-pointer">
               <div className="absolute bottom-0 right-0 left-[65px] top-[65px]">

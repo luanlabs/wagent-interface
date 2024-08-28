@@ -158,7 +158,7 @@ const SignUpForm = () => {
         className="!w-[400px] mobile:!w-[310px]"
         description={response.message}
         failed={response.status === 'error'}
-        verifyEmail={response.status === 'success'}
+        checkEmail={response.status === 'success'}
       />
     </div>
   );

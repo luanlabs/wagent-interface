@@ -3,13 +3,12 @@ import { useRouter } from 'next/navigation';
 
 import Pages from '@/constants/pages';
 import authRequest from '@/services/authRequest';
-import { AuthCredentials, IApiError, IUserLoginResponseMessage } from '@/constants/types';
-
-interface ResponseMessage {
-  status: 'success' | 'error' | '';
-  title: string;
-  message: string;
-}
+import {
+  AuthCredentials,
+  customResponse,
+  IApiError,
+  IUserLoginResponseMessage,
+} from '@/constants/types';
 
 const ERROR_MESSAGES = {
   USER_NOT_EXIST: 'User with this Email not found, Sign up instead.',
@@ -17,7 +16,7 @@ const ERROR_MESSAGES = {
   AUTH_FAILED: 'An error occurred during authentication, try again.',
 };
 
-const SUCCESS_MESSAGE: ResponseMessage = {
+const SUCCESS_MESSAGE: customResponse = {
   status: 'success',
   title: 'Login successful',
   message: 'Your login was successful, now we will redirect you to the dashboard.',
@@ -28,7 +27,7 @@ const SignInHandler = (
   isRememberChecked: boolean,
 ) => {
   const router = useRouter();
-  const [response, setResponse] = useState<ResponseMessage>({
+  const [response, setResponse] = useState<customResponse>({
     status: '',
     title: '',
     message: '',
@@ -49,7 +48,7 @@ const SignInHandler = (
     setTimeout(() => {
       handleCloseModal();
       router.push(Pages.DASHBOARD);
-    }, 2000);
+    }, 3000);
   };
 
   const handleAuthError = (error: IApiError) => {
@@ -82,7 +81,7 @@ const SignInHandler = (
       setIsOpen(true);
       setTimeout(() => {
         handleCloseModal();
-      }, 2000);
+      }, 3000);
 
       handleAuthError(error as IApiError);
     }

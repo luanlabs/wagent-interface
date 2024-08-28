@@ -16,12 +16,12 @@ const AuthLayout = ({ children, imageSrc }: AuthLayoutProps) => {
         <div className="flex justify-end items-end h-full">
           <div className="relative flex w-full h-[85%]">
             <Image
-              src={imageSrc}
-              alt="dashboardImage"
-              fill
               priority
-              className="!select-none"
+              fill
+              src={imageSrc}
               draggable="false"
+              alt="dashboardImage"
+              className="!select-none"
             />
           </div>
         </div>

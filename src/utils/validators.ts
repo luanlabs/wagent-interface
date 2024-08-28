@@ -8,14 +8,10 @@ export const validateEmail = (email: string) => {
   return emailRegex.test(email) ? undefined : 'Invalid email address';
 };
 
-export const validatePassword = (password: string): string | undefined => {
+export const validatePassword = (password: string): string => {
   const rules = [
-    { regex: /.{6,16}/, error: 'Password must be between 6 and 16 characters long.' },
+    { regex: /.{8,64}/, error: 'Password must be between 8 and 64 characters long.' },
     { regex: /[0-9]/, error: 'Password must include at least one number.' },
-    {
-      regex: /[!@#$%^&*]/,
-      error: 'Password must include at least one special character (!@#$%^&*).',
-    },
     { regex: /[a-zA-Z]/, error: 'Password must include at least one letter.' },
     { regex: /[A-Z]/, error: 'Password must include at least one uppercase letter.' },
   ];
@@ -26,5 +22,5 @@ export const validatePassword = (password: string): string | undefined => {
     }
   }
 
-  return undefined;
+  return '';
 };

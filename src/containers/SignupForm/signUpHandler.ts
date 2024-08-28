@@ -3,27 +3,26 @@ import { useRouter } from 'next/navigation';
 
 import Pages from '@/constants/pages';
 import authRequest from '@/services/authRequest';
-import { AuthCredentials, IApiError, IUserAuthResponseMessage } from '@/constants/types';
-
-interface Response {
-  status: 'success' | 'error' | '';
-  title: string;
-  message: string;
-}
+import {
+  AuthCredentials,
+  customResponse,
+  IApiError,
+  IUserAuthResponseMessage,
+} from '@/constants/types';
 
 const ERROR_MESSAGES = {
   USER_ALREADY_EXIST: 'Your Email is already registered, Sign in instead.',
   REGISTRATION_FAILED: 'An error occurred during registration, try again.',
 };
 
-const SUCCESS_MESSAGE: Response = {
+const SUCCESS_MESSAGE: customResponse = {
   status: 'success',
   title: 'Registration Successful',
   message: 'Please verify your Email address',
 };
 
 const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>) => {
-  const [response, setResponse] = useState<Response>({
+  const [response, setResponse] = useState<customResponse>({
     status: '',
     title: '',
     message: '',
@@ -48,7 +47,7 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
         setTimeout(() => {
           handleCloseModal();
           router.push(Pages.SIGNIN);
-        }, 2000);
+        }, 3000);
       }
     } catch (error) {
       const err = error as IApiError;
@@ -57,7 +56,7 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
       setIsOpen(true);
       setTimeout(() => {
         handleCloseModal();
-      }, 2000);
+      }, 3000);
 
       if (err.data.message === 'User Already Exist!') {
         message = ERROR_MESSAGES.USER_ALREADY_EXIST;

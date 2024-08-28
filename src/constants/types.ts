@@ -76,9 +76,19 @@ export interface IUserAuth {
   token: string;
 }
 
-export interface IApiResponse<ResultType, ErrorType = void> {
-  result?: ResultType;
-  error?: ErrorType;
+export interface IApiResponse {
+  message: object | string;
+  result?: object | string;
+  error?: {
+    message: string;
+    extras?: any;
+  };
+}
+
+export interface customResponse {
+  status: 'success' | 'error' | '';
+  title: string;
+  message: string;
 }
 
 export interface IApiError {
@@ -88,21 +98,12 @@ export interface IApiError {
   code?: number;
 }
 
-export interface IApiMessage {
-  message?: string;
-}
-
-export interface IApiLoginResponse extends IApiMessage {
+export interface IApiLoginResponse extends IApiResponse {
   id: string;
   email?: string;
   token: string;
 }
 
-export interface IUserAuthResponseMessage
-  extends IApiResponse<
-    {
-      message: string;
-    },
-    IApiError
-  > {}
-export type IUserLoginResponseMessage = IApiResponse<IApiLoginResponse, IApiError>;
+export interface IUserAuthResponseMessage extends IApiResponse {}
+export type IUserLoginResponseMessage = IApiResponse;
+export type IUserForgotMessage = IApiResponse;

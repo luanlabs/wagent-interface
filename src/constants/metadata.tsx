@@ -5,13 +5,13 @@ const Metadata = () => {
         name="keywords"
         content="Wagent, Stellar, Payment gateway, cryptocurrency, blockchain, finance, digital payments, smart contracts"
       />
-      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="mobile-web-app-capable" content="yes"/>
       <meta
         name="viewport"
         content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
       />
-      <meta name="apple-touch-icon" content="/public/icons/logo512-128.png" />
-      <meta name="icon" content="/public/icons/logo512-128.png" />
+      <meta name="apple-touch-icon" content="/public/icons/logo128.png" />
+      <meta name="icon" content="/public/icons/logo128.png" />
       <meta name="theme-color" content="#ffffff" />
       <meta
         name="description"

@@ -12,12 +12,12 @@ import { composeValidators } from '@/utils/composeValidators';
 import ResetPasswordRequest from '@/services/resetPasswordRequest';
 import { minLength, required, validatePassword } from '@/utils/validators';
 import CLoadingModal from '@/components/CLoadingModal';
-import { customResponse, IUserForgotMessage } from '@/constants/types';
+import { CustomResponse } from '@/constants/types';
 
 const ResetPasswordForm = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [response, setResponse] = useState<customResponse>({
+  const [response, setResponse] = useState<CustomResponse>({
     status: '',
     title: '',
     message: '',
@@ -27,12 +27,12 @@ const ResetPasswordForm = () => {
     setIsOpen(false);
   };
 
-  const onSubmit = async (email: string) => {
-    const { message } = await ResetPasswordRequest<IUserForgotMessage>(email);
-    if (message) {
+  const onSubmit = async (newPassword: string) => {
+    const { data, response } = await ResetPasswordRequest(newPassword);
+    if (data.message) {
       setIsOpen(true);
     }
-    if (message === 'Password has been reset') {
+    if (response.status === 200) {
       setResponse({
         status: 'success',
         title: 'Password has been reset',
@@ -42,7 +42,7 @@ const ResetPasswordForm = () => {
         handleCloseModal();
         router.push(Pages.SIGNIN);
       }, 3000);
-    } else if (message === 'Invalid or expired token') {
+    } else if (response.status === 404) {
       setResponse({
         status: 'error',
         title: 'Error',

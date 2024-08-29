@@ -1,7 +1,7 @@
 import request from '@/utils/request';
 
-const ResetPasswordRequest = async <T>(newPassword: string): Promise<T> => {
-  const { data } = await request<T>(`${process.env.NEXT_PUBLIC_API}/users/auth/password`, {
+const ResetPasswordRequest = async (newPassword: string) => {
+  const { data, response } = await request(`${process.env.NEXT_PUBLIC_API}/users/auth/password`, {
     method: 'POST',
     body: JSON.stringify(newPassword),
     headers: {
@@ -9,7 +9,7 @@ const ResetPasswordRequest = async <T>(newPassword: string): Promise<T> => {
     },
   });
 
-  return data;
+  return { data, response };
 };
 
 export default ResetPasswordRequest;

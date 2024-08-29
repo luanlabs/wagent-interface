@@ -12,12 +12,12 @@ import forgotRequest from '@/services/forgotPasswordRequest';
 import { composeValidators } from '@/utils/composeValidators';
 import { required, validateEmail } from '@/utils/validators';
 import CLoadingModal from '@/components/CLoadingModal';
-import { customResponse, IUserForgotMessage } from '@/constants/types';
+import { CustomResponse } from '@/constants/types';
 
 const ForgotForm = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [response, setResponse] = useState<customResponse>({
+  const [response, setResponse] = useState<CustomResponse>({
     status: '',
     title: '',
     message: '',
@@ -28,11 +28,11 @@ const ForgotForm = () => {
   };
 
   const onSubmit = async (email: string) => {
-    const { message } = await forgotRequest<IUserForgotMessage>(email);
-    if (message) {
+    const { data } = await forgotRequest(email);
+    if (data.message) {
       setIsOpen(true);
     }
-    if (message === 'Password reset link sent') {
+    if (data.message === 'Password reset link sent') {
       setResponse({
         status: 'success',
         title: 'Password reset link sent',
@@ -42,7 +42,7 @@ const ForgotForm = () => {
         handleCloseModal();
         router.push(Pages.RESET);
       }, 3000);
-    } else if (message === 'User not found') {
+    } else if (data.message === 'User not found') {
       setResponse({ status: 'error', title: 'Error', message: 'User not found' });
     } else {
       setResponse({ status: 'error', title: 'Error', message: 'Error occurred!' });

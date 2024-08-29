@@ -1,7 +1,9 @@
+import { IApiData } from '@/constants/types';
+
 const request = async <T>(
   url: string,
   config?: RequestInit,
-): Promise<{ data: T; response: Response }> => {
+): Promise<{ data: IApiData; response: Response }> => {
   try {
     const response = await fetch(url, config);
 

@@ -58,7 +58,7 @@ const SignUpForm = () => {
               <form onSubmit={handleSubmit} autoComplete="false">
                 <div className="space-y-3 w-full">
                   <Field
-                    name="storeName"
+                    name="name"
                     validate={composeValidators(required, minLength(4))}
                     render={({ input, meta }) => (
                       <CInput

@@ -3,26 +3,21 @@ import { useRouter } from 'next/navigation';
 
 import Pages from '@/constants/pages';
 import authRequest from '@/services/authRequest';
-import {
-  AuthCredentials,
-  customResponse,
-  IApiError,
-  IUserAuthResponseMessage,
-} from '@/constants/types';
+import { AuthCredentials, CustomResponse } from '@/constants/types';
 
 const ERROR_MESSAGES = {
   USER_ALREADY_EXIST: 'Your Email is already registered, Sign in instead.',
   REGISTRATION_FAILED: 'An error occurred during registration, try again.',
 };
 
-const SUCCESS_MESSAGE: customResponse = {
+const SUCCESS_MESSAGE: CustomResponse = {
   status: 'success',
   title: 'Registration Successful',
   message: 'Please verify your Email address',
 };
 
 const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>) => {
-  const [response, setResponse] = useState<customResponse>({
+  const [response, setResponse] = useState<CustomResponse>({
     status: '',
     title: '',
     message: '',
@@ -35,13 +30,13 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
 
   const onSubmit = async (credentials: AuthCredentials): Promise<void> => {
     try {
-      const data = await authRequest<IUserAuthResponseMessage>('auth', {
+      const { data } = await authRequest('auth', {
         email: credentials.email,
-        storeName: credentials.storeName,
+        name: credentials.name,
         password: credentials.password,
       });
 
-      if (data.result?.message === 'Verification email was sent, please check your email.') {
+      if (data.message === 'Verification email was sent, please check your email.') {
         setResponse(SUCCESS_MESSAGE);
         setIsOpen(true);
         setTimeout(() => {
@@ -49,8 +44,7 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
           router.push(Pages.SIGNIN);
         }, 3000);
       }
-    } catch (error) {
-      const err = error as IApiError;
+    } catch (error: any) {
       let message = ERROR_MESSAGES.REGISTRATION_FAILED;
 
       setIsOpen(true);
@@ -58,7 +52,7 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
         handleCloseModal();
       }, 3000);
 
-      if (err.data.message === 'User Already Exist!') {
+      if (error.response.status === 401) {
         message = ERROR_MESSAGES.USER_ALREADY_EXIST;
       }
 

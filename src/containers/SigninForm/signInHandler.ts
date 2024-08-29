@@ -3,20 +3,15 @@ import { useRouter } from 'next/navigation';
 
 import Pages from '@/constants/pages';
 import authRequest from '@/services/authRequest';
-import {
-  AuthCredentials,
-  customResponse,
-  IApiError,
-  IUserLoginResponseMessage,
-} from '@/constants/types';
+import { AuthCredentials, CustomResponse, IApiResponse } from '@/constants/types';
 
 const ERROR_MESSAGES = {
-  USER_NOT_EXIST: 'User with this Email not found, Sign up instead.',
+  USER_NOT_EXIST: 'User not found, Sign up instead.',
   INVALID_CREDENTIALS: 'Email or password does not match with your information in our database.',
   AUTH_FAILED: 'An error occurred during authentication, try again.',
 };
 
-const SUCCESS_MESSAGE: customResponse = {
+const SUCCESS_MESSAGE: CustomResponse = {
   status: 'success',
   title: 'Login successful',
   message: 'Your login was successful, now we will redirect you to the dashboard.',
@@ -27,7 +22,7 @@ const SignInHandler = (
   isRememberChecked: boolean,
 ) => {
   const router = useRouter();
-  const [response, setResponse] = useState<customResponse>({
+  const [response, setResponse] = useState<CustomResponse>({
     status: '',
     title: '',
     message: '',
@@ -51,12 +46,12 @@ const SignInHandler = (
     }, 3000);
   };
 
-  const handleAuthError = (error: IApiError) => {
+  const handleAuthError = (data: IApiResponse) => {
     let message = ERROR_MESSAGES.AUTH_FAILED;
 
-    if (error.data.message === 'User not exist') {
+    if (data.response.status === 401) {
       message = ERROR_MESSAGES.USER_NOT_EXIST;
-    } else if (error.data.message === 'Invalid credentials') {
+    } else if (data.response.status === 400) {
       message = ERROR_MESSAGES.INVALID_CREDENTIALS;
     }
 
@@ -69,21 +64,18 @@ const SignInHandler = (
 
   const onSubmit = async (credentials: AuthCredentials): Promise<void> => {
     try {
-      const data: IUserLoginResponseMessage = await authRequest<IUserLoginResponseMessage>(
-        'auth/login',
-        credentials,
-      );
+      const { data, response } = await authRequest('auth/login', credentials);
 
-      if (data.result?.token) {
+      if (data.result && response.status === 200) {
         handleAuthSuccess(data.result.token);
       }
-    } catch (error) {
+    } catch (error: any) {
       setIsOpen(true);
       setTimeout(() => {
         handleCloseModal();
       }, 3000);
 
-      handleAuthError(error as IApiError);
+      handleAuthError(error);
     }
   };
 

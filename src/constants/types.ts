@@ -61,7 +61,7 @@ export interface IFilterValues {
 }
 
 export type AuthCredentials = {
-  storeName?: string;
+  name?: string;
   email: string;
   password: string;
   confirmPassword?: string;
@@ -71,39 +71,27 @@ export type AuthCredentials = {
 export interface IUserAuth {
   id: string;
   email: string;
-  storeName: string;
+  name: string;
   storeImage: string;
   token: string;
 }
 
-export interface IApiResponse {
+export type IApiData = {
   message: object | string;
   result?: object | string;
   error?: {
     message: string;
     extras?: any;
   };
+};
+
+export interface IApiResponse {
+  data: IApiData;
+  response: Response;
 }
 
-export interface customResponse {
+export interface CustomResponse {
   status: 'success' | 'error' | '';
   title: string;
   message: string;
 }
-
-export interface IApiError {
-  data: {
-    message: string;
-  };
-  code?: number;
-}
-
-export interface IApiLoginResponse extends IApiResponse {
-  id: string;
-  email?: string;
-  token: string;
-}
-
-export interface IUserAuthResponseMessage extends IApiResponse {}
-export type IUserLoginResponseMessage = IApiResponse;
-export type IUserForgotMessage = IApiResponse;

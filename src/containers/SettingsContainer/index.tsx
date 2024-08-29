@@ -58,11 +58,7 @@ const SettingsContainer = () => {
   const handleCRadioButtons = (e: BasicOptionType<string>) => {};
 
   const handleSignOut = () => {
-    if (localStorage.getItem('token') === null) {
-      sessionStorage.clear();
-    } else {
-      localStorage.clear();
-    }
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 
     setTimeout(() => {
       router.push(Pages.SIGNIN);

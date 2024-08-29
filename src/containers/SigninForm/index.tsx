@@ -33,7 +33,7 @@ const SignInForm = () => {
     setIsOpen(false);
   };
 
-  const handleForgotPassword = () => {};
+  const handleForgetPassword = () => {};
 
   const { onSubmit, response } = SignInHandler(setIsOpen, isRememberChecked);
 
@@ -99,11 +99,11 @@ const SignInForm = () => {
                     />
 
                     <Link
-                      href={Pages.FORGOT}
-                      onClick={handleForgotPassword}
+                      href={Pages.FORGET}
+                      onClick={handleForgetPassword}
                       className="border-none hover:bg-transparent text-darkGreen text-sm transition-all duration-300 hover:brightness-100"
                     >
-                      Forgot Password?
+                      Forget Password?
                     </Link>
                   </div>
 

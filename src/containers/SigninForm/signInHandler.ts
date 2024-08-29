@@ -34,11 +34,8 @@ const SignInHandler = (
 
   const handleAuthSuccess = (token: string) => {
     setResponse(SUCCESS_MESSAGE);
-    if (isRememberChecked) {
-      localStorage.setItem('token', token);
-    } else {
-      sessionStorage.setItem('token', token);
-    }
+    document.cookie = `token=${token}`;
+
     setIsOpen(true);
     setTimeout(() => {
       handleCloseModal();

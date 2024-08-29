@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 
-const forgotPasswordRequest = async (email: string) => {
+const forgetPasswordRequest = async (email: string) => {
   const { data, response } = await request(`${process.env.NEXT_PUBLIC_API}/users/auth/reset`, {
     method: 'POST',
     body: JSON.stringify(email),
@@ -12,4 +12,4 @@ const forgotPasswordRequest = async (email: string) => {
   return { data, response };
 };
 
-export default forgotPasswordRequest;
+export default forgetPasswordRequest;

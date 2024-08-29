@@ -6,10 +6,10 @@ import dashboardGlance from 'public/images/dashboardGlance.svg';
 import ResetPasswordForm from '@/containers/ResetPasswordForm';
 
 export const metadata: Metadata = {
-  title: 'Wagent - Forgot password',
+  title: 'Wagent - Forget password',
 };
 
-const Forgot = () => {
+const Forget = () => {
   return (
     <AuthLayout imageSrc={dashboardGlance}>
       <ResetPasswordForm />
@@ -17,4 +17,4 @@ const Forgot = () => {
   );
 };
 
-export default Forgot;
+export default Forget;

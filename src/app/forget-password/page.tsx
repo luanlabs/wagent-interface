@@ -1,20 +1,20 @@
 import { Metadata } from 'next';
 
 import AuthLayout from '@/containers/AuthLayout';
-import ForgotForm from '@/containers/ForgotForm';
+import ForgetForm from '@/containers/ForgetForm';
 
 import dashboardGlance from 'public/images/dashboardGlance.svg';
 
 export const metadata: Metadata = {
-  title: 'Wagent - Forgot password',
+  title: 'Wagent - Forget password',
 };
 
-const Forgot = () => {
+const Forget = () => {
   return (
     <AuthLayout imageSrc={dashboardGlance}>
-      <ForgotForm />
+      <ForgetForm />
     </AuthLayout>
   );
 };
 
-export default Forgot;
+export default Forget;

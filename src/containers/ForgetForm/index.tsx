@@ -8,13 +8,13 @@ import { Typography } from '@/assets';
 import Pages from '@/constants/pages';
 import CInput from '@/components/CInput';
 import CButton from '@/components/CButton';
-import forgotRequest from '@/services/forgotPasswordRequest';
+import forgetRequest from '@/services/forgetPasswordRequest';
 import { composeValidators } from '@/utils/composeValidators';
 import { required, validateEmail } from '@/utils/validators';
 import CLoadingModal from '@/components/CLoadingModal';
 import { CustomResponse } from '@/constants/types';
 
-const ForgotForm = () => {
+const ForgetForm = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [response, setResponse] = useState<CustomResponse>({
@@ -28,7 +28,7 @@ const ForgotForm = () => {
   };
 
   const onSubmit = async (email: string) => {
-    const { data } = await forgotRequest(email);
+    const { data } = await forgetRequest(email);
     if (data.message) {
       setIsOpen(true);
     }
@@ -61,7 +61,7 @@ const ForgotForm = () => {
       <div className="flex justify-center mobile:items-start mobile:mt-12 short:items-center short:mt-0 desktop:mt-[30%] bigScreen:mt-[38%] h-full">
         <div className="flex flex-col w-full">
           <div className="mb-4">
-            <p className="text-2xl font-medium text-darkGreen select-none">Forgot password</p>
+            <p className="text-2xl font-medium text-darkGreen select-none">Forget password</p>
           </div>
           <Form
             onSubmit={onSubmit}
@@ -123,4 +123,4 @@ const ForgotForm = () => {
   );
 };
 
-export default ForgotForm;
+export default ForgetForm;

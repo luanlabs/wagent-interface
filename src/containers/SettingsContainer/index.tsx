@@ -17,6 +17,7 @@ import CSelectSearchable from '@/components/CSelectSearchable';
 import { BasicOptionType } from '@/models';
 import EditProfile from '../EditProfile';
 import useCheckboxColors from './useCheckboxColors';
+import CItemField from '@/components/CItemField';
 
 const options: BasicOptionType<string>[] = [
   { value: 'usdt', label: 'USDT' },
@@ -88,118 +89,104 @@ const SettingsContainer = () => {
   return (
     <CPageCard title={pageTitle}>
       <div className="space-y-3">
-        <CCard className="flex justify-between p-6">
-          <div className="flex flex-col">
-            <p className="text-lg">Acceptable payment methods</p>
-            <p className="text-cadetBlue text-sm">Please Choose one or more methods.</p>
-          </div>
-          <div className="inline-flex gap-[12px]">
-            <CCheckbox
-              type="secondary"
-              value="single"
-              label={<CMethods suffix="Method" method="single" />}
-              checked
-              disabled
-            />
-            <CCheckbox
-              type="secondary"
-              value="stream"
-              label={
-                <CMethods
-                  suffix="Method"
-                  method="stream"
-                  fill={checkBoxColors.streamIconColor}
-                  className={checkBoxColors.streamTextColor}
-                />
-              }
-              checked={isStreamChecked}
-              onChange={handleStreamCheck}
-            />
+        <CItemField
+          title="Acceptable payment methods"
+          description="Please Choose one or more methods."
+          component={
+            <div className="inline-flex gap-[12px] w-full mobile:flex-col mobile:space-y-2">
+              <CCheckbox
+                type="secondary"
+                value="single"
+                label={<CMethods suffix="Method" method="single" />}
+                checked
+                disabled
+              />
+              <CCheckbox
+                type="secondary"
+                value="stream"
+                label={
+                  <CMethods
+                    suffix="Method"
+                    method="stream"
+                    fill={checkBoxColors.streamIconColor}
+                    className={checkBoxColors.streamTextColor}
+                  />
+                }
+                checked={isStreamChecked}
+                onChange={handleStreamCheck}
+              />
 
-            <CCheckbox
-              type="secondary"
-              value="vesting"
-              label={
-                <CMethods
-                  suffix="Method"
-                  method="vesting"
-                  fill={checkBoxColors.vestingIconColor}
-                  className={checkBoxColors.vestingTextColor}
-                />
-              }
-              checked={isVestingChecked}
-              onChange={handleVestingCheck}
-            />
-          </div>
-        </CCard>
+              <CCheckbox
+                type="secondary"
+                value="vesting"
+                label={
+                  <CMethods
+                    suffix="Method"
+                    method="vesting"
+                    fill={checkBoxColors.vestingIconColor}
+                    className={checkBoxColors.vestingTextColor}
+                  />
+                }
+                checked={isVestingChecked}
+                onChange={handleVestingCheck}
+              />
+            </div>
+          }
+        />
 
-        <CCard className="flex justify-between p-6">
-          <div className="flex flex-col">
-            <p className="text-lg">Connect your stellar wallet</p>
-            <p className="text-cadetBlue text-sm">Please Choose one or more tokens.</p>
-          </div>
-          <div className="inline-flex gap-2">
+        <CItemField
+          title="Connect your stellar wallet"
+          description="Please Choose one or more tokens."
+          component={
             <div className="w-[356px]">
               <CInputCopy placeholder="Enter Wallet Address" onChange={handleWalletAddress} />
             </div>
-          </div>
-        </CCard>
+          }
+        />
 
-        <CCard className="flex justify-between p-6">
-          <div className="flex flex-col">
-            <p className="text-lg">Minimum cancellable duration</p>
-            <p className="text-cadetBlue text-sm">
-              We will send extra notifications for you in your email.
-            </p>
-          </div>
-          <div className="inline-flex gap-2">
+        <CItemField
+          title="Minimum cancellable duration"
+          description=" We will send extra notifications for you in your email."
+          component={
             <div className="w-[100px]">
               <CNumberInput defaultValue="45" placeholder="45" />
             </div>
-          </div>
-        </CCard>
+          }
+        />
 
-        <CCard className="flex justify-between p-6">
-          <div className="flex flex-col">
-            <p className="text-lg">Email Notifications</p>
-            <p className="text-cadetBlue text-sm">
-              We will send extra notifications for you in your email.
-            </p>
-          </div>
-          <div className="w-[150px]">
-            <CRadioButtonGroup
-              options={switchOptions}
-              defaultOption={switchOptions[1]}
-              onChange={handleCRadioButtons}
-            />
-          </div>
-        </CCard>
+        <CItemField
+          title="Email Notifications"
+          description=" We will send extra notifications for you in your email."
+          component={
+            <div className="w-[150px]">
+              <CRadioButtonGroup
+                options={switchOptions}
+                defaultOption={switchOptions[1]}
+                onChange={handleCRadioButtons}
+              />
+            </div>
+          }
+        />
 
-        <CCard className="flex justify-between p-6">
-          <div className="flex flex-col">
-            <p className="text-lg">API Key</p>
-            <p className="text-cadetBlue text-sm">
-              We will send extra notifications for you in your email.
-            </p>
-          </div>
-          <div className="inline-flex gap-2">
+        <CItemField
+          title="API Key"
+          description=" We will send extra notifications for you in your email."
+          component={
             <div className="w-[356px]">
               <CInputCopy placeholder="Your Api Key" onChange={handleApiKey} hideCharacter />
             </div>
-          </div>
-        </CCard>
+          }
+        />
 
-        <CCard className="flex justify-between p-6">
-          <div className="flex flex-col">
-            <p className="text-lg">Acceptable Tokens</p>
-            <p className="text-cadetBlue text-sm">Please Choose one or more tokens. </p>
-          </div>
-          <div className="inline-flex gap-2">
+        <CItemField
+          title="Acceptable Tokens"
+          description="Please Choose one or more tokens."
+          component={
             <div className="w-[356px]">
               <CSelectSearchable options={options} />
             </div>
-          </div>
-        </CCard>
+          }
+        />
 
         <CCard className="flex w-full justify-between items-center p-6">
           <div>

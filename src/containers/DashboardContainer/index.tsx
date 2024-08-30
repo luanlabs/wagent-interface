@@ -18,11 +18,18 @@ import { history as historyMock } from '@/constants/mockLists';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 
 import { BasicOptionType, CBarChartType } from '@/models';
+import useRequest from '@/hooks/useRequest';
 
 const DashboardContainer = () => {
   const [CBarChartData, setCBarChartData] = useState<CBarChartType[]>(generateChartData('1d'));
   const dispatch = useAppDispatch();
   const history = useAppSelector((state) => state.transactions.history);
+  const { error, isLoading, data, response } = useRequest('/users/transactions', {
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: 'Bearer ' + document.cookie,
+    },
+  });
 
   useEffect(() => {
     dispatch(loadHistory(historyMock));

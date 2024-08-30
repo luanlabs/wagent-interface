@@ -74,9 +74,9 @@ const ProductsContainer = () => {
       error={error}
     >
       <ul className="flex mobile:justify-between items-center rounded-[10px] bg-lightGray text-cadetBlue h-[42px] px-4 mb-4">
-        <li className="text-black w-[20%] whitespace-nowrap">Product name</li>
+        <li className="text-black w-[20%] bigScreen:w-[19%] whitespace-nowrap">Product name</li>
         <li className="mobile:hidden w-[65%] max-w-[28%]">Method</li>
-        <li className="mobile:hidden w-[11%]">ID</li>
+        <li className="mobile:hidden w-[11%] bigScreen:w-[12%]">ID</li>
         <li className="w-[36%] mobile:hidden">Token</li>
         <li>Amount</li>
       </ul>

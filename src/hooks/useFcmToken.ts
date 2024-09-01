@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { onMessage, Unsubscribe } from 'firebase/messaging';
 import { fetchToken, messaging } from '@/services/firebase';
-import { useRouter } from 'next/navigation';
 
 async function getNotificationPermissionAndToken() {
   if (!('Notification' in window)) {
     console.info('This browser does not support desktop notification');
-    return null;
+
+    return '';
   }
 
   if (Notification.permission === 'granted') {
@@ -15,36 +15,36 @@ async function getNotificationPermissionAndToken() {
 
   if (Notification.permission !== 'denied') {
     const permission = await Notification.requestPermission();
+
     if (permission === 'granted') {
       return await fetchToken();
     }
   }
 
-  return null;
+  return '';
 }
 
 const useFcmToken = () => {
-  const router = useRouter();
+  const [token, setToken] = useState<string>('');
   const [notificationPermissionStatus, setNotificationPermissionStatus] =
-    useState<NotificationPermission | null>(null);
-  const [token, setToken] = useState<string | null>(null);
+    useState<NotificationPermission>('default');
+
   const loadToken = async () => {
     const token = await getNotificationPermissionAndToken();
 
-    if (Notification.permission === 'denied') {
-      setNotificationPermissionStatus('denied');
-
-      return;
-    }
-
-    if (!token) {
+    if (token === '') {
       console.error('An error occurred while retrieving token. Retrying...');
-      await loadToken();
-      return;
+
+      // await loadToken();
+      return '';
     }
 
-    setNotificationPermissionStatus(Notification.permission);
+    if (Notification.permission === 'denied') {
+      return '';
+    }
+
     setToken(token);
+    setNotificationPermissionStatus(Notification.permission);
   };
 
   useEffect(() => {
@@ -62,12 +62,6 @@ const useFcmToken = () => {
 
       const unsubscribe = onMessage(m, (payload) => {
         if (Notification.permission !== 'granted') return;
-
-        const link = payload.fcmOptions?.link || payload.data?.link;
-
-        if (link) {
-          router.push(link);
-        }
       });
 
       return unsubscribe;
@@ -82,7 +76,7 @@ const useFcmToken = () => {
     });
 
     return () => unsubscribe?.();
-  }, [token, router]);
+  }, [token]);
 
   return { token, notificationPermissionStatus };
 };

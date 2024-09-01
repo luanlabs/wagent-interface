@@ -20,16 +20,20 @@ const messaging = async () => {
 export const fetchToken = async () => {
   try {
     const fcmMessaging = await messaging();
+
     if (fcmMessaging) {
       const token = await getToken(fcmMessaging, {
         vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY,
       });
+
       return token;
     }
-    return null;
+
+    return '';
   } catch (err) {
     console.error('An error occurred while fetching the token:', err);
-    return null;
+
+    return '';
   }
 };
 

@@ -1,24 +1,20 @@
 import { IApiData } from '@/constants/types';
 
-const request = async <T>(
+const request = async (
   url: string,
   config?: RequestInit,
 ): Promise<{ data: IApiData; response: Response }> => {
-  try {
-    const response = await fetch(url, config);
+  const response = await fetch(url, config);
 
-    if (response.status >= 400) {
-      const data = await response.json();
-
-      throw { data, response };
-    }
-
+  if (response.status >= 400) {
     const data = await response.json();
 
-    return { data, response };
-  } catch (error) {
-    throw error;
+    throw { data, response };
   }
+
+  const data = await response.json();
+
+  return { data, response };
 };
 
 export default request;

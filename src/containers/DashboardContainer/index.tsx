@@ -18,8 +18,13 @@ import { history as historyMock } from '@/constants/mockLists';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 
 import { BasicOptionType, CBarChartType } from '@/models';
+import { IHistoryResponse } from '@/constants/types';
 
-const DashboardContainer = () => {
+type DashboardProps = {
+  transactionsRes: IHistoryResponse;
+};
+
+const DashboardContainer = ({ transactionsRes }: DashboardProps) => {
   const [CBarChartData, setCBarChartData] = useState<CBarChartType[]>(generateChartData('1d'));
   const dispatch = useAppDispatch();
   const history = useAppSelector((state) => state.transactions.history);

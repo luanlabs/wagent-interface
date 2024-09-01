@@ -7,5 +7,6 @@ export const metadata: Metadata = {
 };
 
 export default function Dashboard() {
-  return <DashboardContainer />;
+  const {} = useRequest();
+  return <DashboardContainer transactionsRes={transactionsRes} />;
 }

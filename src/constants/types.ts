@@ -27,7 +27,7 @@ export type ReducerTokensType = {
 
 export type MethodType = 'single' | 'stream' | 'vesting';
 
-export interface IHistoryResponse {
+export interface IHistoryResponse extends IApiResponse {
   id?: string;
   date: number;
   title: string;

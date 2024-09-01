@@ -1,5 +1,6 @@
 'use client';
 
+import Cookies from 'js-cookie';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -58,7 +59,7 @@ const SettingsContainer = () => {
   const handleCRadioButtons = (e: BasicOptionType<string>) => {};
 
   const handleSignOut = () => {
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    Cookies.remove('token');
 
     setTimeout(() => {
       router.push(Pages.SIGNIN);

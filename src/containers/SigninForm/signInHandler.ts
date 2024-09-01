@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -34,7 +35,7 @@ const SignInHandler = (
 
   const handleAuthSuccess = (token: string) => {
     setResponse(SUCCESS_MESSAGE);
-    document.cookie = `token=${token}`;
+    Cookies.set('token', token);
 
     setIsOpen(true);
     setTimeout(() => {

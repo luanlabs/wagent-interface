@@ -21,7 +21,7 @@ type CSelectProps = {
   onChange?: (value: MultiSelectType) => void;
   value?: MultiSelectType;
   initialValuesLength?: number;
-  isCloseModal?: boolean;
+  isModalClose?: boolean;
 };
 
 const CSelect = ({
@@ -31,7 +31,7 @@ const CSelect = ({
   options,
   value = null,
   initialValuesLength,
-  isCloseModal,
+  isModalClose,
 }: CSelectProps) => {
   const [selectValue, setSelectValue] = useState<MultiSelectType>(null);
   const [isMounted, setIsMounted] = useState(false);
@@ -48,10 +48,10 @@ const CSelect = ({
   useEffect(() => setIsMounted(true), []);
 
   useEffect(() => {
-    if (isCloseModal) {
+    if (isModalClose) {
       setItemsSelectedLength(0);
     }
-  }, [isCloseModal]);
+  }, [isModalClose]);
 
   const handleChange = (newValue: MultiValue<OptionType> | SingleValue<OptionType>) => {
     const multiValue = newValue as MultiValue<OptionType>;

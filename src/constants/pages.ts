@@ -7,5 +7,6 @@ enum Pages {
   SIGNIN = '/signin',
   FORGET = '/forget-password',
   RESET = '/forget-password/reset',
+  VERIFY = '/verify',
 }
 export default Pages;

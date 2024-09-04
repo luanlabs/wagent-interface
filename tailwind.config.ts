@@ -51,6 +51,16 @@ const config: Config = {
         box: '0px 4px 16px 0px rgba(118, 138, 189, 0.3)',
         input: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
       },
+      keyframes: {
+        proceed: {
+          from: { width: '0%' },
+          '30%': { width: '30%' },
+          to: { width: '100%' },
+        },
+      },
+      animation: {
+        progress: 'proceed 3s linear forwards',
+      },
     },
   },
   plugins: [],

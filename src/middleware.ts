@@ -7,13 +7,11 @@ export default async function middleware(req: NextRequest) {
   const authorizedRoutes = [Pages.DASHBOARD];
   const unauthorizedRoutes = [Pages.FORGET, Pages.SIGNIN, Pages.SIGNUP];
 
-  // @ts-ignore
   if (authorizedRoutes.some((path) => currentPath.startsWith(path))) {
     if (!isAuthenticated) {
       return NextResponse.redirect(new URL(Pages.SIGNIN, req.url));
     }
     return NextResponse.next();
-    // @ts-ignore
   } else if (unauthorizedRoutes.some((path) => currentPath.startsWith(path))) {
     if (isAuthenticated) {
       return NextResponse.redirect(new URL(Pages.DASHBOARD, req.url));

@@ -9,15 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function Dashboard() {
-  const token = Cookies.get('token');
-
-  const transactionsRes = request(`${process.env.NEXT_PUBLIC_API}/users/transactions`, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  console.log(token, transactionsRes);
-  return <DashboardContainer transactionsRes={transactionsRes} />;
+  return <DashboardContainer />;
 }

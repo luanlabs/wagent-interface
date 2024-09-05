@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import Image, { StaticImageData } from 'next/image';
+import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 import CInput from '@/components/CInput';
 import CModal from '@/components/CModal';
@@ -7,10 +7,10 @@ import CSelect from '@/components/CSelect';
 import CButton from '@/components/CButton';
 import CButtonGroup from '@/components/CButtonGroup';
 
+import { allTokensList, methodTabs } from '@/constants/mockLists';
 import { Edit } from '@/assets';
-import { MultiSelectType } from '@/models';
 import { IProductItemCard } from '@/constants/types';
-import { methodTabs, tokensList } from '@/constants/mockLists';
+import { MultiSelectType } from '@/models';
 
 interface EditProductModalProps {
   onClose: () => void;
@@ -27,6 +27,8 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
   const [errorText, setErrorText] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const initialValuesLengthRef = useRef<number>(0);
 
   const handleSelectedMethod = (value: string[]) => {
     setSelectedMethod(value);
@@ -74,6 +76,7 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
       setSelectedTokens(product.tokens);
       setAmount(product.amount);
       setProductName(product.title);
+      initialValuesLengthRef.current = product.tokens.length;
       setImagePreview(
         typeof product.image === 'string' ? product.image : product.image?.src || null,
       );
@@ -84,10 +87,20 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
       setAmount('');
       setProductName('');
       setErrorText('');
+      initialValuesLengthRef.current = 0;
       setImage(null);
       setImagePreview(null);
     }
   }, [product]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setSelectedTokens((prevTokens) => {
+        initialValuesLengthRef.current = prevTokens?.length || 0;
+        return prevTokens;
+      });
+    }
+  }, [isOpen]);
 
   return (
     <CModal title="Edit Product" isOpen={isOpen} onClose={onClose}>
@@ -147,9 +160,10 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
         <p className="text-sm select-none font-normal text-offBlack mb-[6px]">Tokens</p>
         <CSelect
           placeholder="Select tokens"
-          options={tokensList}
+          options={allTokensList}
           onChange={handleSelectChange}
           value={selectedTokens}
+          initialValuesLength={initialValuesLengthRef.current}
         />
       </div>
       <CInput

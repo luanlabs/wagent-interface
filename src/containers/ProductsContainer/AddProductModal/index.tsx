@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-import CInput from '@/components/CInput';
+import { Edit } from '@/assets';
 import CModal from '@/components/CModal';
+import CInput from '@/components/CInput';
 import CSelect from '@/components/CSelect';
 import CButton from '@/components/CButton';
 import CButtonGroup from '@/components/CButtonGroup';
 import { forceInputNumber } from '@/utils/forceInputNumber';
 
-import { methodTabs, tokensList } from '@/constants/mockLists';
+import { allTokensList, methodTabs } from '@/constants/mockLists';
 import { TokensType } from '@/constants/types';
 import { MultiSelectType } from '@/models';
-import { Edit } from '@/assets';
 
 interface ProductModalProps {
   onClose: () => void;
@@ -150,9 +150,10 @@ const AddProductModal = ({ isOpen, onClose, onAddProduct }: ProductModalProps) =
         <p className="text-sm select-none font-normal text-offBlack mb-[6px]">Tokens</p>
         <CSelect
           placeholder="Select tokens"
-          options={tokensList}
+          options={allTokensList}
           onChange={handleSelectChange}
           value={selectedTokens}
+          isCloseModal={!isOpen}
         />
       </div>
       <CInput

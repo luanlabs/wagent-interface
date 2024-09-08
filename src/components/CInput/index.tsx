@@ -64,7 +64,7 @@ const CInput = ({
   inputClassName,
   clearInputClick,
   eyeIconPosition,
-  autoComplete = 'false',
+  autoComplete = 'off',
   ...props
 }: CInputProps) => {
   const [showPassword, setShowPassword] = useState(false);

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { Pages } from '@/constants/pages';
 import authRequest from '@/services/authRequest';
@@ -11,6 +11,7 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
     title: '',
     message: '',
   });
+  const router = useRouter();
 
   const handleCloseModal = () => {
     setIsOpen(false);
@@ -34,7 +35,7 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
         setIsOpen(true);
         setTimeout(() => {
           handleCloseModal();
-          redirect(Pages.SIGNIN);
+          router.push(Pages.SIGNIN);
         }, 3000);
       }
     } catch (error: any) {
@@ -54,6 +55,8 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
           break;
         case 500:
           message = ErrorMsg.SERVER_ERROR;
+        default:
+          message = ErrorMsg.REGISTRATION_FAILED;
       }
 
       setResponse({

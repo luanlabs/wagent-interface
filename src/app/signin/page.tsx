@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 import AuthLayout from '@/containers/AuthLayout';
-import SignInForm from '@/containers/SigninForm';
+import Form from './form';
 
 import settingsGlance from 'public/images/settingsGlance.svg';
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const SignIn = () => {
   return (
     <AuthLayout imageSrc={settingsGlance}>
-      <SignInForm />
+      <Form />
     </AuthLayout>
   );
 };

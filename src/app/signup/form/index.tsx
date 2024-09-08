@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Form, Field } from 'react-final-form';
 
-import { Typography } from '@/assets';
 import { Pages } from '@/constants/pages';
 import CInput from '@/components/CInput';
 import CButton from '@/components/CButton';
@@ -12,7 +11,7 @@ import { composeValidators } from '@/utils/composeValidators';
 import { AuthCredentials } from '@/constants/types';
 import { required, minLength, validateEmail, validatePassword } from '@/utils/validators';
 
-import SignUpHandler from './formAction';
+import submitHandler from './submitHandler';
 
 import CLoadingModal from '@/components/CLoadingModal';
 
@@ -24,9 +23,9 @@ const SignUpForm = () => {
     setIsOpen(false);
   };
 
-  const { onSubmit, response } = SignUpHandler(setIsOpen);
+  const { onSubmit, response } = submitHandler(setIsOpen);
 
-  const handleRedirectToSignIn = () => {
+  const handleRedirect = () => {
     routes.push(Pages.SIGNIN);
   };
 
@@ -41,12 +40,9 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className="flex flex-col bg-white h-full rounded-3xl px-8 py-7 shadow-md mobile:shadow-none mobile:px-0 mobile:py-3 mobile:rounded-none">
-      <div className="flex justify-start items-start">
-        <Typography />
-      </div>
-      <div className="flex justify-center mobile:items-start mobile:mt-8 short:items-center short:mt-0 desktop:mt-[25%] bigScreen:mt-[36%] h-full">
-        <div className="flex flex-col w-full">
+    <>
+      <div className="relative flex-col h-full justify-between">
+        <div>
           <div className="my-4 space-y-4">
             <p className="text-2xl font-medium text-darkGreen select-none">Sign Up</p>
           </div>
@@ -140,17 +136,14 @@ const SignUpForm = () => {
             )}
           />
         </div>
-      </div>
-      <div className="flex justify-between items-center w-full">
-        <p className="text-sm select-none text-smokyBlue">Already have an Account?</p>
 
-        <CButton
-          text="Sign in"
-          variant="outline"
-          className="!w-1/3"
-          onClick={handleRedirectToSignIn}
-        />
+        <div className="absolute bottom-0 flex justify-between items-center w-full">
+          <p className="text-sm select-none text-smokyBlue">Already have an Account?</p>
+
+          <CButton text="Sign in" variant="outline" className="!w-1/3" onClick={handleRedirect} />
+        </div>
       </div>
+
       <CLoadingModal
         isOpen={isOpen}
         title={response.title}
@@ -160,7 +153,7 @@ const SignUpForm = () => {
         failed={response.status === 'error'}
         checkEmail={response.status === 'success'}
       />
-    </div>
+    </>
   );
 };
 

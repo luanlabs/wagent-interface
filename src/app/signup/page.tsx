@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 import AuthLayout from '@/containers/AuthLayout';
-import SignUpForm from '@/containers/SignupForm';
+import Form from './form';
 
 import dashboardGlance from 'public/images/dashboardGlance.svg';
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const SignUp = () => {
   return (
     <AuthLayout imageSrc={dashboardGlance}>
-      <SignUpForm />
+      <Form />
     </AuthLayout>
   );
 };

@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import { Form, Field } from 'react-final-form';
 
 import { Typography } from '@/assets';
-import Pages from '@/constants/pages';
 import CInput from '@/components/CInput';
+import { Pages } from '@/constants/pages';
 import CButton from '@/components/CButton';
 import forgetRequest from '@/services/forgetPasswordRequest';
 import { composeValidators } from '@/utils/composeValidators';

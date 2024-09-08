@@ -4,8 +4,8 @@ import Cookies from 'js-cookie';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import Pages from '@/constants/pages';
 import CCard from '@/components/CCard';
+import { Pages } from '@/constants/pages';
 import CButton from '@/components/CButton';
 import CMethods from '@/components/CMethods';
 import CCheckbox from '@/components/CCheckbox';

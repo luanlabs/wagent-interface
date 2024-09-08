@@ -1,5 +1,15 @@
 import { StaticImageData } from 'next/image';
 
+export enum ErrorMsg {
+  SERVER_ERROR = 'Internal server error.',
+  USER_NOT_EXISTS = 'User not found or ',
+  INVALID_CREDENTIALS = 'Validation failed due to invalid fields.',
+  AUTH_FAILED = 'An error occurred during authentication, try again.',
+  USER_NOT_VERIFIED = 'Email is not verified, check your email or go to verify email.',
+  USER_ALREADY_EXISTS = 'Your Email is already registered, Sign in instead.',
+  REGISTRATION_FAILED = 'An error occurred during registration, try again.',
+}
+
 export interface CNavLinkProps {
   url: string;
   title: string;

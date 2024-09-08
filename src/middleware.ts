@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Pages from './constants/pages';
+import { Pages } from './constants/pages';
 
 export default async function middleware(req: NextRequest) {
   const isAuthenticated = req.cookies.get('token')?.value;

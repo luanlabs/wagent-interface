@@ -1,5 +1,5 @@
-import Pages from '@/constants/pages';
 import request from '@/utils/request';
+import { Pages } from '@/constants/pages';
 import { redirect } from 'next/navigation';
 
 export default async function Verify({ params }: { params: { token: string } }) {

@@ -1,4 +1,4 @@
-enum Pages {
+export enum Pages {
   DASHBOARD = '/dashboard',
   HISTORY = '/dashboard/history',
   PRODUCTS = '/dashboard/products',
@@ -9,4 +9,7 @@ enum Pages {
   RESET = '/forget-password/reset',
   VERIFY = '/verify',
 }
-export default Pages;
+
+export enum ExternalLinks {
+  LANDING = 'https://wagent.app',
+}

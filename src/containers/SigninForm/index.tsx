@@ -5,14 +5,14 @@ import { useRouter } from 'next/navigation';
 import { Form, Field } from 'react-final-form';
 
 import { Typography } from '@/assets';
-import Pages from '@/constants/pages';
+import { Pages } from '@/constants/pages';
 import CInput from '@/components/CInput';
 import CButton from '@/components/CButton';
 import CCheckbox from '@/components/CCheckbox';
 import { composeValidators } from '@/utils/composeValidators';
 import { required, minLength, validateEmail, validatePassword } from '@/utils/validators';
 
-import SignInHandler from './signInHandler';
+import SignInHandler from './formAction';
 import CLoadingModal from '@/components/CLoadingModal';
 import Link from 'next/link';
 

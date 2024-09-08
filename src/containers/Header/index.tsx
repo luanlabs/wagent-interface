@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import CCard from '@/components/CCard';
 import { Bell, Typography } from '@/assets';
-import ExternalLinks from '@/constants/externalLinks';
+import { ExternalLinks } from '@/constants/pages';
 
 import Notification from '../Notification';
 

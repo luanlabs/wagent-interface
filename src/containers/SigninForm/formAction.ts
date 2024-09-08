@@ -1,28 +1,15 @@
 import Cookies from 'js-cookie';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
-import Pages from '@/constants/pages';
+import { Pages } from '@/constants/pages';
 import authRequest from '@/services/authRequest';
-import { AuthCredentials, CustomResponse, IApiResponse } from '@/constants/types';
-
-const ERROR_MESSAGES = {
-  USER_NOT_EXIST: 'User not found, Sign up instead.',
-  INVALID_CREDENTIALS: 'Email or password does not match with your information in our database.',
-  AUTH_FAILED: 'An error occurred during authentication, try again.',
-};
-
-const SUCCESS_MESSAGE: CustomResponse = {
-  status: 'success',
-  title: 'Login successful',
-  message: 'Your login was successful, now we will redirect you to the dashboard.',
-};
+import { AuthCredentials, CustomResponse, ErrorMsg, IApiResponse } from '@/constants/types';
 
 const SignInHandler = (
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
   isRememberChecked: boolean,
 ) => {
-  const router = useRouter();
   const [response, setResponse] = useState<CustomResponse>({
     status: '',
     title: '',
@@ -34,28 +21,47 @@ const SignInHandler = (
   };
 
   const handleAuthSuccess = (token: string) => {
-    setResponse(SUCCESS_MESSAGE);
-    Cookies.set('token', token);
+    setResponse({
+      status: 'success',
+      title: 'Login successful',
+      message: 'Your login was successful, now we will redirect you to dashboard.',
+    });
+
+    if (isRememberChecked) {
+      Cookies.set('token', token, { expires: 365 });
+    } else {
+      Cookies.set('token', token);
+    }
 
     setIsOpen(true);
     setTimeout(() => {
       handleCloseModal();
-      router.push(Pages.DASHBOARD);
+      redirect(Pages.DASHBOARD);
     }, 3000);
   };
 
   const handleAuthError = (data: IApiResponse) => {
-    let message = ERROR_MESSAGES.AUTH_FAILED;
+    let message = ErrorMsg.AUTH_FAILED;
+    let title = 'Login Failed';
 
-    if (data.response.status === 401) {
-      message = ERROR_MESSAGES.USER_NOT_EXIST;
-    } else if (data.response.status === 400) {
-      message = ERROR_MESSAGES.INVALID_CREDENTIALS;
+    switch (data.response.status) {
+      case 400:
+        title = 'Validation failed';
+        message = ErrorMsg.INVALID_CREDENTIALS;
+        break;
+      case 401:
+        message = ErrorMsg.USER_NOT_VERIFIED;
+        break;
+      case 404:
+        message = ErrorMsg.USER_NOT_EXISTS;
+        break;
+      case 500:
+        message = ErrorMsg.SERVER_ERROR;
     }
 
     setResponse({
       status: 'error',
-      title: 'Login Failed',
+      title,
       message,
     });
   };
@@ -65,7 +71,7 @@ const SignInHandler = (
       const { data, response } = await authRequest('auth/login', credentials);
 
       if (data.result && response.status === 200) {
-        handleAuthSuccess(data.result.token);
+        handleAuthSuccess((data.result as { token: string }).token);
       }
     } catch (error: any) {
       setIsOpen(true);

@@ -1,20 +1,20 @@
-// import { Metadata } from 'next';
+import { Metadata } from 'next';
 
-// import AuthLayout from '@/containers/AuthLayout';
+import AuthLayout from '@/containers/AuthLayout';
+import Form from './form';
 
-// import dashboardGlance from 'public/images/dashboardGlance.svg';
-// import verifyEmailForm from '@/containers/verifyEmailForm';
+import dashboardGlance from 'public/images/dashboardGlance.svg';
 
-// export const metadata: Metadata = {
-//   title: 'Wagent - request verification email',
-// };
+export const metadata: Metadata = {
+  title: 'Wagent - request verification email',
+};
 
-// const Forget = () => {
-//   return (
-//     <AuthLayout imageSrc={dashboardGlance}>
-//       <verifyEmailForm />
-//     </AuthLayout>
-//   );
-// };
+const Forget = () => {
+  return (
+    <AuthLayout imageSrc={dashboardGlance}>
+      <Form />
+    </AuthLayout>
+  );
+};
 
-// export default Forget;
+export default Forget;

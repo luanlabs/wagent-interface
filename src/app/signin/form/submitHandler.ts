@@ -38,7 +38,7 @@ const SubmitHandler = (
     setTimeout(() => {
       handleCloseModal();
       router.push(Pages.DASHBOARD);
-    }, 3000);
+    }, 4000);
   };
 
   const handleAuthError = (data: IApiResponse) => {
@@ -81,6 +81,9 @@ const SubmitHandler = (
       setIsOpen(true);
       setTimeout(() => {
         handleCloseModal();
+        if (error.response.status === 401) {
+          router.push(Pages.VERIFY);
+        }
       }, 3000);
 
       handleAuthError(error);

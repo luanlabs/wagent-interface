@@ -19,7 +19,7 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
 
   const onSubmit = async (credentials: AuthCredentials): Promise<void> => {
     try {
-      const { data, response } = await authRequest('auth', {
+      const { response } = await authRequest('auth', {
         email: credentials.email,
         name: credentials.name,
         password: credentials.password,
@@ -36,15 +36,10 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
         setTimeout(() => {
           handleCloseModal();
           router.push(Pages.SIGNIN);
-        }, 3000);
+        }, 4000);
       }
     } catch (error: any) {
       let message = ErrorMsg.REGISTRATION_FAILED;
-
-      setIsOpen(true);
-      setTimeout(() => {
-        handleCloseModal();
-      }, 3000);
 
       switch (error.response.status) {
         case 400:
@@ -59,11 +54,17 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
           message = ErrorMsg.REGISTRATION_FAILED;
       }
 
+      setIsOpen(true);
+
       setResponse({
         status: 'error',
         title: 'Registration Failed',
         message,
       });
+
+      setTimeout(() => {
+        handleCloseModal();
+      }, 3000);
     }
   };
 

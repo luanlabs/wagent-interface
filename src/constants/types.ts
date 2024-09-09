@@ -8,6 +8,11 @@ export enum ErrorMsg {
   USER_ALREADY_EXISTS = 'Email is already registered. Please sign in.',
   USER_NOT_FOUND = 'Invalid email or password. Please try again or reset your password.',
   EMAIL_NOT_VERIFIED = 'Email not verified. Please check your inbox or verify your email.',
+  VERIFICATION_FAILED = 'Request verification token failed. Please try again.',
+  ALREADY_VERIFIED = 'Email is already verified.',
+  EMAIL_NOT_FOUND = 'Verification failed. User not found.',
+  INVALID_EMAIL = 'Invalid email address, Please try again.',
+  TOO_MANY_REQUESTS = 'You can only request a token verification every 5 minutes.',
 }
 export interface CNavLinkProps {
   url: string;

@@ -29,7 +29,7 @@ const VerifyForm = () => {
   const onSubmit = async (email: string) => {
     try {
       const { response } = await verifyEmailRequest(email);
-      if (response.status === 201) {
+      if (response.status === 200) {
         setResponse({
           status: 'success',
           title: 'Verification Successful',

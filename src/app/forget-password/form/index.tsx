@@ -4,17 +4,16 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Form, Field } from 'react-final-form';
 
-import { Typography } from '@/assets';
-import CInput from '@/components/CInput';
 import { Pages } from '@/constants/pages';
+import CInput from '@/components/CInput';
 import CButton from '@/components/CButton';
-import forgetRequest from '@/services/forgetPasswordRequest';
-import { composeValidators } from '@/utils/composeValidators';
-import { required, validateEmail } from '@/utils/validators';
 import CLoadingModal from '@/components/CLoadingModal';
-import { CustomResponse } from '@/constants/types';
+import forgetRequest from '@/services/forgetPasswordRequest';
+import { CustomResponse, ErrorMsg } from '@/constants/types';
+import { required, validateEmail } from '@/utils/validators';
+import { composeValidators } from '@/utils/composeValidators';
 
-const ForgetForm = () => {
+const VerifyForm = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [response, setResponse] = useState<CustomResponse>({
@@ -28,39 +27,63 @@ const ForgetForm = () => {
   };
 
   const onSubmit = async (email: string) => {
-    const { data } = await forgetRequest(email);
-    if (data.message) {
+    try {
+      const { response } = await forgetRequest(email);
+      if (response.status === 200) {
+        setResponse({
+          status: 'success',
+          title: 'Successful',
+          message: 'Reset password email is sent',
+        });
+
+        setIsOpen(true);
+
+        setTimeout(() => {
+          handleCloseModal();
+        }, 4000);
+      }
+    } catch (error: any) {
+      let message = 'An unknown error occurred.';
+
+      switch (error.response.status) {
+        case 400:
+          message = ErrorMsg.INVALID_EMAIL;
+          break;
+        case 404:
+          message = ErrorMsg.EMAIL_NOT_FOUND;
+          break;
+        case 429:
+          message = ErrorMsg.TOO_MANY_REQUESTS;
+          break;
+        case 500:
+          message = ErrorMsg.SERVER_ERROR;
+        default:
+          message = 'An unknown error occurred.';
+      }
+
       setIsOpen(true);
-    }
-    if (data.message === 'Password reset link sent') {
+
       setResponse({
-        status: 'success',
-        title: 'Password reset link sent',
-        message: 'Please check your email for more information',
+        status: 'error',
+        title: 'Reset Password Failed',
+        message,
       });
+
       setTimeout(() => {
         handleCloseModal();
-        router.push(Pages.RESET);
       }, 3000);
-    } else if (data.message === 'User not found') {
-      setResponse({ status: 'error', title: 'Error', message: 'User not found' });
-    } else {
-      setResponse({ status: 'error', title: 'Error', message: 'Error occurred!' });
     }
   };
 
-  const handleRedirectToSignIn = () => {
+  const handleRedirect = () => {
     router.push(Pages.SIGNIN);
   };
 
   return (
-    <div className="flex flex-col bg-white h-full rounded-3xl px-8 py-7 shadow-md mobile:shadow-none mobile:px-0 mobile:py-3 mobile:rounded-none">
-      <div className="flex justify-start items-start">
-        <Typography />
-      </div>
-      <div className="flex justify-center mobile:items-start mobile:mt-12 short:items-center short:mt-0 desktop:mt-[30%] bigScreen:mt-[38%] h-full">
-        <div className="flex flex-col w-full">
-          <div className="mb-4">
+    <>
+      <div className="relative flex-col h-full justify-between">
+        <div>
+          <div className="my-4 space-y-4">
             <p className="text-2xl font-medium text-darkGreen select-none">Forget password</p>
           </div>
           <Form
@@ -99,16 +122,11 @@ const ForgetForm = () => {
             )}
           />
         </div>
-      </div>
-      <div className="flex justify-between items-center w-full">
-        <p className="text-sm select-none text-smokyBlue">Remembered your password?</p>
+        <div className="absolute bottom-0 flex justify-between items-center w-full">
+          <p className="text-sm select-none text-smokyBlue">Remembered password?</p>
 
-        <CButton
-          text="Sign in"
-          variant="outline"
-          className="!w-1/3"
-          onClick={handleRedirectToSignIn}
-        />
+          <CButton text="Sign in" variant="outline" className="!w-1/3" onClick={handleRedirect} />
+        </div>
       </div>
       <CLoadingModal
         isOpen={isOpen}
@@ -119,8 +137,8 @@ const ForgetForm = () => {
         failed={response.status === 'error'}
         success={response.status === 'success'}
       />
-    </div>
+    </>
   );
 };
 
-export default ForgetForm;
+export default VerifyForm;

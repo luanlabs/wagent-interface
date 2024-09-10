@@ -7,42 +7,96 @@ import { Form, Field } from 'react-final-form';
 import { Pages } from '@/constants/pages';
 import CInput from '@/components/CInput';
 import CButton from '@/components/CButton';
-import { composeValidators } from '@/utils/composeValidators';
-import { AuthCredentials } from '@/constants/types';
-import { required, minLength, validateEmail, validatePassword } from '@/utils/validators';
-
-import submitHandler from './submitHandler';
-
 import CLoadingModal from '@/components/CLoadingModal';
+import { CustomResponse, ErrorMsg } from '@/constants/types';
+import { minLength, required, validatePassword } from '@/utils/validators';
+import { composeValidators } from '@/utils/composeValidators';
+import ResetPasswordRequest from '@/services/resetPasswordRequest';
 
-const SignUpForm = () => {
+type PasswordValues = {
+  newPassword: string;
+  confirmNewPassword: string;
+};
+
+type FromProps = {
+  token: string;
+};
+
+const ResetPasswordForm = ({ token }: FromProps) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const routes = useRouter();
+  const [response, setResponse] = useState<CustomResponse>({
+    status: '',
+    title: '',
+    message: '',
+  });
 
   const handleCloseModal = () => {
     setIsOpen(false);
   };
 
-  const { onSubmit, response } = submitHandler(setIsOpen);
+  const onSubmit = async (values: PasswordValues) => {
+    try {
+      const { response } = await ResetPasswordRequest(token, values.newPassword);
+      if (response.status === 200) {
+        setResponse({
+          status: 'success',
+          title: 'Successful',
+          message: 'Password has been reset',
+        });
 
-  const handleRedirect = () => {
-    routes.push(Pages.SIGNIN);
+        setIsOpen(true);
+
+        setTimeout(() => {
+          handleCloseModal();
+          router.push(Pages.SIGNIN);
+        }, 4000);
+      }
+    } catch (error: any) {
+      let message = 'An unknown error occurred.';
+
+      switch (error.response.status) {
+        case 400:
+          message = ErrorMsg.EXPIRED_TOKEN;
+          break;
+        case 500:
+          message = ErrorMsg.SERVER_ERROR;
+        default:
+          message = 'An unknown error occurred.';
+      }
+
+      setIsOpen(true);
+
+      setResponse({
+        status: 'error',
+        title: 'Reset Password Failed',
+        message,
+      });
+
+      setTimeout(() => {
+        handleCloseModal();
+      }, 3000);
+    }
   };
 
-  const validateForm = (values: AuthCredentials) => {
-    const errors: Partial<AuthCredentials> = {};
+  const handleRedirect = () => {
+    router.push(Pages.SIGNIN);
+  };
 
-    const { password, confirmPassword } = values;
+  const validateForm = (values: PasswordValues) => {
+    const errors: Partial<PasswordValues> = {};
 
-    if (!password || !confirmPassword) {
-      if (!password) {
-        errors.password = 'Password is required';
+    const { newPassword, confirmNewPassword } = values;
+
+    if (!newPassword || !confirmNewPassword) {
+      if (!newPassword) {
+        errors.newPassword = 'A new password is required';
       }
-      if (!confirmPassword) {
-        errors.confirmPassword = 'Confirm password is required';
+      if (!confirmNewPassword) {
+        errors.confirmNewPassword = 'Confirm password is required';
       }
-    } else if (confirmPassword.trim() !== password.trim()) {
-      errors.confirmPassword = 'Passwords do not match';
+    } else if (confirmNewPassword.trim() !== newPassword.trim()) {
+      errors.confirmNewPassword = 'Passwords do not match';
     }
 
     return errors;
@@ -52,7 +106,7 @@ const SignUpForm = () => {
       <div className="relative flex-col h-full justify-between">
         <div>
           <div className="my-4 space-y-4">
-            <p className="text-2xl font-medium text-darkGreen select-none">Sign Up</p>
+            <p className="text-2xl font-medium text-darkGreen select-none">Reset password</p>
           </div>
           <Form
             validate={validateForm}
@@ -62,47 +116,14 @@ const SignUpForm = () => {
               <form onSubmit={handleSubmit} autoComplete="false">
                 <div className="space-y-3 w-full">
                   <Field
-                    name="name"
-                    validate={composeValidators(required, minLength(4))}
-                    render={({ input, meta }) => (
-                      <CInput
-                        {...input}
-                        border
-                        autoComplete="name"
-                        type="text"
-                        placeholder="Store Name"
-                        meta={meta}
-                        error={meta.touched && meta.error}
-                        errorMsg={meta.error}
-                      />
-                    )}
-                  />
-
-                  <Field
-                    name="email"
-                    validate={composeValidators(required, validateEmail)}
-                    render={({ input, meta }) => (
-                      <CInput
-                        {...input}
-                        border
-                        type="email"
-                        placeholder="Email"
-                        meta={meta}
-                        error={meta.touched && meta.error}
-                        errorMsg={meta.error}
-                      />
-                    )}
-                  />
-
-                  <Field
-                    name="password"
+                    name="newPassword"
                     validate={composeValidators(required, minLength(8), validatePassword)}
                     render={({ input, meta }) => (
                       <CInput
                         {...input}
                         border
                         type="password"
-                        placeholder="Password"
+                        placeholder="Enter your new Password"
                         meta={meta}
                         hideCharacter
                         eyeIconPosition="right"
@@ -111,19 +132,18 @@ const SignUpForm = () => {
                       />
                     )}
                   />
-
                   <Field
-                    name="confirmPassword"
-                    validate={composeValidators(required, minLength(8))}
+                    name="confirmNewPassword"
+                    validate={composeValidators(required, minLength(8), validatePassword)}
                     render={({ input, meta }) => (
                       <CInput
                         {...input}
                         border
+                        type="password"
+                        placeholder="Confirm your new Password"
+                        meta={meta}
                         hideCharacter
                         eyeIconPosition="right"
-                        type="password"
-                        placeholder="Confirm Password"
-                        meta={meta}
                         error={meta.touched && meta.error}
                         errorMsg={meta.error}
                       />
@@ -134,7 +154,7 @@ const SignUpForm = () => {
                 <div className="w-full">
                   <CButton
                     variant="confirm"
-                    text="Sign Up"
+                    text="Reset Password"
                     className="mt-3"
                     type="submit"
                     disabled={pristine || submitError || submitting || invalid}
@@ -144,14 +164,12 @@ const SignUpForm = () => {
             )}
           />
         </div>
-
         <div className="absolute bottom-0 flex justify-between items-center w-full">
-          <p className="text-sm select-none text-smokyBlue">Already have an Account?</p>
+          <p className="text-sm select-none text-smokyBlue">Remembered your password?</p>
 
           <CButton text="Sign in" variant="outline" className="!w-1/3" onClick={handleRedirect} />
         </div>
       </div>
-
       <CLoadingModal
         isOpen={isOpen}
         title={response.title}
@@ -159,10 +177,10 @@ const SignUpForm = () => {
         className="!w-[400px] mobile:!w-[310px]"
         description={response.message}
         failed={response.status === 'error'}
-        checkEmail={response.status === 'success'}
+        success={response.status === 'success'}
       />
     </>
   );
 };
 
-export default SignUpForm;
+export default ResetPasswordForm;

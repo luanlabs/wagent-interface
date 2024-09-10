@@ -13,6 +13,7 @@ export enum ErrorMsg {
   EMAIL_NOT_FOUND = 'Verification failed. User not found.',
   INVALID_EMAIL = 'Invalid email address, Please try again.',
   TOO_MANY_REQUESTS = 'You can only request a token verification every 5 minutes.',
+  EXPIRED_TOKEN = 'Invalid or expired token.',
 }
 export interface CNavLinkProps {
   url: string;

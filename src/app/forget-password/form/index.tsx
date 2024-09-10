@@ -123,7 +123,7 @@ const VerifyForm = () => {
           />
         </div>
         <div className="absolute bottom-0 flex justify-between items-center w-full">
-          <p className="text-sm select-none text-smokyBlue">Remembered password?</p>
+          <p className="text-sm select-none text-smokyBlue">Remembered your password?</p>
 
           <CButton text="Sign in" variant="outline" className="!w-1/3" onClick={handleRedirect} />
         </div>

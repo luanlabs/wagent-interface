@@ -8,8 +8,9 @@ import { Pages } from '@/constants/pages';
 import CInput from '@/components/CInput';
 import CButton from '@/components/CButton';
 import CLoadingModal from '@/components/CLoadingModal';
+import { MODAL_CLOSE_DURATION_MS } from '@/constants/values';
 import forgetRequest from '@/services/forgetPasswordRequest';
-import { CustomResponse, ErrorMsg } from '@/constants/types';
+import { CustomResponse, ErrorMsg, HttpStatusCode } from '@/constants/types';
 import { required, validateEmail } from '@/utils/validators';
 import { composeValidators } from '@/utils/composeValidators';
 
@@ -29,7 +30,7 @@ const VerifyForm = () => {
   const onSubmit = async (email: string) => {
     try {
       const { response } = await forgetRequest(email);
-      if (response.status === 200) {
+      if (response.status === HttpStatusCode.OK) {
         setResponse({
           status: 'success',
           title: 'Successful',
@@ -40,22 +41,22 @@ const VerifyForm = () => {
 
         setTimeout(() => {
           handleCloseModal();
-        }, 4000);
+        }, MODAL_CLOSE_DURATION_MS);
       }
     } catch (error: any) {
       let message = 'An unknown error occurred.';
 
       switch (error.response.status) {
-        case 400:
+        case HttpStatusCode.BadRequest:
           message = ErrorMsg.INVALID_EMAIL;
           break;
-        case 404:
+        case HttpStatusCode.NotFound:
           message = ErrorMsg.EMAIL_NOT_FOUND;
           break;
-        case 429:
+        case HttpStatusCode.TooManyRequests:
           message = ErrorMsg.TOO_MANY_REQUESTS;
           break;
-        case 500:
+        case HttpStatusCode.InternalServerError:
           message = ErrorMsg.SERVER_ERROR;
         default:
           message = 'An unknown error occurred.';
@@ -71,7 +72,7 @@ const VerifyForm = () => {
 
       setTimeout(() => {
         handleCloseModal();
-      }, 3000);
+      }, MODAL_CLOSE_DURATION_MS);
     }
   };
 

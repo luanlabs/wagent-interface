@@ -4,7 +4,14 @@ import { useRouter } from 'next/navigation';
 
 import { Pages } from '@/constants/pages';
 import authRequest from '@/services/authRequest';
-import { AuthCredentials, CustomResponse, ErrorMsg, IApiResponse } from '@/constants/types';
+import { MODAL_CLOSE_DURATION_MS } from '@/constants/values';
+import {
+  AuthCredentials,
+  CustomResponse,
+  ErrorMsg,
+  HttpStatusCode,
+  IApiResponse,
+} from '@/constants/types';
 
 const SubmitHandler = (
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
@@ -38,7 +45,7 @@ const SubmitHandler = (
     setTimeout(() => {
       handleCloseModal();
       router.push(Pages.DASHBOARD);
-    }, 4000);
+    }, MODAL_CLOSE_DURATION_MS);
   };
 
   const handleAuthError = (data: IApiResponse) => {
@@ -46,17 +53,17 @@ const SubmitHandler = (
     let message = ErrorMsg.AUTH_FAILED;
 
     switch (data.response.status) {
-      case 400:
+      case HttpStatusCode.BadRequest:
         title = 'Validation failed';
         message = ErrorMsg.INVALID_CREDENTIALS;
         break;
-      case 401:
+      case HttpStatusCode.Unauthorized:
         message = ErrorMsg.EMAIL_NOT_VERIFIED;
         break;
-      case 404:
+      case HttpStatusCode.NotFound:
         message = ErrorMsg.USER_NOT_FOUND;
         break;
-      case 500:
+      case HttpStatusCode.InternalServerError:
         message = ErrorMsg.SERVER_ERROR;
         break;
       default:
@@ -74,17 +81,17 @@ const SubmitHandler = (
     try {
       const { data, response } = await authRequest('auth/login', credentials);
 
-      if (data.result && response.status === 200) {
+      if (data.result && response.status === HttpStatusCode.OK) {
         handleAuthSuccess((data.result as { token: string }).token);
       }
     } catch (error: any) {
       setIsOpen(true);
       setTimeout(() => {
         handleCloseModal();
-        if (error.response.status === 401) {
+        if (error.response.status === HttpStatusCode.Unauthorized) {
           router.push(Pages.VERIFY);
         }
-      }, 3000);
+      }, MODAL_CLOSE_DURATION_MS);
 
       handleAuthError(error);
     }

@@ -15,6 +15,16 @@ export enum ErrorMsg {
   TOO_MANY_REQUESTS = 'You can only request a token verification every 5 minutes.',
   EXPIRED_TOKEN = 'Invalid or expired token.',
 }
+export enum HttpStatusCode {
+  OK = 200,
+  Created = 201,
+  BadRequest = 400,
+  Unauthorized = 401,
+  NotFound = 404,
+  TooManyRequests = 429,
+  InternalServerError = 500,
+}
+
 export interface CNavLinkProps {
   url: string;
   title: string;

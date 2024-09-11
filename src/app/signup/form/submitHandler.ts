@@ -3,7 +3,8 @@ import { useRouter } from 'next/navigation';
 
 import { Pages } from '@/constants/pages';
 import authRequest from '@/services/authRequest';
-import { AuthCredentials, CustomResponse, ErrorMsg } from '@/constants/types';
+import { MODAL_CLOSE_DURATION_MS } from '@/constants/values';
+import { AuthCredentials, CustomResponse, ErrorMsg, HttpStatusCode } from '@/constants/types';
 
 const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>) => {
   const [response, setResponse] = useState<CustomResponse>({
@@ -25,7 +26,7 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
         password: credentials.password,
       });
 
-      if (response.status === 201) {
+      if (response.status === HttpStatusCode.Created) {
         setResponse({
           status: 'success',
           title: 'Registration Successful',
@@ -36,19 +37,19 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
         setTimeout(() => {
           handleCloseModal();
           router.push(Pages.SIGNIN);
-        }, 4000);
+        }, MODAL_CLOSE_DURATION_MS);
       }
     } catch (error: any) {
       let message = ErrorMsg.REGISTRATION_FAILED;
 
       switch (error.response.status) {
-        case 400:
+        case HttpStatusCode.BadRequest:
           message = ErrorMsg.INVALID_CREDENTIALS;
           break;
-        case 401:
+        case HttpStatusCode.Unauthorized:
           message = ErrorMsg.USER_ALREADY_EXISTS;
           break;
-        case 500:
+        case HttpStatusCode.InternalServerError:
           message = ErrorMsg.SERVER_ERROR;
         default:
           message = ErrorMsg.REGISTRATION_FAILED;
@@ -64,7 +65,7 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
 
       setTimeout(() => {
         handleCloseModal();
-      }, 3000);
+      }, MODAL_CLOSE_DURATION_MS);
     }
   };
 

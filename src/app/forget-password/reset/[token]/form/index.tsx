@@ -11,7 +11,7 @@ import CLoadingModal from '@/components/CLoadingModal';
 import { CustomResponse, ErrorMsg } from '@/constants/types';
 import { minLength, required, validatePassword } from '@/utils/validators';
 import { composeValidators } from '@/utils/composeValidators';
-import ResetPasswordRequest from '@/services/resetPasswordRequest';
+import resetPasswordRequest from '@/services/resetPasswordRequest';
 
 type PasswordValues = {
   newPassword: string;
@@ -37,7 +37,7 @@ const ResetPasswordForm = ({ token }: FromProps) => {
 
   const onSubmit = async (values: PasswordValues) => {
     try {
-      const { response } = await ResetPasswordRequest(token, values.newPassword);
+      const { response } = await resetPasswordRequest(token, values.newPassword);
       if (response.status === 200) {
         setResponse({
           status: 'success',

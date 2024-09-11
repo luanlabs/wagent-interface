@@ -12,13 +12,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Reset({ params }: { params: { token: string } }) {
-  const getToken = await request(`${process.env.NEXT_PUBLIC_API}/users/auth/reset/${params.token}`);
+  await request(`${process.env.NEXT_PUBLIC_API}/users/auth/reset/${params.token}`);
 
-  if (getToken.response.status == 200) {
-    return (
-      <AuthLayout imageSrc={dashboardGlance}>
-        <Form token={params.token} />
-      </AuthLayout>
-    );
-  }
+  return (
+    <AuthLayout imageSrc={dashboardGlance}>
+      <Form token={params.token} />
+    </AuthLayout>
+  );
 }

@@ -4,8 +4,8 @@ import { Pages } from './constants/pages';
 export default async function middleware(req: NextRequest) {
   const isAuthenticated = req.cookies.get('token')?.value;
   const currentPath = req.nextUrl.pathname;
-  const authorizedRoutes = [Pages.DASHBOARD];
-  const unauthorizedRoutes = [Pages.FORGET, Pages.SIGNIN, Pages.SIGNUP];
+  const authorizedRoutes = [Pages.DASHBOARD, '/'];
+  const unauthorizedRoutes = [Pages.FORGET, Pages.SIGNIN, Pages.SIGNUP, Pages.VERIFY];
 
   if (authorizedRoutes.some((path) => currentPath.startsWith(path))) {
     if (!isAuthenticated) {

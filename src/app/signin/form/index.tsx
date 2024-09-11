@@ -11,7 +11,7 @@ import CCheckbox from '@/components/CCheckbox';
 import { composeValidators } from '@/utils/composeValidators';
 import { required, minLength, validateEmail, validatePassword } from '@/utils/validators';
 
-import SubmitHandler from './submitHandler';
+import submitHandler from './submitHandler';
 import CLoadingModal from '@/components/CLoadingModal';
 import Link from 'next/link';
 
@@ -34,7 +34,7 @@ const SignInForm = () => {
 
   const handleForgetPassword = () => {};
 
-  const { onSubmit, response } = SubmitHandler(setIsOpen, isRememberChecked);
+  const { onSubmit, response } = submitHandler(setIsOpen, isRememberChecked);
 
   return (
     <>

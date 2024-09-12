@@ -18,9 +18,11 @@ const request = async (
   const params: RequestInit = {
     ...restConfig,
     headers: defaultHeaders,
-    ...(body && { body: JSON.stringify(body) }),
   };
 
+  if (body) {
+    params.body = JSON.stringify(body);
+  }
   const response = await fetch(url, params);
 
   if (response.status >= 400) {

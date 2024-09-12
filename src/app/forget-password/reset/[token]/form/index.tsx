@@ -12,7 +12,7 @@ import { CustomResponse, ErrorMsg, HttpStatusCode } from '@/constants/types';
 import { MODAL_CLOSE_DURATION_MS } from '@/constants/values';
 import { composeValidators } from '@/utils/composeValidators';
 import resetPasswordRequest from '@/services/resetPasswordRequest';
-import { minLength, required, validatePassword } from '@/utils/validators';
+import { minLength, required } from '@/utils/validators';
 
 type PasswordValues = {
   newPassword: string;
@@ -118,7 +118,7 @@ const ResetPasswordForm = ({ token }: FromProps) => {
                 <div className="space-y-3 w-full">
                   <Field
                     name="newPassword"
-                    validate={composeValidators(required, minLength(8), validatePassword)}
+                    validate={composeValidators(required, minLength(8))}
                     render={({ input, meta }) => (
                       <CInput
                         {...input}
@@ -135,7 +135,7 @@ const ResetPasswordForm = ({ token }: FromProps) => {
                   />
                   <Field
                     name="confirmNewPassword"
-                    validate={composeValidators(required, minLength(8), validatePassword)}
+                    validate={composeValidators(required, minLength(8))}
                     render={({ input, meta }) => (
                       <CInput
                         {...input}

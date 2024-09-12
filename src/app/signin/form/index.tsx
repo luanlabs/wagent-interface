@@ -9,7 +9,7 @@ import CInput from '@/components/CInput';
 import CButton from '@/components/CButton';
 import CCheckbox from '@/components/CCheckbox';
 import { composeValidators } from '@/utils/composeValidators';
-import { required, minLength, validateEmail, validatePassword } from '@/utils/validators';
+import { required, minLength, validateEmail } from '@/utils/validators';
 
 import submitHandler from './submitHandler';
 import CLoadingModal from '@/components/CLoadingModal';
@@ -66,7 +66,7 @@ const SignInForm = () => {
 
                   <Field
                     name="password"
-                    validate={composeValidators(required, minLength(8), validatePassword)}
+                    validate={composeValidators(required, minLength(8))}
                     render={({ input, meta }) => (
                       <CInput
                         {...input}

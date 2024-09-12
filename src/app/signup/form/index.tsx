@@ -9,7 +9,7 @@ import CInput from '@/components/CInput';
 import CButton from '@/components/CButton';
 import { composeValidators } from '@/utils/composeValidators';
 import { AuthCredentials } from '@/constants/types';
-import { required, minLength, validateEmail, validatePassword } from '@/utils/validators';
+import { required, minLength, validateEmail } from '@/utils/validators';
 
 import submitHandler from './submitHandler';
 
@@ -96,7 +96,7 @@ const SignUpForm = () => {
 
                   <Field
                     name="password"
-                    validate={composeValidators(required, minLength(8), validatePassword)}
+                    validate={composeValidators(required, minLength(8))}
                     render={({ input, meta }) => (
                       <CInput
                         {...input}

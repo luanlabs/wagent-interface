@@ -3,13 +3,14 @@
 import { useRouter } from 'next/navigation';
 
 import { Failed } from '@/assets';
+import { Pages } from '@/constants/pages';
 import CButton from '@/components/CButton';
 
 export default function Error() {
   const router = useRouter();
 
-  const handleGoBack = () => {
-    router.back();
+  const handleGoHome = () => {
+    router.push(Pages.DASHBOARD);
   };
 
   return (
@@ -20,9 +21,9 @@ export default function Error() {
       <p className="text-2xl text-center text-darkBlue">something went wrong!</p>
       <CButton
         variant="simple"
-        text="Go back"
+        text="Go Home"
         className="w-[280px] mt-2 mx-4 bg-lightestRed border border-lightRed text-error"
-        onClick={handleGoBack}
+        onClick={handleGoHome}
       />
     </div>
   );

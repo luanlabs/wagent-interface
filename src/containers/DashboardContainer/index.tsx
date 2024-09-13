@@ -6,12 +6,12 @@ import CCard from '@/components/CCard';
 import CPageCard from '@/components/CPageCard';
 import CBarChart from '@/components/Charts/CBarChart';
 
-import generateChartData from '@/containers/ChartTimeStamps/generateChartData';
+import ChartTimeStamps from '@/containers/ChartTimeStamps';
+import HistoryItem from '@/containers/HistoryContainer/HistoryItem';
+import RevenueChart from '@/containers/DashboardContainer/RevenueChart';
 import DonutChartContainer from '@/containers/DashboardContainer/DonutChart';
 import { HistoryListHeader } from '@/containers/HistoryContainer/ListHeader';
-import RevenueChart from '@/containers/DashboardContainer/RevenueChart';
-import HistoryItem from '@/containers/HistoryContainer/HistoryItem';
-import ChartTimeStamps from '@/containers/ChartTimeStamps';
+import generateChartData from '@/containers/ChartTimeStamps/generateChartData';
 
 import { loadHistory } from '@/reducers/transactions';
 import { history as historyMock } from '@/constants/mockLists';
@@ -71,10 +71,7 @@ const DashboardContainer = () => {
         ) : (
           <>
             <HistoryListHeader />
-            <div
-              className="space-y-2 pb-3 mobile:space-y-[6px] w-full overflow-y-auto
-              bigScreen:max-h-fit bigScreen:pb-0 desktop:min-h-[100px] short:h-[80px]"
-            >
+            <div className="space-y-2 pb-3 mobile:space-y-[6px] w-full ">
               {history.slice(0, 4).map((item) => (
                 <HistoryItem key={item.id} data={item} />
               ))}

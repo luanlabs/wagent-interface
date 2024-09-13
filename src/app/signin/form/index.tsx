@@ -4,25 +4,24 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Form, Field } from 'react-final-form';
 
-import { Typography } from '@/assets';
-import Pages from '@/constants/pages';
+import { Pages } from '@/constants/pages';
 import CInput from '@/components/CInput';
 import CButton from '@/components/CButton';
 import CCheckbox from '@/components/CCheckbox';
 import { composeValidators } from '@/utils/composeValidators';
-import { required, minLength, validateEmail, validatePassword } from '@/utils/validators';
+import { required, minLength, validateEmail } from '@/utils/validators';
 
-import SignInHandler from './signInHandler';
+import submitHandler from './submitHandler';
 import CLoadingModal from '@/components/CLoadingModal';
 import Link from 'next/link';
 
 const SignInForm = () => {
-  const routes = useRouter();
   const [isRememberChecked, setIsRememberChecked] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
-  const handleRedirectToSignUp = () => {
-    routes.push(Pages.SIGNUP);
+  const handleRedirect = () => {
+    router.push(Pages.SIGNUP);
   };
 
   const handleRememberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,25 +32,21 @@ const SignInForm = () => {
     setIsOpen(false);
   };
 
-  const handleForgotPassword = () => {};
+  const handleForgetPassword = () => {};
 
-  const { onSubmit, response } = SignInHandler(setIsOpen, isRememberChecked);
+  const { onSubmit, response } = submitHandler(setIsOpen, isRememberChecked);
 
   return (
-    <div className="flex flex-col bg-white h-full rounded-3xl px-8 py-7 shadow-md mobile:shadow-none mobile:px-0 mobile:py-3 mobile:rounded-none">
-      <div className="flex justify-start items-start">
-        <Typography />
-      </div>
-      <div className="flex justify-center mobile:items-start mobile:mt-8 short:items-center short:mt-0 desktop:mt-[25%] bigScreen:mt-[36%] h-full">
-        <div className="flex flex-col w-full">
+    <>
+      <div className="relative flex-col h-full justify-between">
+        <div>
           <div className="my-4 space-y-4">
             <p className="text-2xl font-medium text-darkGreen select-none">Sign In</p>
           </div>
-
           <Form
             onSubmit={onSubmit}
             render={({ handleSubmit, submitError, submitting, pristine, invalid }) => (
-              <form onSubmit={handleSubmit} autoComplete="false">
+              <form onSubmit={handleSubmit} autoComplete="off">
                 <div className="space-y-3 w-full">
                   <Field
                     name="email"
@@ -71,7 +66,7 @@ const SignInForm = () => {
 
                   <Field
                     name="password"
-                    validate={composeValidators(required, minLength(8), validatePassword)}
+                    validate={composeValidators(required, minLength(8))}
                     render={({ input, meta }) => (
                       <CInput
                         {...input}
@@ -99,11 +94,11 @@ const SignInForm = () => {
                     />
 
                     <Link
-                      href={Pages.FORGOT}
-                      onClick={handleForgotPassword}
+                      href={Pages.FORGET}
+                      onClick={handleForgetPassword}
                       className="border-none hover:bg-transparent text-darkGreen text-sm transition-all duration-300 hover:brightness-100"
                     >
-                      Forgot Password?
+                      Forget Password?
                     </Link>
                   </div>
 
@@ -119,17 +114,14 @@ const SignInForm = () => {
             )}
           />
         </div>
-      </div>
-      <div className="flex justify-between items-center w-full">
-        <p className="text-sm select-none text-smokyBlue">Don&apos;t have an Account?</p>
 
-        <CButton
-          text="Sign up"
-          variant="outline"
-          className="!w-1/3"
-          onClick={handleRedirectToSignUp}
-        />
+        <div className="absolute bottom-0 flex justify-between items-center w-full">
+          <p className="text-sm select-none text-smokyBlue">Don&apos;t have an Account?</p>
+
+          <CButton text="Sign up" variant="outline" className="!w-1/3" onClick={handleRedirect} />
+        </div>
       </div>
+
       <CLoadingModal
         isOpen={isOpen}
         title={response.title}
@@ -139,7 +131,7 @@ const SignInForm = () => {
         failed={response.status === 'error'}
         success={response.status === 'success'}
       />
-    </div>
+    </>
   );
 };
 

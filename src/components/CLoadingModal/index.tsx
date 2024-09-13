@@ -6,7 +6,7 @@ interface CLoadingModalProps {
   title: string;
   description?: string;
   success?: boolean;
-  verifyEmail?: boolean;
+  checkEmail?: boolean;
   failed?: boolean;
   onClose: () => void;
   className?: string;
@@ -18,7 +18,7 @@ const CLoadingModal = ({
   success,
   failed,
   title,
-  verifyEmail,
+  checkEmail,
   description,
   className,
 }: CLoadingModalProps) => {
@@ -27,7 +27,7 @@ const CLoadingModal = ({
   if (success) {
     loadingStatus = <Success />;
   }
-  if (verifyEmail) {
+  if (checkEmail) {
     loadingStatus = <MailBox />;
   } else if (failed) {
     loadingStatus = <Failed />;

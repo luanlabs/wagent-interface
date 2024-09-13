@@ -1,15 +1,16 @@
 import { Metadata } from 'next';
 
 import AuthLayout from '@/containers/AuthLayout';
-import Form from './form';
 
 import dashboardGlance from 'public/images/dashboardGlance.svg';
 
+import Form from './form';
+
 export const metadata: Metadata = {
-  title: 'Wagent - Sign up',
+  title: 'Wagent - Forget password',
 };
 
-const SignUp = () => {
+const Forget = () => {
   return (
     <AuthLayout imageSrc={dashboardGlance}>
       <Form />
@@ -17,4 +18,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Forget;

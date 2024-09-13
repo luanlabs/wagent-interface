@@ -3,18 +3,18 @@ import { Metadata } from 'next';
 import AuthLayout from '@/containers/AuthLayout';
 import Form from './form';
 
-import settingsGlance from 'public/images/settingsGlance.svg';
+import dashboardGlance from 'public/images/dashboardGlance.svg';
 
 export const metadata: Metadata = {
-  title: 'Wagent - Sign in',
+  title: 'Wagent - request verification email',
 };
 
-const SignIn = () => {
+const Forget = () => {
   return (
-    <AuthLayout imageSrc={settingsGlance}>
+    <AuthLayout imageSrc={dashboardGlance}>
       <Form />
     </AuthLayout>
   );
 };
 
-export default SignIn;
+export default Forget;

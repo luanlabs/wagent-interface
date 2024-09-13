@@ -1,22 +1,37 @@
-const request = async <T>(
+import { IApiData } from '@/constants/types';
+
+interface RequestConfig extends Omit<RequestInit, 'body'> {
+  body?: Record<string, any> | string;
+}
+
+const request = async (
   url: string,
-  config?: RequestInit,
-): Promise<{ data: T; response: Response }> => {
-  try {
-    const response = await fetch(url, config);
+  config: RequestConfig = {},
+): Promise<{ data: IApiData; response: Response }> => {
+  const { headers, body, ...restConfig } = config;
 
-    if (response.status >= 400) {
-      const data = await response.json();
+  const defaultHeaders = {
+    'Content-Type': 'application/json',
+    ...headers,
+  };
 
-      throw { data, response };
-    }
+  const params: RequestInit = {
+    ...restConfig,
+    headers: defaultHeaders,
+  };
 
-    const data = await response.json();
-
-    return { data, response };
-  } catch (error) {
-    throw error;
+  if (body) {
+    params.body = JSON.stringify(body);
   }
+  const response = await fetch(url, params);
+
+  if (response.status >= 400) {
+    const data = await response.json();
+    throw { data, response };
+  }
+
+  const data = await response.json();
+  return { data, response };
 };
 
 export default request;

@@ -9,15 +9,13 @@ type requestProps = {
 };
 
 const sendClientFcmToken = async ({ fcmToken, data }: requestProps) => {
-  await request('https://api2.wagent.app/services/send-notification', {
+  // TODO
+  await request('https://api.wagent.app/services/send-notification', {
     method: 'POST',
-    body: JSON.stringify({
+    body: {
       token: fcmToken,
       title: data.title,
       body: data.body,
-    }),
-    headers: {
-      'Content-Type': 'application/json',
     },
   });
 };

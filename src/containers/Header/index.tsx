@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import CCard from '@/components/CCard';
 import { Bell, Typography } from '@/assets';
-import ExternalLinks from '@/constants/externalLinks';
+import { ExternalLinks } from '@/constants/pages';
 
 import Notification from '../Notification';
 
@@ -20,7 +20,7 @@ const Header = () => {
 
   return (
     <CCard
-      className="relative flex justify-between w-full items-center py-[16px] px-6 mobile:px-4 mobile:fixed mobile:top-0 mobile:right-0 mobile:left-0 mobile:h-16
+      className="relative flex justify-between w-full items-center py-4 px-6 mobile:px-4 mobile:fixed mobile:top-0 mobile:right-0 mobile:left-0 mobile:h-16
         desktop:mb-[10px] mobile:rounded-none mobile:!border-t-0 z-40"
       borderColor="rgba(5, 1, 66, 0.10)"
       bgColor="white"

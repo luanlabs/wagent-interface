@@ -44,12 +44,22 @@ const config: Config = {
         xl: { min: '1280px', max: '1535px' },
         xxl: { min: '1540px' },
         tall: { raw: '(min-height: 933px)' },
-        short: { raw: '(max-height: 690px)' },
+        short: { raw: '(max-height: 716px)' },
         chartFix: { min: '1023px', max: '1260px' },
       },
       boxShadow: {
         box: '0px 4px 16px 0px rgba(118, 138, 189, 0.3)',
         input: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+      },
+      keyframes: {
+        proceed: {
+          from: { width: '0%' },
+          '30%': { width: '30%' },
+          to: { width: '100%' },
+        },
+      },
+      animation: {
+        progress: 'proceed 3s linear forwards',
       },
     },
   },

@@ -1,5 +1,30 @@
 import { StaticImageData } from 'next/image';
 
+export enum ErrorMsg {
+  SERVER_ERROR = 'Internal server error.',
+  AUTH_FAILED = 'Authentication failed, please try again.',
+  REGISTRATION_FAILED = 'Registration failed, please try again.',
+  INVALID_CREDENTIALS = 'Validation failed due to invalid fields.',
+  USER_ALREADY_EXISTS = 'Email is already registered. Please sign in.',
+  USER_NOT_FOUND = 'Invalid email or password. Please try again or reset your password.',
+  EMAIL_NOT_VERIFIED = 'Email not verified. Please check your inbox or verify your email.',
+  VERIFICATION_FAILED = 'Request verification token failed. Please try again.',
+  ALREADY_VERIFIED = 'Email is already verified.',
+  EMAIL_NOT_FOUND = 'Verification failed. User not found.',
+  INVALID_EMAIL = 'Invalid email address, Please try again.',
+  TOO_MANY_REQUESTS = 'You can only request a token verification every 5 minutes.',
+  EXPIRED_TOKEN = 'Invalid or expired token.',
+}
+export enum HttpStatusCode {
+  OK = 200,
+  Created = 201,
+  BadRequest = 400,
+  Unauthorized = 401,
+  NotFound = 404,
+  TooManyRequests = 429,
+  InternalServerError = 500,
+}
+
 export interface CNavLinkProps {
   url: string;
   title: string;
@@ -27,7 +52,7 @@ export type ReducerTokensType = {
 
 export type MethodType = 'single' | 'stream' | 'vesting';
 
-export interface IHistoryResponse {
+export interface IHistoryResponse extends IApiResponse {
   id?: string;
   date: number;
   title: string;
@@ -61,7 +86,7 @@ export interface IFilterValues {
 }
 
 export type AuthCredentials = {
-  storeName?: string;
+  name?: string;
   email: string;
   password: string;
   confirmPassword?: string;
@@ -71,38 +96,27 @@ export type AuthCredentials = {
 export interface IUserAuth {
   id: string;
   email: string;
-  storeName: string;
+  name: string;
   storeImage: string;
   token: string;
 }
 
-export interface IApiResponse<ResultType, ErrorType = void> {
-  result?: ResultType;
-  error?: ErrorType;
-}
-
-export interface IApiError {
-  data: {
+export type IApiData = {
+  message: object | string;
+  result?: object | string;
+  error?: {
     message: string;
+    extras?: any;
   };
-  code?: number;
+};
+
+export interface IApiResponse {
+  data: IApiData;
+  response: Response;
 }
 
-export interface IApiMessage {
-  message?: string;
+export interface CustomResponse {
+  status: 'success' | 'error' | '';
+  title: string;
+  message: string;
 }
-
-export interface IApiLoginResponse extends IApiMessage {
-  id: string;
-  email?: string;
-  token: string;
-}
-
-export interface IUserAuthResponseMessage
-  extends IApiResponse<
-    {
-      message: string;
-    },
-    IApiError
-  > {}
-export type IUserLoginResponseMessage = IApiResponse<IApiLoginResponse, IApiError>;

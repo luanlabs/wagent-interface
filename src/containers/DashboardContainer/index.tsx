@@ -34,7 +34,7 @@ const DashboardContainer = () => {
 
   return (
     <CPageCard title="Dashboard" className="overflow-y-auto">
-      <div className=" flex mb-[15px] space-x-4 w-full mobile:flex-col mobile:space-x-0 mobile:space-y-2">
+      <div className="flex mb-[15px] space-x-4 w-full mobile:flex-col mobile:space-x-0 mobile:space-y-2">
         <RevenueChart title="Total Revenue" amount="32331.93" percentage={12.31} />
         <RevenueChart
           title="Monthly Revenue"

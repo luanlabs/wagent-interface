@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   }, [token]);
 
   return (
-    <div className="xl:px-8 xxl:px-8 px-4 mobile:p-0 pt-[9px] desktop:pb-7 bigScreen:pb-0 w-full h-screen m-auto">
+    <div className="xl:px-8 xxl:px-8 px-4 mobile:p-0 pt-[9px] desktop:pb-5 bigScreen:pb-0 w-full h-screen m-auto">
       <Header />
       <section className="desktop:inline-flex basis-full gap-3 w-full desktop:h-[90%] mobile:h-full mobile:!overflow-auto">
         <Aside />

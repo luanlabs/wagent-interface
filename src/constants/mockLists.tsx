@@ -1,7 +1,7 @@
 import productImage from 'public/images/p.jpg';
 import hoodie from 'public/images/hoodie.png';
 
-import { IProductItemCard, IHistoryResponse, TokensType } from './types';
+import { IProductItemCard, TokensType } from './types';
 
 const usdc: TokensType = {
   value: 'usdc',
@@ -62,44 +62,5 @@ export const products: IProductItemCard[] = [
     tokens: tokensList,
     amount: '1000',
     image: productImage,
-  },
-];
-
-export const history: IHistoryResponse[] = [
-  {
-    title: 'red Hoodie',
-    method: 'single',
-    id: '1',
-    token: usdc,
-    amount: '15',
-    image: productImage,
-    date: Date.now(),
-    status: 'active',
-    sender: '0x600',
-    progress: 90,
-  },
-  {
-    title: 'XX Hoodie',
-    method: 'vesting',
-    id: '2',
-    token: dai,
-    amount: '1500',
-    image: hoodie,
-    date: Date.now(),
-    status: 'completed',
-    sender: '0x600',
-    progress: 30,
-  },
-  {
-    title: 'X Hoodie',
-    method: 'stream',
-    id: '3',
-    token: xlm,
-    amount: '1500000',
-    image: hoodie,
-    date: Date.now(),
-    status: 'cancelled',
-    sender: '0x600',
-    progress: 20,
   },
 ];

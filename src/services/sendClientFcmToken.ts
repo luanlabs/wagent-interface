@@ -4,10 +4,6 @@ import request from '@/utils/request';
 
 type requestProps = {
   token: string;
-  // data: {
-  //   title: string;
-  //   body: string;
-  // };
 };
 
 const sendClientFcmToken = async ({ token }: requestProps) => {
@@ -18,7 +14,7 @@ const sendClientFcmToken = async ({ token }: requestProps) => {
       Authorization: `Bearer ${JWT_token}`,
     },
     method: 'POST',
-    body: token,
+    body: { token: token },
   });
 };
 

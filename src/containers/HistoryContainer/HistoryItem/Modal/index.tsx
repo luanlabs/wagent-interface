@@ -2,17 +2,18 @@ import React from 'react';
 import Image from 'next/image';
 
 import LabelValue from './labelValue';
-import ProgressBar from './progressBar';
+// import ProgressBar from './progressBar';
 import CModal from '@/components/CModal';
 import CMethods from '@/components/CMethods';
-import CStatusCard from '@/components/CStatusCard';
+import CStatusCard, { StatusType } from '@/components/CStatusCard';
 import CTokenLabel from '@/components/CTokenLabel';
 
 import { formatDate } from '@/utils/formatDate';
-import { IHistoryResponse } from '@/constants/types';
+import { ITransaction, MethodType } from '@/constants/types';
+import shortenAddress from '@/utils/shortenAddress';
 
 interface IDetailProps {
-  data: IHistoryResponse;
+  data: ITransaction;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -20,7 +21,8 @@ interface IDetailProps {
 const HistoryDetailsModal = ({ isOpen, onClose, data }: IDetailProps) => {
   const Title = (
     <span className="inline-flex gap-1">
-      Payment <span className="text-[#A8A8A8] font-normal select-text">#{data.id}</span>
+      Payment{' '}
+      <span className="text-[#A8A8A8] font-normal select-text">#{data.order._id.slice(0, 6)}</span>
     </span>
   );
 
@@ -28,40 +30,53 @@ const HistoryDetailsModal = ({ isOpen, onClose, data }: IDetailProps) => {
     <CModal title={Title} isOpen={isOpen} onClose={onClose}>
       <LabelValue label="Product name">
         <div className="inline-flex whitespace-nowrap gap-3 items-center">
-          {data.image && (
-            <Image
-              src={data.image}
-              alt={data.title}
-              className="rounded-[50px]"
-              width={30}
-              height={30}
-            />
+          {data.order.products && data.order.products[0] && (
+            <>
+              <Image
+                src={data.order.products[0].logo}
+                alt={data.order.products[0].name}
+                className="rounded-[50px]"
+                width={30}
+                height={30}
+              />
+              <span className="mobile:w-full text-darkBlue text-base">
+                {data.order.products[0].name}
+              </span>
+            </>
           )}
-          <span className="mobile:w-full text-darkBlue text-base">{data.title}</span>
         </div>
       </LabelValue>
-      <LabelValue label="Status" value={CStatusCard(data.status)} />
-      <LabelValue label="Method">
-        <CMethods method={data.method} className="!text-base w-full flex justify-end" />
+      <LabelValue label="Status">
+        <CStatusCard status={data.order.status as StatusType} />
       </LabelValue>
-      <LabelValue label="Date & Time" value={formatDate(data.date)} className="text-cadetBlue" />
-      {data.cancellableAfter && (
+      <LabelValue label="Method">
+        <CMethods
+          method={data.method as MethodType}
+          className="!text-base w-full flex justify-end"
+        />
+      </LabelValue>
+      <LabelValue
+        label="Date & Time"
+        value={formatDate(data.submittedAt)}
+        className="text-cadetBlue"
+      />
+      {/* {data.cancellableAfter && (
         <LabelValue
           label="Cancelable After"
           value={formatDate(data.cancellableAfter)}
           className="text-cadetBlue"
         />
-      )}
+      )} */}
       <LabelValue label="Token">
-        <CTokenLabel symbol={data.token.value} rounded />
+        <CTokenLabel symbol={data.token.symbol} rounded />
       </LabelValue>
-      <LabelValue label="Sender" value={data.sender} />
-      {data.progress && (
+      <LabelValue label="Sender" value={shortenAddress(data.payerAddress, 4)} />
+      {/* {data.progress && (
         <LabelValue label="Progress">
           <ProgressBar progress={data.progress} />
         </LabelValue>
-      )}
-      <LabelValue label="Amount" value={data.amount} />
+      )} */}
+      <LabelValue label="Amount" value={`$${data.order.amount}`} />
     </CModal>
   );
 };

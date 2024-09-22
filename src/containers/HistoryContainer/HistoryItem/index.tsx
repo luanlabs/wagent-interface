@@ -4,16 +4,16 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 import CMethods from '@/components/CMethods';
-import CStatusCard from '@/components/CStatusCard';
+import CStatusCard, { StatusType } from '@/components/CStatusCard';
 import CTokenLabel from '@/components/CTokenLabel';
 
 import { formatDate } from '@/utils/formatDate';
 import humanizeAmount from '@/utils/humanizeAmount';
-import { IHistoryResponse } from '@/constants/types';
+import { ITransaction, MethodType } from '@/constants/types';
 
 import HistoryDetailsModal from './Modal';
 
-type HistoryItemProps = { data: IHistoryResponse };
+type HistoryItemProps = { data: ITransaction };
 
 const HistoryItem = ({ data }: HistoryItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,29 +34,35 @@ const HistoryItem = ({ data }: HistoryItemProps) => {
         onClick={handleItemClick}
       >
         <div className="inline-flex whitespace-nowrap gap-3 items-center desktop:w-[40%]">
-          {data.image && (
-            <Image
-              src={data.image}
-              alt={data.title}
-              className="rounded-[50px]"
-              width={30}
-              height={30}
-            />
+          {data.order.products && data.order.products[0] && (
+            <>
+              <Image
+                src={data.order.products[0].logo}
+                alt={data.order.products[0].name}
+                className="rounded-[50px]"
+                width={30}
+                height={30}
+              />
+              <span className="mobile:w-full text-darkBlue text-base">
+                {data.order.products[0].name}
+              </span>
+            </>
           )}
-          <span className="mobile:w-full text-darkBlue text-base">{data.title}</span>
         </div>
         <div className="inline-flex items-center w-full mobile:hidden whitespace-nowrap">
           <span className="w-1/4">
-            <CMethods method={data.method} />
+            <CMethods method={data.method as MethodType} />
           </span>
-          <span className="w-1/4">{CStatusCard(data.status)}</span>
-          <span className="w-1/4">{formatDate(data.date)}</span>
+          <span className="w-1/4">
+            <CStatusCard status={data.order.status as StatusType} />
+          </span>
+          <span className="w-1/4">{formatDate(data.submittedAt)}</span>
           <span className="w-1/4 ml-2">
-            <CTokenLabel symbol={data.token.value} rounded />
+            <CTokenLabel symbol={data.token.symbol} rounded />
           </span>
         </div>
 
-        <span className="mobile:w-full text-right w-1/6">${humanizeAmount(data.amount)}</span>
+        <span className="mobile:w-full text-right w-1/6">${humanizeAmount(data.order.amount)}</span>
       </div>
 
       <HistoryDetailsModal data={data} isOpen={isOpen} onClose={handleCloseModal} />

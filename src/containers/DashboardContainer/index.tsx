@@ -14,10 +14,11 @@ import { HistoryListHeader } from '@/containers/HistoryContainer/ListHeader';
 import generateChartData from '@/containers/ChartTimeStamps/generateChartData';
 
 import { loadHistory } from '@/reducers/transactions';
-import { history as historyMock } from '@/constants/mockLists';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 
 import { BasicOptionType, CBarChartType } from '@/models';
+import getTransactions from '@/services/getTransactions';
+import { ITransaction } from '@/constants/types';
 
 const DashboardContainer = () => {
   const [CBarChartData, setCBarChartData] = useState<CBarChartType[]>(generateChartData('1d'));
@@ -25,7 +26,9 @@ const DashboardContainer = () => {
   const history = useAppSelector((state) => state.transactions.history);
 
   useEffect(() => {
-    dispatch(loadHistory(historyMock));
+    getTransactions().then(({ data, response }) => {
+      dispatch(loadHistory(data.result as ITransaction[]));
+    });
   }, [dispatch]);
 
   const handleChartTimeStampsChange = (e: BasicOptionType<string>) => {
@@ -73,7 +76,7 @@ const DashboardContainer = () => {
             <HistoryListHeader />
             <div className="space-y-2 pb-3 mobile:space-y-[6px] w-full ">
               {history.slice(0, 4).map((item) => (
-                <HistoryItem key={item.id} data={item} />
+                <HistoryItem key={item._id} data={item} />
               ))}
             </div>
           </>

@@ -3,15 +3,15 @@
 import { allTokensList } from '@/constants/mockLists';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { IFilterValues, IHistoryResponse } from 'src/constants/types';
+import { IFilterValues, ITransaction } from 'src/constants/types';
 
-interface ITransactions {
+interface ITransactionsReducer {
   filterValues: IFilterValues;
-  history: IHistoryResponse[];
+  history: ITransaction[];
   loading: boolean;
 }
 
-const initialState: ITransactions = {
+const initialState: ITransactionsReducer = {
   filterValues: {
     stream: true,
     single: true,
@@ -36,7 +36,7 @@ export const transactions = createSlice({
   name: 'transactions',
   initialState,
   reducers: {
-    loadHistory: (state, action: PayloadAction<IHistoryResponse[]>) => {
+    loadHistory: (state, action: PayloadAction<ITransaction[]>) => {
       state.history = action.payload;
       state.loading = false;
     },

@@ -12,6 +12,7 @@ import humanizeAmount from '@/utils/humanizeAmount';
 import { ITransaction, MethodType } from '@/constants/types';
 
 import HistoryDetailsModal from './Modal';
+import questionMark from 'public/images/questionMark.svg';
 
 type HistoryItemProps = { data: ITransaction };
 
@@ -34,7 +35,7 @@ const HistoryItem = ({ data }: HistoryItemProps) => {
         onClick={handleItemClick}
       >
         <div className="inline-flex whitespace-nowrap gap-3 items-center desktop:w-[40%]">
-          {data.order.products && data.order.products[0] && (
+          {data.order.products && data.order.products[0] ? (
             <>
               <Image
                 src={data.order.products[0].logo}
@@ -45,7 +46,19 @@ const HistoryItem = ({ data }: HistoryItemProps) => {
               />
               <span className="mobile:w-full text-darkBlue text-base">
                 {data.order.products[0].name}
+                {data.order.products.length > 1 && ` x${data.order.products[0].count}`}
               </span>
+            </>
+          ) : (
+            <>
+              <Image
+                src={questionMark}
+                alt="questionMark"
+                className="rounded-[50px]"
+                width={30}
+                height={30}
+              />
+              <span className="mobile:w-full text-darkBlue text-base">Unknown product</span>
             </>
           )}
         </div>

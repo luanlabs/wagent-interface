@@ -128,9 +128,11 @@ export interface IFilterValues {
   stream: boolean;
   single: boolean;
   vesting: boolean;
-  active: boolean;
+  active?: boolean;
+  expired: boolean;
+  pending: boolean;
   completed: boolean;
-  cancelled: boolean;
+  cancelled?: boolean;
   selectedTokens: ReducerTokensType[];
 }
 

@@ -28,9 +28,9 @@ const HistoryDetailsModal = ({ isOpen, onClose, data }: IDetailProps) => {
 
   return (
     <CModal title={Title} isOpen={isOpen} onClose={onClose}>
-      <LabelValue label="Product name">
-        <div className="inline-flex whitespace-nowrap gap-3 items-center">
-          {data.order.products && data.order.products[0] && (
+      {data.order.products && data.order.products[0] && (
+        <LabelValue label="Product name">
+          <div className="inline-flex whitespace-nowrap gap-3 items-center">
             <>
               <Image
                 src={data.order.products[0].logo}
@@ -43,18 +43,24 @@ const HistoryDetailsModal = ({ isOpen, onClose, data }: IDetailProps) => {
                 {data.order.products[0].name}
               </span>
             </>
-          )}
-        </div>
+          </div>
+        </LabelValue>
+      )}
+      <LabelValue label="Amount" value={`$${data.order.amount}`} />
+      <LabelValue label="Method">
+        <CMethods
+          method={data.method as MethodType}
+          className="!text-base w-full flex justify-end !text-darkBlue"
+          fill="#101828"
+        />
+      </LabelValue>
+      <LabelValue label="Token">
+        <CTokenLabel symbol={data.token.symbol} rounded />
       </LabelValue>
       <LabelValue label="Status">
         <CStatusCard status={data.order.status as StatusType} />
       </LabelValue>
-      <LabelValue label="Method">
-        <CMethods
-          method={data.method as MethodType}
-          className="!text-base w-full flex justify-end"
-        />
-      </LabelValue>
+      <LabelValue label="Sender" value={shortenAddress(data.payerAddress, 4)} />
       <LabelValue
         label="Date & Time"
         value={formatDate(data.submittedAt)}
@@ -67,16 +73,11 @@ const HistoryDetailsModal = ({ isOpen, onClose, data }: IDetailProps) => {
           className="text-cadetBlue"
         />
       )} */}
-      <LabelValue label="Token">
-        <CTokenLabel symbol={data.token.symbol} rounded />
-      </LabelValue>
-      <LabelValue label="Sender" value={shortenAddress(data.payerAddress, 4)} />
       {/* {data.progress && (
         <LabelValue label="Progress">
           <ProgressBar progress={data.progress} />
         </LabelValue>
       )} */}
-      <LabelValue label="Amount" value={`$${data.order.amount}`} />
     </CModal>
   );
 };

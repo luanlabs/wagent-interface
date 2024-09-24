@@ -2,14 +2,14 @@ import React from 'react';
 
 import capitalizeFirstLetter from '@/utils/capitalizeFirstLetter';
 
-export type StatusType = 'active' | 'completed' | 'expired' | 'pending';
+export type StatusType = 'completed' | 'expired' | 'pending';
 
 type CStatusCardProps = {
   status: StatusType;
 };
 
 const getStatusStyle = (status: StatusType) => {
-  if (status === 'active' || status === 'pending') {
+  if (status === 'pending') {
     return 'text-warning border-lightOrange bg-lightestOrange';
   } else if (status === 'completed') {
     return 'text-success border-lightGreen bg-lightestGreen';

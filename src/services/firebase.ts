@@ -23,7 +23,7 @@ export const fetchToken = async () => {
 
     if (fcmMessaging) {
       const token = await getToken(fcmMessaging, {
-        vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY,
+        vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
       });
 
       return token;

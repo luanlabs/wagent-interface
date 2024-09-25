@@ -3,22 +3,22 @@
 import { allTokensList } from '@/constants/mockLists';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { IFilterValues, IHistoryResponse } from 'src/constants/types';
+import { IFilterValues, ITransaction } from 'src/constants/types';
 
-interface ITransactions {
+interface ITransactionsReducer {
   filterValues: IFilterValues;
-  history: IHistoryResponse[];
+  history: ITransaction[];
   loading: boolean;
 }
 
-const initialState: ITransactions = {
+const initialState: ITransactionsReducer = {
   filterValues: {
     stream: true,
     single: true,
     vesting: true,
-    active: true,
+    pending: true,
     completed: true,
-    cancelled: true,
+    expired: true,
     selectedTokens: allTokensList.map((token) => ({
       ...token,
       checked: true,
@@ -28,7 +28,7 @@ const initialState: ITransactions = {
   loading: true,
 };
 export interface IChangeCheckbox {
-  key: 'stream' | 'single' | 'vesting' | 'completed' | 'cancelled' | 'active';
+  key: 'stream' | 'single' | 'vesting' | 'completed' | 'expired' | 'pending';
   value: boolean;
 }
 
@@ -36,7 +36,7 @@ export const transactions = createSlice({
   name: 'transactions',
   initialState,
   reducers: {
-    loadHistory: (state, action: PayloadAction<IHistoryResponse[]>) => {
+    loadHistory: (state, action: PayloadAction<ITransaction[]>) => {
       state.history = action.payload;
       state.loading = false;
     },

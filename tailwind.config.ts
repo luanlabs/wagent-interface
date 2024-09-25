@@ -42,7 +42,7 @@ const config: Config = {
         desktopMax: { max: '1536px' },
         lg: { min: '1024px', max: '1279px' },
         xl: { min: '1280px', max: '1535px' },
-        xxl: { min: '1540px' },
+        xxl: { min: '1536px' },
         tall: { raw: '(min-height: 933px)' },
         short: { raw: '(max-height: 716px)' },
         chartFix: { min: '1023px', max: '1260px' },

@@ -33,7 +33,7 @@ const HistoryContainer = () => {
           <HistoryListHeader />
           <div className="space-y-2 mobile:space-y-[6px] pb-3 max-h-[calc(100vh-270px)] desktopMax:max-h-[calc(100vh-265px)] w-full overflow-hidden overflow-y-auto">
             {filteredHistory.map((item) => (
-              <HistoryItem key={item.id} data={item} />
+              <HistoryItem key={item._id} data={item} />
             ))}
           </div>
           <div className="absolute bottom-0 left-0 w-full h-10 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>

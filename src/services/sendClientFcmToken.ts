@@ -1,22 +1,20 @@
+import Cookies from 'js-cookie';
+
 import request from '@/utils/request';
 
 type requestProps = {
-  fcmToken: string;
-  data: {
-    title: string;
-    body: string;
-  };
+  token: string;
 };
 
-const sendClientFcmToken = async ({ fcmToken, data }: requestProps) => {
-  // TODO
-  await request('https://api.wagent.app/services/send-notification', {
-    method: 'POST',
-    body: {
-      token: fcmToken,
-      title: data.title,
-      body: data.body,
+const sendClientFcmToken = async ({ token }: requestProps) => {
+  const JWT_token = Cookies.get('token');
+
+  await request(`${process.env.NEXT_PUBLIC_API}/users/notification`, {
+    headers: {
+      Authorization: `Bearer ${JWT_token}`,
     },
+    method: 'POST',
+    body: { token: token },
   });
 };
 

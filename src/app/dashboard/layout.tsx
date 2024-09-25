@@ -11,16 +11,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   useEffect(() => {
     if (token) {
-      const data = { title: 'test', body: 'A test for notification is showing' };
       sendClientFcmToken({
-        fcmToken: token,
-        data: data,
+        token: token,
       });
     }
   }, [token]);
 
   return (
-    <div className="px-8 short:px-4 mobile:p-0 pt-[9px] pb-7 w-full h-screen m-auto">
+    <div className="xl:px-8 xxl:px-8 px-4 mobile:p-0 pt-[9px] desktop:pb-5 bigScreen:pb-0 w-full h-screen m-auto">
       <Header />
       <section className="desktop:inline-flex basis-full gap-3 w-full desktop:h-[90%] mobile:h-full mobile:!overflow-auto">
         <Aside />

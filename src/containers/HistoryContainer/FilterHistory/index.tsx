@@ -145,9 +145,9 @@ const FilterHistory = () => {
           <div className="space-y-2">
             <p className="text-base select-none">Filter by Status</p>
             <CCheckbox
-              value="active"
-              label="Active"
-              checked={filteredValues.active}
+              value="pending"
+              label="Pending"
+              checked={filteredValues.pending}
               onChange={handleCheckBoxChange}
             />
             <CCheckbox
@@ -157,9 +157,9 @@ const FilterHistory = () => {
               onChange={handleCheckBoxChange}
             />
             <CCheckbox
-              value="cancelled"
-              label="Cancelled"
-              checked={filteredValues.cancelled}
+              value="expired"
+              label="Expired"
+              checked={filteredValues.expired}
               onChange={handleCheckBoxChange}
             />
           </div>

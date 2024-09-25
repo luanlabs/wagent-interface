@@ -1,6 +1,6 @@
-import { IHistoryResponse, IFilterValues } from '@/constants/types';
+import { ITransaction, IFilterValues } from '@/constants/types';
 
-const filterHistoryByValues = (history: IHistoryResponse[], values: IFilterValues) => {
+const filterHistoryByValues = (history: ITransaction[], values: IFilterValues) => {
   const filteredHistory = history.filter((tx) => {
     const methodMatch =
       (values.single && tx.method === 'single') ||
@@ -8,12 +8,14 @@ const filterHistoryByValues = (history: IHistoryResponse[], values: IFilterValue
       (values.vesting && tx.method === 'vesting');
 
     const statusMatch =
-      (values.active && tx.status === 'active') ||
-      (values.completed && tx.status === 'completed') ||
-      (values.cancelled && tx.status === 'cancelled');
+      (values.completed && tx.order.status === 'completed') ||
+      (values.expired && tx.order.status === 'expired') ||
+      (values.pending && tx.order.status === 'pending');
+    // (values.active && tx.order.status === 'active') ||
+    // (values.cancelled && tx.order.status === 'cancelled');
 
     const tokenMatch = values.selectedTokens.some(
-      (token) => token.checked && token.value === tx.token.value,
+      (token) => token.checked && token.value === tx.token.symbol,
     );
 
     return methodMatch && statusMatch && tokenMatch;

@@ -22,7 +22,7 @@ export default function Error() {
       <CButton
         variant="simple"
         text="Go Home"
-        className="w-[280px] mt-2 mx-4 bg-lightestRed border border-lightRed text-error"
+        className="!w-[280px] mt-2 mx-4 bg-lightestRed border border-lightRed text-error"
         onClick={handleGoHome}
       />
     </div>

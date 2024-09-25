@@ -19,6 +19,7 @@ import { BasicOptionType } from '@/models';
 import EditProfile from '../EditProfile';
 import useCheckboxColors from './useCheckboxColors';
 import CItemField from '@/components/CItemField';
+import { ISettingData } from '@/constants/types';
 
 const options: BasicOptionType<string>[] = [
   { value: 'usdt', label: 'USDT' },
@@ -27,16 +28,19 @@ const options: BasicOptionType<string>[] = [
 ];
 
 const switchOptions = [
-  { value: 'on', label: 'ON' },
   { value: 'off', label: 'OFF' },
+  { value: 'on', label: 'ON' },
 ];
 
-const SettingsContainer = () => {
+type SettingsProps = {
+  data: ISettingData;
+};
+const SettingsContainer = ({ data }: SettingsProps) => {
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const [isStreamChecked, setIsStreamChecked] = useState(false);
   const [isVestingChecked, setIsVestingChecked] = useState(false);
-  const [apiKeyValue, setApiKeyValue] = useState('');
-  const [walletAddress, setWalletAddress] = useState('');
+  const [apiKeyValue, setApiKeyValue] = useState(data.apiKey);
+  const [walletAddress, setWalletAddress] = useState(data.email);
 
   const router = useRouter();
   const checkBoxColors = useCheckboxColors(isStreamChecked, isVestingChecked);
@@ -88,7 +92,7 @@ const SettingsContainer = () => {
       <div className="space-y-3">
         <CItemField
           title="Acceptable payment methods"
-          description="Please Choose one or more methods."
+          description="Please choose one or more methods."
           component={
             <div className="inline-flex gap-[12px] w-full mobile:flex-col mobile:space-y-2">
               <CCheckbox
@@ -101,6 +105,7 @@ const SettingsContainer = () => {
               <CCheckbox
                 type="secondary"
                 value="stream"
+                disabled
                 label={
                   <CMethods
                     suffix="Method"
@@ -116,6 +121,7 @@ const SettingsContainer = () => {
               <CCheckbox
                 type="secondary"
                 value="vesting"
+                disabled
                 label={
                   <CMethods
                     suffix="Method"
@@ -132,33 +138,41 @@ const SettingsContainer = () => {
         />
 
         <CItemField
-          title="Connect your stellar wallet"
-          description="Please Choose one or more tokens."
+          title="Enter your stellar wallet"
+          description="Please enter your wallet address (you can change it but api key will be regenerated)."
           component={
             <div className="w-[356px]">
-              <CInputCopy placeholder="Enter Wallet Address" onChange={handleWalletAddress} />
+              <CInputCopy
+                type="email"
+                value={walletAddress}
+                placeholder="Enter Wallet Address"
+                onChange={handleWalletAddress}
+              />
             </div>
           }
         />
 
         <CItemField
           title="Minimum cancellable duration"
-          description=" We will send extra notifications for you in your email."
+          description="Please select the acceptable time period for client payment cancellations."
           component={
             <div className="w-[100px]">
-              <CNumberInput defaultValue="45" placeholder="45" />
+              <CNumberInput
+                defaultValue={data.minimumCancellableStreamDuration.toString()}
+                placeholder="45"
+              />
             </div>
           }
         />
 
         <CItemField
           title="Email Notifications"
-          description=" We will send extra notifications for you in your email."
+          description="Please choose if you'd like to get Email notifications."
           component={
             <div className="w-[150px]">
               <CRadioButtonGroup
                 options={switchOptions}
-                defaultOption={switchOptions[1]}
+                defaultOption={data.isSubscribed ? switchOptions[1] : switchOptions[0]}
                 onChange={handleCRadioButtons}
               />
             </div>
@@ -167,17 +181,24 @@ const SettingsContainer = () => {
 
         <CItemField
           title="API Key"
-          description=" We will send extra notifications for you in your email."
+          description="*This Api key is generated based on your wallet address."
           component={
             <div className="w-[356px]">
-              <CInputCopy placeholder="Your Api Key" onChange={handleApiKey} hideCharacter />
+              <CInputCopy
+                type="apiKey"
+                hideCharacter
+                value={apiKeyValue}
+                eyeIconPosition="left"
+                placeholder="your api key"
+                onChange={handleApiKey}
+              />
             </div>
           }
         />
 
         <CItemField
           title="Acceptable Tokens"
-          description="Please Choose one or more tokens."
+          description="Please choose one or more tokens you'd accept."
           component={
             <div className="w-[356px]">
               <CSelectSearchable options={options} />
@@ -185,7 +206,7 @@ const SettingsContainer = () => {
           }
         />
 
-        <CCard className="flex w-full justify-between items-center p-6">
+        <CCard className="flex w-full justify-between items-center p-6 !mb-2">
           <div>
             <p className="text-lg">Sign out of Wagent</p>
           </div>
@@ -199,7 +220,7 @@ const SettingsContainer = () => {
           </div>
         </CCard>
 
-        <EditProfile isOpen={isEditProfileOpen} onClose={ModalOnClose} />
+        <EditProfile isOpen={isEditProfileOpen} onClose={ModalOnClose} data={data} />
       </div>
     </CPageCard>
   );

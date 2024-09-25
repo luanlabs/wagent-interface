@@ -152,14 +152,27 @@ export interface IUserAuth {
   token: string;
 }
 
-export type IApiData<T = null> = {
+export type IApiData = {
   message: object | string;
-  result?: object | string | T;
+  result?: object | string;
   error?: {
     message: string;
     extras?: any;
   };
 };
+
+export interface ISettingData {
+  name: string;
+  logo: string;
+  email: string;
+  apiKey: string;
+  tokens: string;
+  isAdmin: boolean;
+  isVerified: boolean;
+  methods: number;
+  isSubscribed: boolean;
+  minimumCancellableStreamDuration: number;
+}
 
 export interface CustomResponse {
   status: 'success' | 'error' | '';

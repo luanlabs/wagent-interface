@@ -6,17 +6,19 @@ import { setProfile, clearProfile } from '@/reducers/profile';
 import CButton from '@/components/CButton';
 import CModal from '@/components/CModal';
 import CInput from '@/components/CInput';
+import { ISettingData } from '@/constants/types';
 
 interface EditProfileProps {
   isOpen: boolean;
   onClose: () => void;
+  data: ISettingData;
 }
 
-const EditProfile = ({ isOpen, onClose }: EditProfileProps) => {
+const EditProfile = ({ isOpen, onClose, data }: EditProfileProps) => {
   const profile = useSelector((state) => state.profile);
   const dispatch = useDispatch();
-  const [storeName, setStoreName] = useState(profile.storeName);
-  const [storeLogo, setStoreLogo] = useState(profile.storeLogo);
+  const [storeName, setStoreName] = useState(data.name);
+  const [storeLogo, setStoreLogo] = useState(data.logo);
   const [newLogo, setNewLogo] = useState<string | ArrayBuffer | null>(null);
 
   const handleChange = () => {
@@ -53,6 +55,8 @@ const EditProfile = ({ isOpen, onClose }: EditProfileProps) => {
             <div className="h-[50px] w-[50px] mr-4">
               <Image
                 src={newLogo ? newLogo : storeLogo}
+                priority
+                quality={100}
                 width={0}
                 height={0}
                 alt="Store Logo"

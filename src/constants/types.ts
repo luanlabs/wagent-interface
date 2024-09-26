@@ -14,6 +14,7 @@ export enum ErrorMsg {
   TOO_MANY_REQUESTS = 'You can only request a token verification every 5 minutes.',
   USER_NOT_FOUND = 'Invalid email or password. Please try again or reset your password.',
   EMAIL_NOT_VERIFIED = 'Email not verified. Please check your inbox or verify your email.',
+  INVALID_TOKEN = 'Authorization token is invalid or expired',
 }
 
 export enum HttpStatusCode {
@@ -166,7 +167,7 @@ export interface ISettingData {
   logo: string;
   email: string;
   apiKey: string;
-  tokens: string;
+  tokens: ITokenServerType[];
   isAdmin: boolean;
   isVerified: boolean;
   methods: number;

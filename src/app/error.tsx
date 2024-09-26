@@ -1,13 +1,19 @@
 'use client';
 
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
 import { Failed } from '@/assets';
 import { Pages } from '@/constants/pages';
 import CButton from '@/components/CButton';
+import { ErrorMsg } from '@/constants/types';
 
-export default function Error() {
+export default function Error({ error }: any) {
   const router = useRouter();
+
+  if (error.data.message === ErrorMsg.INVALID_TOKEN) {
+    Cookies.remove('token');
+  }
 
   const handleGoHome = () => {
     router.push(Pages.DASHBOARD);

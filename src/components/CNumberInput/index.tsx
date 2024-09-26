@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import CInput from '../CInput';
 
 interface CNumberInputProps {
+  name?: string;
   placeholder: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
   defaultValue?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-const CNumberInput = ({ placeholder, onChange, defaultValue }: CNumberInputProps) => {
+const CNumberInput = ({ placeholder, onChange, defaultValue, name }: CNumberInputProps) => {
   const [value, setValue] = useState(defaultValue || '');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,6 +19,7 @@ const CNumberInput = ({ placeholder, onChange, defaultValue }: CNumberInputProps
   return (
     <div className="relative overflow-hidden">
       <CInput
+        name={name}
         inputClassName="!border-gray"
         value={value}
         placeholder={placeholder}

@@ -1,30 +1,34 @@
+'use client';
+
 import { useState } from 'react';
 import Image from 'next/image';
-import { useSelector, useDispatch } from 'react-redux';
 
 import { setProfile, clearProfile } from '@/reducers/profile';
 import CButton from '@/components/CButton';
 import CModal from '@/components/CModal';
 import CInput from '@/components/CInput';
 import { ISettingData } from '@/constants/types';
+import { useAppDispatch } from '@/hooks/useRedux';
 
 interface EditProfileProps {
   isOpen: boolean;
   onClose: () => void;
   data: ISettingData;
+  onProfileChange: (storeName: string, storeLogo: string | ArrayBuffer | null) => void;
 }
 
-const EditProfile = ({ isOpen, onClose, data }: EditProfileProps) => {
-  const profile = useSelector((state) => state.profile);
-  const dispatch = useDispatch();
+const EditProfile = ({ isOpen, onClose, data, onProfileChange }: EditProfileProps) => {
+  const dispatch = useAppDispatch();
   const [storeName, setStoreName] = useState(data.name);
   const [storeLogo, setStoreLogo] = useState(data.logo);
   const [newLogo, setNewLogo] = useState<string | ArrayBuffer | null>(null);
 
   const handleChange = () => {
-    const logoToUpdate = newLogo || storeLogo;
-    dispatch(setProfile({ storeName, storeLogo: logoToUpdate }));
-    setStoreLogo(logoToUpdate as string);
+    const updatedLogo = newLogo || storeLogo;
+    dispatch(setProfile({ storeName, storeLogo: updatedLogo }));
+    setStoreLogo(updatedLogo as string);
+
+    onProfileChange(storeName, updatedLogo);
     onClose();
   };
 
@@ -33,6 +37,8 @@ const EditProfile = ({ isOpen, onClose, data }: EditProfileProps) => {
     setStoreName('');
     setStoreLogo('/images/default.jpg');
     setNewLogo(null);
+
+    onProfileChange('', '/images/default.jpg');
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

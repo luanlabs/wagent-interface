@@ -12,6 +12,10 @@ import { BasicOptionType, OptionType } from '@/models';
 type CSelectSearchableProps = {
   placeholder?: string;
   options: BasicOptionType<string>[];
+  selectedOptions: MultiValue<BasicOptionType<string> | OptionType>;
+  setSelectedOptions: React.Dispatch<
+    React.SetStateAction<MultiValue<BasicOptionType<string> | OptionType>>
+  >;
   onChange?: (value: MultiValue<BasicOptionType<string>>) => void;
 };
 
@@ -19,11 +23,9 @@ const CSelectSearchable = ({
   onChange,
   placeholder = 'Search ...',
   options,
+  selectedOptions,
+  setSelectedOptions,
 }: CSelectSearchableProps) => {
-  const [selectedOptions, setSelectedOptions] = useState<
-    MultiValue<BasicOptionType<string> | OptionType>
-  >([]);
-
   const handleChange = (
     newValue: MultiValue<BasicOptionType<string>> | SingleValue<BasicOptionType<string>>,
     _actionMeta: ActionMeta<BasicOptionType<string>>,

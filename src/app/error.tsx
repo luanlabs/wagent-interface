@@ -11,7 +11,7 @@ import { ErrorMsg } from '@/constants/types';
 export default function Error({ error }: any) {
   const router = useRouter();
 
-  if (error.data.message === ErrorMsg.INVALID_TOKEN) {
+  if (error === ErrorMsg.INVALID_TOKEN) {
     Cookies.remove('token');
   }
 

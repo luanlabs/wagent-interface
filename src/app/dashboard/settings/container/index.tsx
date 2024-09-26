@@ -16,7 +16,8 @@ const SettingsContainer = () => {
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
 
   if (error) {
-    throw error;
+    // @ts-ignore
+    throw error.data.message;
   }
 
   const pageTitle = (

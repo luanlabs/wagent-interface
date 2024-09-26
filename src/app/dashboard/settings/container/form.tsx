@@ -2,28 +2,25 @@
 
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
+import { MultiValue } from 'react-select';
+import { useRouter } from 'next/navigation';
 
-import CButton from '@/components/CButton';
 import CCard from '@/components/CCard';
-import CCheckbox from '@/components/CCheckbox';
-import CInputCopy from '@/components/CInputCopy';
-import CItemField from '@/components/CItemField';
+import { Pages } from '@/constants/pages';
+import CButton from '@/components/CButton';
 import CMethods from '@/components/CMethods';
+import CCheckbox from '@/components/CCheckbox';
+import CInputCopyPaste from '@/components/CInputCopyPaste';
+import CItemField from '@/components/CItemField';
+import EditProfile from '@/containers/EditProfile';
 import CNumberInput from '@/components/CNumberInput';
+// import useCheckboxColors from '@/hooks/useCheckboxColors';
 import CRadioButtonGroup from '@/components/CRadioButtonGroup';
 import CSelectSearchable from '@/components/CSelectSearchable';
-import EditProfile from '@/containers/EditProfile';
-import { useRouter } from 'next/navigation';
-import { BasicOptionType } from '@/models';
-import useCheckboxColors from '@/hooks/useCheckboxColors';
-import { ISettingData } from '@/constants/types';
-import { Pages } from '@/constants/pages';
 
-// const options: BasicOptionType<string>[] = [
-//   { value: 'usdt', label: 'USDT' },
-//   { value: 'usdc', label: 'USDC' },
-//   { value: 'dai', label: 'DAI' },
-// ];
+import { BasicOptionType, OptionType } from '@/models';
+import { ISettingData } from '@/constants/types';
+import { useUpdateUserMutation } from '@/services/userApi';
 
 const switchOptions = [
   { value: 'off', label: 'OFF' },
@@ -37,165 +34,210 @@ type SettingsProps = {
 };
 
 const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: SettingsProps) => {
-  const [isStreamChecked, setIsStreamChecked] = useState(false);
-  const [isVestingChecked, setIsVestingChecked] = useState(false);
-  const [apiKeyValue, setApiKeyValue] = useState(data.apiKey);
-  const [walletAddress, setWalletAddress] = useState(data.email);
-
-  const router = useRouter();
-  const checkBoxColors = useCheckboxColors(isStreamChecked, isVestingChecked);
-
   const options: BasicOptionType<string>[] = data.tokens.map((item) => ({
     value: item.symbol,
     label: item.symbol,
   }));
+  const [selectedOptions, setSelectedOptions] = useState<
+    MultiValue<BasicOptionType<string> | OptionType>
+  >([]);
+  const [formState, setFormState] = useState({
+    methods: 1,
+    name: data.name,
+    logo: data.logo,
+    tokens: data.tokens,
+    walletAddress: '',
+    apiKeyValue: data.apiKey,
+    isSubscribed: data.isSubscribed,
+    minimumCancellableStreamDuration: data.minimumCancellableStreamDuration,
+  });
 
-  const handleStreamCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsStreamChecked(e.target.checked);
+  const router = useRouter();
+  // TODO fix methods
+  // const checkBoxColors = useCheckboxColors(formState.isStreamChecked, formState.isVestingChecked);
+
+  const [updateUser, { isLoading, isError, isSuccess, error }] = useUpdateUserMutation();
+
+  const payload = {
+    name: formState.name,
+    logo: formState.logo,
+    tokens: formState.tokens,
+    methods: formState.methods,
+    isSubscribed: formState.isSubscribed,
+    walletAddress: formState.walletAddress,
+    minimumCancellableStreamDuration: formState.minimumCancellableStreamDuration,
   };
 
-  const handleVestingCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsVestingChecked(e.target.checked);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: value.trim(),
+    }));
+
+    console.log(formState);
+    updateUser(payload).unwrap();
   };
 
-  const handleApiKey = () => {
-    setApiKeyValue(data.apiKey);
+  const handleSelectChange = (value: MultiValue<BasicOptionType<string>>) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      tokens: value as BasicOptionType<string>[],
+    }));
   };
 
-  const handleWalletAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setWalletAddress(e.target.value.trim());
+  const handleProfileChange = (storeName: string, storeLogo: string | ArrayBuffer | null) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      name: storeName,
+      logo: typeof storeLogo === 'string' ? storeLogo : '',
+    }));
   };
 
-  const handleCRadioButtons = (e: BasicOptionType<string>) => {};
-
-  const handleSignOut = () => {
-    Cookies.remove('token');
-
-    setTimeout(() => {
-      router.push(Pages.SIGNIN);
-    }, 1000);
+  const handleRadioChange = (option: BasicOptionType<string>) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      isSubscribed: option.value === 'on' ? true : false,
+    }));
   };
 
   const ModalOnClose = () => {
     setIsEditProfileOpen(false);
   };
+
+  const handleSignOut = () => {
+    Cookies.remove('token');
+    setTimeout(() => {
+      router.push(Pages.SIGNIN);
+    }, 1000);
+  };
+
   return (
     <div className="space-y-3">
       <CItemField
         title="Acceptable payment methods"
         description="Please choose one or more methods."
-        component={
-          <div className="inline-flex gap-[12px] w-full mobile:flex-col mobile:space-y-2">
-            <CCheckbox
-              type="secondary"
-              value="single"
-              label={<CMethods suffix="Method" method="single" />}
-              checked
-              disabled
-            />
-            <CCheckbox
-              type="secondary"
-              value="stream"
-              disabled
-              label={
-                <CMethods
-                  suffix="Method"
-                  method="stream"
-                  fill={checkBoxColors.streamIconColor}
-                  className={checkBoxColors.streamTextColor}
-                />
-              }
-              checked={isStreamChecked}
-              onChange={handleStreamCheck}
-            />
+      >
+        <div className="inline-flex gap-[12px] w-full mobile:flex-col mobile:space-y-2">
+          <CCheckbox
+            type="secondary"
+            value="single"
+            label={<CMethods suffix="Method" method="single" />}
+            checked
+            disabled
+          />
+          <CCheckbox
+            type="secondary"
+            name="isStreamChecked"
+            value="stream"
+            label={
+              <CMethods
+                suffix="Method"
+                method="stream"
+                // fill={checkBoxColors.streamIconColor}
+                // className={checkBoxColors.streamTextColor}
+              />
+            }
+            disabled
+            checked={false}
+            onChange={handleChange}
+          />
+          <CCheckbox
+            type="secondary"
+            name="isVestingChecked"
+            value="vesting"
+            label={
+              <CMethods
+                suffix="Method"
+                method="vesting"
+                // fill={checkBoxColors.vestingIconColor}
+                // className={checkBoxColors.vestingTextColor}
+              />
+            }
+            disabled
+            checked={false}
+            onChange={handleChange}
+          />
+        </div>
+      </CItemField>
 
-            <CCheckbox
-              type="secondary"
-              value="vesting"
-              disabled
-              label={
-                <CMethods
-                  suffix="Method"
-                  method="vesting"
-                  fill={checkBoxColors.vestingIconColor}
-                  className={checkBoxColors.vestingTextColor}
-                />
-              }
-              checked={isVestingChecked}
-              onChange={handleVestingCheck}
-            />
-          </div>
-        }
-      />
-
-      <CItemField
-        title="Enter your stellar wallet"
-        description="Please enter your wallet address (you can change it but api key will be regenerated)."
-        component={
+      <form className="space-y-3">
+        <CItemField
+          title="Enter your stellar wallet"
+          description="Please enter your wallet address (you can change it but api key will be regenerated)."
+        >
           <div className="w-[356px]">
-            <CInputCopy
-              type="email"
-              value={walletAddress}
+            <CInputCopyPaste
+              mode="paste"
+              type="text"
+              name="walletAddress"
+              value={formState.walletAddress}
               placeholder="Enter Wallet Address"
-              onChange={handleWalletAddress}
+              onChange={handleChange}
             />
           </div>
-        }
-      />
+        </CItemField>
 
-      <CItemField
-        title="Minimum cancellable duration"
-        description="Please select the acceptable time period for client payment cancellations."
-        component={
+        <CItemField
+          title="Minimum cancellable duration"
+          description="Please select the acceptable time period for client payment cancellations."
+        >
           <div className="w-[100px]">
             <CNumberInput
-              defaultValue={data.minimumCancellableStreamDuration.toString()}
-              placeholder="45"
+              name="minimumDuration"
+              defaultValue={formState.minimumCancellableStreamDuration.toString()}
+              placeholder="10"
+              onChange={handleChange}
             />
           </div>
-        }
-      />
+        </CItemField>
 
-      <CItemField
-        title="Email Notifications"
-        description="Please choose if you'd like to get Email notifications."
-        component={
+        <CItemField
+          title="Email Notifications"
+          description="Please choose if you'd like to get Email notifications."
+        >
           <div className="w-[150px]">
             <CRadioButtonGroup
               options={switchOptions}
-              defaultOption={data.isSubscribed ? switchOptions[1] : switchOptions[0]}
-              onChange={handleCRadioButtons}
+              defaultOption={formState.isSubscribed ? switchOptions[1] : switchOptions[0]}
+              onChange={handleRadioChange}
             />
           </div>
-        }
-      />
+        </CItemField>
 
-      <CItemField
-        title="API Key"
-        description="*This Api key is generated based on your wallet address."
-        component={
+        <CItemField
+          title="API Key"
+          description="*This Api key is generated based on your wallet address."
+        >
           <div className="w-[356px]">
-            <CInputCopy
+            <CInputCopyPaste
+              mode="copy"
               type="apiKey"
+              name="apiKeyValue"
               hideCharacter
-              value={apiKeyValue}
               eyeIconPosition="left"
+              value={formState.apiKeyValue}
               placeholder="your api key"
-              onChange={handleApiKey}
+              className="!cursor-pointer"
             />
           </div>
-        }
-      />
+        </CItemField>
 
-      <CItemField
-        title="Acceptable Tokens"
-        description="Please choose one or more tokens you'd accept."
-        component={
+        <CItemField
+          title="Acceptable Tokens"
+          description="Please choose one or more tokens you'd accept."
+        >
           <div className="w-[356px]">
-            <CSelectSearchable options={options} />
+            <CSelectSearchable
+              options={options}
+              onChange={handleSelectChange}
+              selectedOptions={selectedOptions}
+              setSelectedOptions={setSelectedOptions}
+            />
           </div>
-        }
-      />
+        </CItemField>
+      </form>
 
       <CCard className="flex w-full justify-between items-center p-6 !mb-2">
         <div>
@@ -211,7 +253,12 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
         </div>
       </CCard>
 
-      <EditProfile isOpen={isEditProfileOpen} onClose={ModalOnClose} data={data} />
+      <EditProfile
+        isOpen={isEditProfileOpen}
+        onClose={ModalOnClose}
+        data={data}
+        onProfileChange={handleProfileChange}
+      />
     </div>
   );
 };

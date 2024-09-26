@@ -129,7 +129,6 @@ export interface IFilterValues {
   stream: boolean;
   single: boolean;
   vesting: boolean;
-  active?: boolean;
   expired: boolean;
   pending: boolean;
   completed: boolean;
@@ -160,6 +159,24 @@ export type IApiData = {
     message: string;
     extras?: any;
   };
+};
+
+export type IApiRes<T> = {
+  message: object | string;
+  result?: object | string | T;
+  error?: {
+    message: string;
+    extras?: any;
+  };
+};
+
+export type IUpdateUserPayload = {
+  name: string;
+  logo: string;
+  methods: number;
+  isSubscribed: boolean;
+  tokens: ITokenServerType[];
+  minimumCancellableStreamDuration: number;
 };
 
 export interface ISettingData {

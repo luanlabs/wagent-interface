@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import CCard from '@/components/CCard';
 import CPageCard from '@/components/CPageCard';
@@ -13,23 +13,15 @@ import DonutChartContainer from '@/containers/DashboardContainer/DonutChart';
 import { HistoryListHeader } from '@/containers/HistoryContainer/ListHeader';
 import generateChartData from '@/containers/ChartTimeStamps/generateChartData';
 
-import { loadHistory } from '@/reducers/transactions';
-import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
-
 import { BasicOptionType, CBarChartType } from '@/models';
-import getTransactions from '@/services/getTransactions';
+import { useGetTransactionsQuery } from '@/services/userApi';
 import { ITransaction } from '@/constants/types';
 
 const DashboardContainer = () => {
   const [CBarChartData, setCBarChartData] = useState<CBarChartType[]>(generateChartData('1d'));
-  const dispatch = useAppDispatch();
-  const history = useAppSelector((state) => state.transactions.history);
+  const { data, isLoading } = useGetTransactionsQuery();
 
-  useEffect(() => {
-    getTransactions().then(({ data, response }) => {
-      dispatch(loadHistory(data.result as ITransaction[]));
-    });
-  }, [dispatch]);
+  const transactions = (data?.result as ITransaction[]) || [];
 
   const handleChartTimeStampsChange = (e: BasicOptionType<string>) => {
     setCBarChartData(generateChartData(e.value));
@@ -66,21 +58,25 @@ const DashboardContainer = () => {
         </CCard>
       </div>
       <div className="mt-5 overflow-hidden">
-        <h1 className="text-2xl mb-[10px] font-medium">Recent transactions</h1>
-        {history.length === 0 ? (
-          <p className="text-cadetBlue mt-4 bigScreen:mt-24 text-center text-lg">
-            No transactions found
-          </p>
-        ) : (
-          <>
-            <HistoryListHeader />
-            <div className="space-y-2 pb-3 mobile:space-y-[6px] w-full ">
-              {history.slice(0, 4).map((item) => (
-                <HistoryItem key={item._id} data={item} />
-              ))}
-            </div>
-          </>
-        )}
+        <h1 className="text-2xl mb-2.5 font-medium">Recent Transactions</h1>
+
+        <HistoryListHeader />
+
+        <div className="space-y-2 pb-3 mobile:space-y-1.5 w-full">
+          {isLoading ? (
+            <p className="text-cadetBlue mt-4 bigScreen:mt-24 text-center text-lg">
+              Loading transaction history...
+            </p>
+          ) : transactions.length === 0 ? (
+            <p className="text-cadetBlue mt-4 bigScreen:mt-24 text-center text-lg">
+              No transactions found
+            </p>
+          ) : (
+            transactions
+              .slice(0, 4)
+              .map((transaction) => <HistoryItem key={transaction._id} data={transaction} />)
+          )}
+        </div>
       </div>
     </CPageCard>
   );

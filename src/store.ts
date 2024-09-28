@@ -4,7 +4,7 @@ import profile from './reducers/profile';
 import transactions from './reducers/transactions';
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { userApi } from '@/services/userApi'; // Import your RTK Query API
+import { userApi } from '@/services/userApi';
 
 const rootReducer = combineReducers({
   transactions,

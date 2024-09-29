@@ -61,7 +61,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
   const payload = {
     name: formState.name,
     logo: formState.logo,
-    tokens: formState.tokens,
+    tokens: formState.tokens.map((x) => x._id),
     methods: formState.methods,
     isSubscribed: formState.isSubscribed,
     walletAddress: formState.walletAddress,
@@ -76,8 +76,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
       [name]: value.trim(),
     }));
 
-    console.log(formState);
-    updateUser(payload).unwrap();
+    updateUser({ [name]: value.trim() });
   };
 
   const handleSelectChange = (value: MultiValue<BasicOptionType<string>>) => {
@@ -85,6 +84,8 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
       ...prevState,
       tokens: value as BasicOptionType<string>[],
     }));
+
+    updateUser({ tokens: value as BasicOptionType<string>[] });
   };
 
   const handleProfileChange = (storeName: string, storeLogo: string | ArrayBuffer | null) => {
@@ -93,6 +94,11 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
       name: storeName,
       logo: typeof storeLogo === 'string' ? storeLogo : '',
     }));
+
+    updateUser({
+      name: storeName,
+      logo: typeof storeLogo === 'string' ? storeLogo : '',
+    });
   };
 
   const handleRadioChange = (option: BasicOptionType<string>) => {
@@ -100,6 +106,10 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
       ...prevState,
       isSubscribed: option.value === 'on' ? true : false,
     }));
+
+    updateUser({
+      isSubscribed: option.value === 'on' ? true : false,
+    });
   };
 
   const ModalOnClose = () => {

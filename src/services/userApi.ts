@@ -1,12 +1,13 @@
 import Cookies from 'js-cookie';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IApiRes, ISettingData, ITransaction, IUpdateUserPayload } from '@/constants/types'; // Assume types are defined in your project
+import { IApiRes, ISettingData, ITransaction, IUpdateUserPayload } from '@/constants/types';
 
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API,
     prepareHeaders: (headers) => {
+      headers.set('Content-Type', 'application/json');
       const token = Cookies.get('token');
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);

@@ -171,12 +171,12 @@ export type IApiRes<T> = {
 };
 
 export type IUpdateUserPayload = {
-  name: string;
-  logo: string;
-  methods: number;
-  isSubscribed: boolean;
-  tokens: ITokenServerType[];
-  minimumCancellableStreamDuration: number;
+  name?: string;
+  logo?: string;
+  methods?: number;
+  isSubscribed?: boolean;
+  tokens?: string[];
+  minimumCancellableStreamDuration?: number;
 };
 
 export interface ISettingData {

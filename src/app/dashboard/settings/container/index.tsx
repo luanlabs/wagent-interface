@@ -12,7 +12,9 @@ import { useGetUserQuery } from '@/services/userApi';
 import SettingsForm from './form';
 
 const SettingsContainer = () => {
-  const { data, isLoading, error } = useGetUserQuery();
+  const { data, isLoading, error } = useGetUserQuery(undefined, {
+    pollingInterval: 3000,
+  });
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
 
   if (error) {
@@ -42,7 +44,7 @@ const SettingsContainer = () => {
         />
       ) : (
         <div className="h-full w-full flex justify-center items-center">
-          <p className="text-cadetBlue text-lg">Loading settings</p>
+          <p className="text-cadetBlue text-lg">Loading settings...</p>
         </div>
       )}
     </CPageCard>

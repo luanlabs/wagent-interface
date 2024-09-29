@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import { RootState } from '@/store';
+import { useAppSelector } from '@/hooks/useRedux';
 
 interface ProfileProp {
   isMinimizedAside?: boolean;
@@ -12,7 +11,7 @@ interface ProfileProp {
 const Profile = ({ isMinimizedAside }: ProfileProp) => {
   const [isHidden, setIsHidden] = useState(true);
 
-  const profile = useSelector((state: RootState) => state.profile);
+  const profile = useAppSelector((state) => state.profile);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -33,8 +32,10 @@ const Profile = ({ isMinimizedAside }: ProfileProp) => {
       >
         <Image
           src={profile.storeLogo}
-          width={0}
-          height={0}
+          priority
+          quality={100}
+          width={50}
+          height={50}
           alt="Store Logo"
           className="rounded-full w-full h-full object-cover"
         />

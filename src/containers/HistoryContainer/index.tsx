@@ -18,7 +18,9 @@ const HistoryPageHeader = () => (
 );
 
 const HistoryContainer = () => {
-  const { data: transactionsData, isLoading } = useGetTransactionsQuery();
+  const { data: transactionsData, isLoading } = useGetTransactionsQuery(undefined, {
+    pollingInterval: 3000,
+  });
   const filterValues = useAppSelector((state) => state.transactions.filterValues);
 
   const filteredTransactions = transactionsData?.result

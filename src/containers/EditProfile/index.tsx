@@ -30,7 +30,6 @@ const EditProfile = ({ isOpen, onClose, data, onProfileChange }: EditProfileProp
     dispatch(setProfile({ storeName, storeLogo }));
   }, [data, dispatch, storeLogo, storeName]);
 
-  console.log(selectProfile);
   const handleProfileChange = () => {
     const updatedLogo = newLogo || storeLogo;
     setStoreLogo(updatedLogo as string);

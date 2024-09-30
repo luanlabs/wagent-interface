@@ -80,12 +80,14 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
   };
 
   const handleSelectChange = (value: MultiValue<BasicOptionType<string>>) => {
-    setFormState((prevState) => ({
-      ...prevState,
-      tokens: value as BasicOptionType<string>[],
-    }));
+    // setFormState((prevState) => ({
+    //   ...prevState,
+    //   tokens: value as BasicOptionType<string>[],
+    // }));
 
-    updateUser({ tokens: value as BasicOptionType<string>[] });
+    // updateUser({ tokens: value as BasicOptionType<string>[] });
+
+    console.log(value);
   };
 
   const handleProfileChange = (storeName: string, storeLogo: string | ArrayBuffer | null) => {

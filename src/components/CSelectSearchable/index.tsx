@@ -30,9 +30,10 @@ const CSelectSearchable = ({
     newValue: MultiValue<BasicOptionType<string>> | SingleValue<BasicOptionType<string>>,
     _actionMeta: ActionMeta<BasicOptionType<string>>,
   ) => {
-    setSelectedOptions(newValue as MultiValue<BasicOptionType<string>>);
+    const selectedValue = newValue as MultiValue<BasicOptionType<string>>;
+    setSelectedOptions(selectedValue);
 
-    if (onChange) onChange(selectedOptions);
+    if (onChange) onChange(selectedValue);
   };
 
   const handleRemove = (optionToRemove: BasicOptionType<string>) => {

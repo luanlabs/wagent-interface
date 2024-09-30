@@ -26,6 +26,7 @@ const CCheckbox = ({
   onChange,
   label,
   value,
+  name,
   disabled = false,
   type = 'primary',
   className,

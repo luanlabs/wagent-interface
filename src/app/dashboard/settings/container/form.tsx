@@ -34,7 +34,21 @@ type SettingsProps = {
 };
 
 const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: SettingsProps) => {
-  const [selectedOptions, setSelectedOptions] = useState<MultiValue<BasicOptionType<string>>>([]);
+  const { data: tokenData } = useGetTokensQuery();
+
+  const options: BasicOptionType<string>[] = Array.isArray(tokenData?.result)
+    ? tokenData.result.map((item: ITokenServerType) => ({
+        value: item._id,
+        label: item.symbol,
+      }))
+    : [];
+
+  const [selectedOptions, setSelectedOptions] = useState<MultiValue<BasicOptionType<string>>>(
+    data.tokens.map((item) => ({
+      value: item._id,
+      label: item.symbol,
+    })),
+  );
 
   const [formState, setFormState] = useState({
     methods: 1,
@@ -46,15 +60,6 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
     isSubscribed: data.isSubscribed,
     minimumCancellableStreamDuration: data.minimumCancellableStreamDuration,
   });
-
-  const { data: tokenData } = useGetTokensQuery();
-
-  const options: BasicOptionType<string>[] = Array.isArray(tokenData?.result)
-    ? tokenData.result.map((item: ITokenServerType) => ({
-        value: item._id,
-        label: item.symbol,
-      }))
-    : [];
 
   const router = useRouter();
   // TODO fix methods
@@ -127,10 +132,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
   }
   return (
     <div className="space-y-3">
-      <CItemField
-        title="Acceptable payment methods"
-        description="Please choose one or more methods."
-      >
+      <CItemField title="Acceptable payment methods" description="Choose which method to accept.">
         <div className="inline-flex gap-[12px] w-full mobile:flex-col mobile:space-y-2">
           <CCheckbox
             type="secondary"
@@ -177,7 +179,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
       <form className="space-y-3">
         <CItemField
           title="Enter your stellar wallet"
-          description="Please enter your wallet address (you can change it but api key will be regenerated)."
+          description="Your wallet address for receiving payments. Ensure it's valid."
         >
           <div className="w-[356px]">
             <CInputCopyPaste
@@ -193,7 +195,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
 
         <CItemField
           title="Minimum cancellable duration"
-          description="Please select the acceptable time period for client payment cancellations."
+          description="Set the minimum time before a stream payment can be cancelled."
         >
           <div className="w-[100px]">
             <CNumberInput
@@ -207,7 +209,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
 
         <CItemField
           title="Email Notifications"
-          description="Please choose if you'd like to get Email notifications."
+          description="Get notified about transactions and account updates via email."
         >
           <div className="w-[150px]">
             <CRadioButtonGroup
@@ -220,7 +222,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
 
         <CItemField
           title="API Key"
-          description="*This Api key is generated based on your wallet address."
+          description="Connect Wagent to your shop. Keep it secure, and regenerate only if needed."
         >
           <div className="w-[356px]">
             <CInputCopyPaste
@@ -236,10 +238,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
           </div>
         </CItemField>
 
-        <CItemField
-          title="Acceptable Tokens"
-          description="Please choose one or more tokens you'd accept."
-        >
+        <CItemField title="Acceptable Tokens" description="Choose which tokens to accept.">
           <div className="w-[356px]">
             <CSelectSearchable
               options={options}

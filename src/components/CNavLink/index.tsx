@@ -16,7 +16,7 @@ const CNavLink = ({ title, icon, activeIcon, url, isMinimized = false }: Type) =
       href={url}
       prefetch
       passHref
-      className={`select-none w-full items-center rounded-xl px-[10px] h-[48px] cursor-pointer overflow-hidden
+      className={`select-none w-full items-center rounded-xl px-[12px] h-[48px] cursor-pointer overflow-hidden
       ${isMinimized ? 'flex justify-start' : 'inline-flex justify-between mobile:justify-center'}
       ${isActive && ' desktop:bg-mintGreen transition-all duration-500'}`}
     >

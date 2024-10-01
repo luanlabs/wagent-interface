@@ -1,6 +1,12 @@
 import Cookies from 'js-cookie';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IApiRes, ISettingData, ITransaction, IUpdateUserPayload } from '@/constants/types';
+import {
+  IApiRes,
+  ISettingData,
+  ITokenServerType,
+  ITransaction,
+  IUpdateUserPayload,
+} from '@/constants/types';
 
 export const userApi = createApi({
   reducerPath: 'userApi',
@@ -26,6 +32,13 @@ export const userApi = createApi({
       }),
     }),
 
+    getTokens: builder.query<IApiRes<ITokenServerType[]>, void>({
+      query: () => ({
+        url: `/tokens`,
+        method: 'GET',
+      }),
+    }),
+
     updateUser: builder.mutation<IApiRes<ISettingData>, IUpdateUserPayload>({
       query: (payload) => ({
         url: `/users`,
@@ -36,4 +49,9 @@ export const userApi = createApi({
   }),
 });
 
-export const { useGetUserQuery, useUpdateUserMutation, useGetTransactionsQuery } = userApi;
+export const {
+  useGetUserQuery,
+  useUpdateUserMutation,
+  useGetTransactionsQuery,
+  useGetTokensQuery,
+} = userApi;

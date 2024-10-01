@@ -18,9 +18,9 @@ import CNumberInput from '@/components/CNumberInput';
 import CRadioButtonGroup from '@/components/CRadioButtonGroup';
 import CSelectSearchable from '@/components/CSelectSearchable';
 
-import { BasicOptionType, OptionType } from '@/models';
-import { ISettingData } from '@/constants/types';
-import { useUpdateUserMutation } from '@/services/userApi';
+import { BasicOptionType } from '@/models';
+import { ISettingData, ITokenServerType } from '@/constants/types';
+import { useGetTokensQuery, useUpdateUserMutation } from '@/services/userApi';
 
 const switchOptions = [
   { value: 'off', label: 'OFF' },
@@ -34,14 +34,8 @@ type SettingsProps = {
 };
 
 const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: SettingsProps) => {
-  const options: BasicOptionType<string>[] = data.tokens.map((item) => ({
-    value: item.symbol,
-    label: item.symbol,
-    id: item._id,
-  }));
+  const [selectedOptions, setSelectedOptions] = useState<MultiValue<BasicOptionType<string>>>([]);
 
-  const [selectedOptions, setSelectedOptions] =
-    useState<MultiValue<BasicOptionType<string> | OptionType>>(options);
   const [formState, setFormState] = useState({
     methods: 1,
     name: data.name,
@@ -52,6 +46,15 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
     isSubscribed: data.isSubscribed,
     minimumCancellableStreamDuration: data.minimumCancellableStreamDuration,
   });
+
+  const { data: tokenData } = useGetTokensQuery();
+
+  const options: BasicOptionType<string>[] = Array.isArray(tokenData?.result)
+    ? tokenData.result.map((item: ITokenServerType) => ({
+        value: item._id,
+        label: item.symbol,
+      }))
+    : [];
 
   const router = useRouter();
   // TODO fix methods
@@ -71,12 +74,13 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
   };
 
   const handleSelectChange = (value: MultiValue<BasicOptionType<string>>) => {
-    setFormState((prevState) => ({
-      ...prevState,
-      tokens: value.map((x) => x.id),
-    }));
+    setSelectedOptions(value);
 
-    updateUser({ tokens: value.map((x) => x.id) });
+    const selectedTokensId = value.map((x) => x.value);
+
+    updateUser({
+      tokens: selectedTokensId,
+    });
   };
 
   const handleProfileChange = (storeName: string, storeLogo: string | ArrayBuffer | null) => {

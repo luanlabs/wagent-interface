@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Select, { MultiValue, ActionMeta, SingleValue } from 'react-select';
 
 import SelectOption from './Option';
@@ -21,7 +21,7 @@ type CSelectSearchableProps = {
 
 const CSelectSearchable = ({
   onChange,
-  placeholder = 'Search ...',
+  placeholder = 'Search...',
   options,
   selectedOptions,
   setSelectedOptions,

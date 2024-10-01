@@ -189,6 +189,7 @@ export interface ISettingData {
   isVerified: boolean;
   methods: number;
   isSubscribed: boolean;
+  walletAddress: string;
   minimumCancellableStreamDuration: number;
 }
 

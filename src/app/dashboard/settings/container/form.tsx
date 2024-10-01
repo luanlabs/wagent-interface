@@ -37,16 +37,17 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
   const options: BasicOptionType<string>[] = data.tokens.map((item) => ({
     value: item.symbol,
     label: item.symbol,
+    id: item._id,
   }));
-  const [selectedOptions, setSelectedOptions] = useState<
-    MultiValue<BasicOptionType<string> | OptionType>
-  >([]);
+
+  const [selectedOptions, setSelectedOptions] =
+    useState<MultiValue<BasicOptionType<string> | OptionType>>(options);
   const [formState, setFormState] = useState({
     methods: 1,
     name: data.name,
     logo: data.logo,
     tokens: data.tokens,
-    walletAddress: '',
+    walletAddress: data.walletAddress,
     apiKeyValue: data.apiKey,
     isSubscribed: data.isSubscribed,
     minimumCancellableStreamDuration: data.minimumCancellableStreamDuration,
@@ -56,17 +57,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
   // TODO fix methods
   // const checkBoxColors = useCheckboxColors(formState.isStreamChecked, formState.isVestingChecked);
 
-  const [updateUser, { isLoading, isError, isSuccess, error }] = useUpdateUserMutation();
-
-  const payload = {
-    name: formState.name,
-    logo: formState.logo,
-    tokens: formState.tokens.map((x) => x._id),
-    methods: formState.methods,
-    isSubscribed: formState.isSubscribed,
-    walletAddress: formState.walletAddress,
-    minimumCancellableStreamDuration: formState.minimumCancellableStreamDuration,
-  };
+  const [updateUser, { isError }] = useUpdateUserMutation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -80,14 +71,12 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
   };
 
   const handleSelectChange = (value: MultiValue<BasicOptionType<string>>) => {
-    // setFormState((prevState) => ({
-    //   ...prevState,
-    //   tokens: value as BasicOptionType<string>[],
-    // }));
+    setFormState((prevState) => ({
+      ...prevState,
+      tokens: value.map((x) => x.id),
+    }));
 
-    // updateUser({ tokens: value as BasicOptionType<string>[] });
-
-    console.log(value);
+    updateUser({ tokens: value.map((x) => x.id) });
   };
 
   const handleProfileChange = (storeName: string, storeLogo: string | ArrayBuffer | null) => {
@@ -125,6 +114,13 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
     }, 1000);
   };
 
+  if (isError) {
+    return (
+      <div className="h-full w-full flex justify-center items-center">
+        <p className="text-error text-lg">Updating account settings failed!</p>
+      </div>
+    );
+  }
   return (
     <div className="space-y-3">
       <CItemField
@@ -230,7 +226,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
               hideCharacter
               eyeIconPosition="left"
               value={formState.apiKeyValue}
-              placeholder="your api key"
+              placeholder="Your api key"
               className="!cursor-pointer"
             />
           </div>

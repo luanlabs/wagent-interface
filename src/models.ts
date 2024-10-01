@@ -31,6 +31,7 @@ export interface TooltipProps {
 export interface BasicOptionType<T> {
   value: T;
   label: string;
+  id?: string;
 }
 
 export interface OptionType extends BasicOptionType<string> {

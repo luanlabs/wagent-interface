@@ -7,15 +7,13 @@ import ValueContainer from './ValueContainer';
 import DropdownIndicator from './DropdownIndicator';
 import customStyles from './CSelectSearchableCustomStyles';
 
-import { BasicOptionType, OptionType } from '@/models';
+import { BasicOptionType } from '@/models';
 
 type CSelectSearchableProps = {
   placeholder?: string;
   options: BasicOptionType<string>[];
-  selectedOptions: MultiValue<BasicOptionType<string> | OptionType>;
-  setSelectedOptions: React.Dispatch<
-    React.SetStateAction<MultiValue<BasicOptionType<string> | OptionType>>
-  >;
+  selectedOptions: MultiValue<BasicOptionType<string>>;
+  setSelectedOptions: (options: MultiValue<BasicOptionType<string>>) => void;
   onChange?: (value: MultiValue<BasicOptionType<string>>) => void;
 };
 
@@ -37,7 +35,12 @@ const CSelectSearchable = ({
   };
 
   const handleRemove = (optionToRemove: BasicOptionType<string>) => {
-    setSelectedOptions(selectedOptions.filter((option) => option.value !== optionToRemove.value));
+    const updatedOptions = selectedOptions.filter(
+      (option) => option.value !== optionToRemove.value,
+    );
+    setSelectedOptions(updatedOptions);
+
+    if (onChange) onChange(updatedOptions);
   };
 
   return (
@@ -62,7 +65,7 @@ const CSelectSearchable = ({
         {selectedOptions.map((option) => (
           <CTokenLabel
             key={option.value}
-            symbol={option.value}
+            symbol={option.label}
             onRemove={() => handleRemove(option)}
             rounded
           />

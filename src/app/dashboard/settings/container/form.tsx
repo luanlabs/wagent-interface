@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Cookies from 'js-cookie';
 import { MultiValue } from 'react-select';
 import { useRouter } from 'next/navigation';
@@ -10,11 +10,11 @@ import { Pages } from '@/constants/pages';
 import CButton from '@/components/CButton';
 import CMethods from '@/components/CMethods';
 import CCheckbox from '@/components/CCheckbox';
-import CInputCopyPaste from '@/components/CInputCopyPaste';
 import CItemField from '@/components/CItemField';
 import EditProfile from '@/containers/EditProfile';
 import CNumberInput from '@/components/CNumberInput';
-// import useCheckboxColors from '@/hooks/useCheckboxColors';
+import useCheckboxColors from '@/hooks/useCheckboxColors';
+import CInputCopyPaste from '@/components/CInputCopyPaste';
 import CRadioButtonGroup from '@/components/CRadioButtonGroup';
 import CSelectSearchable from '@/components/CSelectSearchable';
 
@@ -51,19 +51,21 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
   );
 
   const [formState, setFormState] = useState({
-    methods: 1,
     name: data.name,
     logo: data.logo,
     tokens: data.tokens,
-    walletAddress: data.walletAddress,
+    methods: data.methods,
     apiKeyValue: data.apiKey,
     isSubscribed: data.isSubscribed,
+    walletAddress: data.walletAddress,
+    isSingleChecked: true,
+    isStreamChecked: data.methods === 3 ? true : false,
+    isVestingChecked: false,
     minimumCancellableStreamDuration: data.minimumCancellableStreamDuration,
   });
 
   const router = useRouter();
-  // TODO fix methods
-  // const checkBoxColors = useCheckboxColors(formState.isStreamChecked, formState.isVestingChecked);
+  const checkBoxColors = useCheckboxColors(formState.isStreamChecked, formState.isVestingChecked);
 
   const [updateUser, { isError }] = useUpdateUserMutation();
 
@@ -73,9 +75,10 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
     setFormState((prevState) => ({
       ...prevState,
       [name]: value.trim(),
+      minimumCancellableStreamDuration: Number(value),
     }));
 
-    updateUser({ [name]: value.trim() });
+    updateUser({ [name]: value.trim(), minimumCancellableStreamDuration: Number(value) });
   };
 
   const handleSelectChange = (value: MultiValue<BasicOptionType<string>>) => {
@@ -101,6 +104,22 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
     });
   };
 
+  const handleStreamCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      isStreamChecked: e.target.checked,
+    }));
+    if (e.target.checked === true) {
+      updateUser({
+        methods: 3,
+      });
+    } else {
+      updateUser({
+        methods: 1,
+      });
+    }
+  };
+
   const handleRadioChange = (option: BasicOptionType<string>) => {
     setFormState((prevState) => ({
       ...prevState,
@@ -116,12 +135,10 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
     setIsEditProfileOpen(false);
   };
 
-  const handleSignOut = () => {
+  const handleSignOut = useCallback(() => {
     Cookies.remove('token');
-    setTimeout(() => {
-      router.push(Pages.SIGNIN);
-    }, 1000);
-  };
+    router.push(Pages.SIGNIN);
+  }, [router]);
 
   if (isError) {
     return (
@@ -132,51 +149,49 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
   }
   return (
     <div className="space-y-3">
-      <CItemField title="Acceptable payment methods" description="Choose which method to accept.">
-        <div className="inline-flex gap-[12px] w-full mobile:flex-col mobile:space-y-2">
-          <CCheckbox
-            type="secondary"
-            value="single"
-            label={<CMethods suffix="Method" method="single" />}
-            checked
-            disabled
-          />
-          <CCheckbox
-            type="secondary"
-            name="isStreamChecked"
-            value="stream"
-            label={
-              <CMethods
-                suffix="Method"
-                method="stream"
-                // fill={checkBoxColors.streamIconColor}
-                // className={checkBoxColors.streamTextColor}
-              />
-            }
-            disabled
-            checked={false}
-            onChange={handleChange}
-          />
-          <CCheckbox
-            type="secondary"
-            name="isVestingChecked"
-            value="vesting"
-            label={
-              <CMethods
-                suffix="Method"
-                method="vesting"
-                // fill={checkBoxColors.vestingIconColor}
-                // className={checkBoxColors.vestingTextColor}
-              />
-            }
-            disabled
-            checked={false}
-            onChange={handleChange}
-          />
-        </div>
-      </CItemField>
-
       <form className="space-y-3">
+        <CItemField title="Acceptable payment methods" description="Choose which method to accept.">
+          <div className="inline-flex gap-[12px] w-full mobile:flex-col mobile:space-y-2">
+            <CCheckbox
+              type="secondary"
+              value="single"
+              label={<CMethods suffix="Method" method="single" />}
+              checked={formState.isSingleChecked}
+              onChange={handleChange}
+            />
+            <CCheckbox
+              type="secondary"
+              name="isStreamChecked"
+              value="stream"
+              label={
+                <CMethods
+                  suffix="Method"
+                  method="stream"
+                  fill={checkBoxColors.streamIconColor}
+                  className={checkBoxColors.streamTextColor}
+                />
+              }
+              checked={formState.isStreamChecked}
+              onChange={handleStreamCheck}
+            />
+            <CCheckbox
+              type="secondary"
+              name="isVestingChecked"
+              value="vesting"
+              label={
+                <CMethods
+                  suffix="Method"
+                  method="vesting"
+                  fill={checkBoxColors.vestingIconColor}
+                  className={checkBoxColors.vestingTextColor}
+                />
+              }
+              checked={formState.isVestingChecked}
+              onChange={handleChange}
+            />
+          </div>
+        </CItemField>
+
         <CItemField
           title="Enter your stellar wallet"
           description="Your wallet address for receiving payments. Ensure it's valid."
@@ -199,7 +214,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
         >
           <div className="w-[100px]">
             <CNumberInput
-              name="minimumDuration"
+              name="minimumCancellableStreamDuration"
               defaultValue={formState.minimumCancellableStreamDuration.toString()}
               placeholder="10"
               onChange={handleChange}

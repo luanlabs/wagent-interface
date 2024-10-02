@@ -11,7 +11,7 @@ type CCheckboxProps = {
   name?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   label: string | React.JSX.Element;
-  value: string;
+  value: string | number;
   disabled?: boolean;
   type?: CCheckboxType;
   className?: string;

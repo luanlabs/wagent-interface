@@ -1,13 +1,22 @@
 'use client';
 
-import useFcmToken from '@/hooks/useFcmToken';
-import sendClientFcmToken from '@/services/sendClientFcmToken';
 import { useEffect } from 'react';
+
+import CError from '@/components/CError';
 import Aside from 'src/containers/Aside';
 import Header from 'src/containers/Header';
+import CLoading from '@/components/CLoading';
+import useFcmToken from '@/hooks/useFcmToken';
+import { useGetTransactionsQuery, useGetUserQuery } from '@/services/userApi';
+import sendClientFcmToken from '@/services/sendClientFcmToken';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const { token } = useFcmToken();
+
+  const { isLoading: userLoading, error: userError } = useGetUserQuery(undefined, {
+    pollingInterval: 3000,
+  });
+  const { isLoading: txLoading, error: txError } = useGetTransactionsQuery();
 
   useEffect(() => {
     if (token) {
@@ -16,6 +25,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       });
     }
   }, [token]);
+
+  if (userError || txError) {
+    return <CError error={userError ? userError : txError} />;
+  }
+
+  if (userLoading || txLoading) {
+    return <CLoading />;
+  }
 
   return (
     <div className="xl:px-8 xxl:px-8 px-4 mobile:p-0 pt-[9px] desktop:pb-5 bigScreen:pb-0 w-full h-screen m-auto">

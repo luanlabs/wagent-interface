@@ -1,14 +1,14 @@
 'use client';
 
 import React from 'react';
+
 import HistoryItem from './HistoryItem';
+import { UserDataProps } from '@/models';
 import FilterHistory from './FilterHistory';
-import { HistoryListHeader } from './ListHeader';
 import CPageCard from '@/components/CPageCard';
-import { ITransaction } from '@/constants/types';
+import { HistoryListHeader } from './ListHeader';
 import { useAppSelector } from '@/hooks/useRedux';
 import filterTransactions from '@/utils/filterHistoryByValues';
-import { useGetTransactionsQuery } from '@/services/userApi';
 
 const HistoryPageHeader = () => (
   <div className="flex justify-between items-center w-full -my-1">
@@ -17,23 +17,22 @@ const HistoryPageHeader = () => (
   </div>
 );
 
-const HistoryContainer = () => {
-  const { data: transactionsData, isLoading } = useGetTransactionsQuery(undefined, {
-    pollingInterval: 3000,
-  });
-  const filterValues = useAppSelector((state) => state.transactions.filterValues);
-
-  const filteredTransactions = transactionsData?.result
-    ? filterTransactions(transactionsData.result as ITransaction[], filterValues)
-    : [];
-
-  return (
-    <CPageCard title={<HistoryPageHeader />} className="h-full relative overflow-hidden">
+/*
+ *
       {isLoading ? (
         <p className="text-cadetBlue flex h-full justify-center items-center text-lg">
           Loading transaction history...
         </p>
-      ) : filteredTransactions.length === 0 ? (
+ */
+
+const HistoryContainer = ({ txs }: UserDataProps) => {
+  const filterValues = useAppSelector((state) => state.transactions.filterValues);
+
+  const filteredTransactions = filterTransactions(txs, filterValues);
+
+  return (
+    <CPageCard title={<HistoryPageHeader />} className="h-full relative overflow-hidden">
+      {filteredTransactions.length === 0 ? (
         <p className="text-cadetBlue flex h-full justify-center items-center text-lg">
           No transactions found
         </p>

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useState } from 'react';
+import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { MultiValue } from 'react-select';
 import { useRouter } from 'next/navigation';
@@ -20,7 +21,11 @@ import CSelectSearchable from '@/components/CSelectSearchable';
 
 import { BasicOptionType } from '@/models';
 import { ISettingData, ITokenServerType } from '@/constants/types';
-import { useGetTokensQuery, useUpdateUserMutation } from '@/services/userApi';
+import {
+  useGetTokensQuery,
+  useUpdateApiKeyMutation,
+  useUpdateUserMutation,
+} from '@/services/userApi';
 
 const switchOptions = [
   { value: 'off', label: 'OFF' },
@@ -68,17 +73,26 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
   const checkBoxColors = useCheckboxColors(formState.isStreamChecked, formState.isVestingChecked);
 
   const [updateUser, { isError }] = useUpdateUserMutation();
+  const [updateApiKey] = useUpdateApiKeyMutation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
+    const parsedValue =
+      name === 'minimumCancellableStreamDuration'
+        ? value.trim() === ''
+          ? 0
+          : Number(value)
+        : value.trim();
+
     setFormState((prevState) => ({
       ...prevState,
-      [name]: value.trim(),
-      minimumCancellableStreamDuration: Number(value),
+      [name]: parsedValue,
     }));
 
-    updateUser({ [name]: value.trim(), minimumCancellableStreamDuration: Number(value) });
+    console.log(name, value, typeof parsedValue);
+
+    updateUser({ [name]: parsedValue });
   };
 
   const handleSelectChange = (value: MultiValue<BasicOptionType<string>>) => {
@@ -139,6 +153,22 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
     Cookies.remove('token');
     router.push(Pages.SIGNIN);
   }, [router]);
+
+  const handleRegenerate = () => {
+    updateApiKey()
+      .unwrap()
+      .then((res) => {
+        const newApiKey = res.data?.result;
+        if (newApiKey) {
+          setFormState((prevState) => ({
+            ...prevState,
+            apiKeyValue: newApiKey,
+          }));
+        } else {
+          console.error('API key regeneration failed: No key returned in the response');
+        }
+      });
+  };
 
   if (isError) {
     return (
@@ -215,7 +245,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
           <div className="w-[100px]">
             <CNumberInput
               name="minimumCancellableStreamDuration"
-              defaultValue={formState.minimumCancellableStreamDuration.toString()}
+              defaultValue={formState.minimumCancellableStreamDuration}
               placeholder="10"
               onChange={handleChange}
             />
@@ -237,9 +267,20 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
 
         <CItemField
           title="API Key"
-          description="Connect Wagent to your shop. Keep it secure, and regenerate only if needed."
+          description={
+            <p className="desktop:whitespace-nowrap">
+              Connect Wagent to your shop. Keep it secure, and{' '}
+              <span
+                onClick={handleRegenerate}
+                className="text-emeraldGreen font-medium hover:text-emerald-800 cursor-pointer transition-colors duration-300"
+              >
+                regenerate
+              </span>{' '}
+              only if needed.
+            </p>
+          }
         >
-          <div className="w-[356px]">
+          <div className="w-[400px]">
             <CInputCopyPaste
               mode="copy"
               type="apiKey"

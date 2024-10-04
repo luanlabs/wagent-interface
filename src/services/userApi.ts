@@ -39,6 +39,13 @@ export const userApi = createApi({
       }),
     }),
 
+    updateApiKey: builder.mutation<IApiRes<string>, void>({
+      query: () => ({
+        url: `/users/api-key`,
+        method: 'PUT',
+      }),
+    }),
+
     updateUser: builder.mutation<IApiRes<ISettingData>, IUpdateUserPayload>({
       query: (payload) => ({
         url: `/users`,
@@ -52,6 +59,7 @@ export const userApi = createApi({
 export const {
   useGetUserQuery,
   useUpdateUserMutation,
+  useUpdateApiKeyMutation,
   useGetTransactionsQuery,
   useGetTokensQuery,
 } = userApi;

@@ -1,7 +1,7 @@
 'use client';
 
 import CLoading from '@/components/CLoading';
-import { ISettingData, ITransaction } from '@/constants/types';
+import { IApiRes, ISettingData, ITransaction } from '@/constants/types';
 import { useAppSelector } from '@/hooks/useRedux';
 import { UserDataProps } from '@/models';
 import React from 'react';
@@ -13,8 +13,8 @@ const UserDataProvider = (props: { child: React.ComponentType<UserDataProps> }) 
   const isTxsPending = !txs || txs.status === 'pending';
   const isUserPending = !user || user.status === 'pending';
 
-  const userData = user?.data as any;
-  const txsData = txs?.data as any;
+  const userData = user?.data as IApiRes<ISettingData>;
+  const txsData = txs?.data as IApiRes<ITransaction[]>;
 
   const isTxsHasValue = txsData?.result;
   const isUserHasValue = userData?.result;

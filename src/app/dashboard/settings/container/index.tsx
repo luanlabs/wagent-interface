@@ -2,25 +2,14 @@
 
 import React, { useState } from 'react';
 
+import { UserDataProps } from '@/models';
 import CButton from '@/components/CButton';
-
 import CPageCard from '@/components/CPageCard';
-
-import { ISettingData } from '@/constants/types';
-import { useGetUserQuery } from '@/services/userApi';
 
 import SettingsForm from './form';
 
-const SettingsContainer = () => {
-  const { data, isLoading, error } = useGetUserQuery(undefined, {
-    pollingInterval: 3000,
-  });
+const SettingsContainer = ({ user }: UserDataProps) => {
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
-
-  if (error) {
-    // @ts-ignore
-    throw error.data.message;
-  }
 
   const pageTitle = (
     <div className="flex justify-between items-center w-full -my-1">
@@ -36,17 +25,11 @@ const SettingsContainer = () => {
 
   return (
     <CPageCard title={pageTitle}>
-      {!isLoading ? (
-        <SettingsForm
-          data={data?.result as ISettingData}
-          setIsEditProfileOpen={setIsEditProfileOpen}
-          isEditProfileOpen={isEditProfileOpen}
-        />
-      ) : (
-        <div className="h-full w-full flex justify-center items-center">
-          <p className="text-cadetBlue text-lg">Loading settings...</p>
-        </div>
-      )}
+      <SettingsForm
+        data={user}
+        setIsEditProfileOpen={setIsEditProfileOpen}
+        isEditProfileOpen={isEditProfileOpen}
+      />
     </CPageCard>
   );
 };

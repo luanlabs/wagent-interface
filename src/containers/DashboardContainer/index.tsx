@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import CCard from '@/components/CCard';
 import CPageCard from '@/components/CPageCard';
 import CBarChart from '@/components/Charts/CBarChart';
-
 import ChartTimeStamps from '@/containers/ChartTimeStamps';
 import HistoryItem from '@/containers/HistoryContainer/HistoryItem';
 import RevenueChart from '@/containers/DashboardContainer/RevenueChart';
@@ -13,15 +12,10 @@ import DonutChartContainer from '@/containers/DashboardContainer/DonutChart';
 import { HistoryListHeader } from '@/containers/HistoryContainer/ListHeader';
 import generateChartData from '@/containers/ChartTimeStamps/generateChartData';
 
-import { BasicOptionType, CBarChartType } from '@/models';
-import { useGetTransactionsQuery } from '@/services/userApi';
-import { ITransaction } from '@/constants/types';
+import { BasicOptionType, CBarChartType, UserDataProps } from '@/models';
 
-const DashboardContainer = () => {
+const DashboardContainer = ({ txs }: UserDataProps) => {
   const [CBarChartData, setCBarChartData] = useState<CBarChartType[]>(generateChartData('1d'));
-  const { data, isLoading } = useGetTransactionsQuery();
-
-  const transactions = (data?.result as ITransaction[]) || [];
 
   const handleChartTimeStampsChange = (e: BasicOptionType<string>) => {
     setCBarChartData(generateChartData(e.value));
@@ -63,16 +57,12 @@ const DashboardContainer = () => {
         <HistoryListHeader />
 
         <div className="space-y-2 pb-3 mobile:space-y-1.5 w-full">
-          {isLoading ? (
-            <p className="text-cadetBlue mt-4 bigScreen:mt-24 text-center text-lg">
-              Loading transaction history...
-            </p>
-          ) : transactions.length === 0 ? (
+          {txs.length === 0 ? (
             <p className="text-cadetBlue mt-4 bigScreen:mt-24 text-center text-lg">
               No transactions found
             </p>
           ) : (
-            transactions
+            txs
               .slice(0, 4)
               .map((transaction) => <HistoryItem key={transaction._id} data={transaction} />)
           )}

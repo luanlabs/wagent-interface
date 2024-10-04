@@ -1,4 +1,5 @@
 import { MultiValue } from 'react-select';
+import { ISettingData, ITransaction } from './constants/types';
 
 export type ErrorType = {
   title: string;
@@ -39,3 +40,8 @@ export interface OptionType extends BasicOptionType<string> {
 }
 
 export type MultiSelectType = MultiValue<OptionType> | null;
+
+export type UserDataProps = {
+  user: ISettingData;
+  txs: ITransaction[];
+};

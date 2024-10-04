@@ -7,8 +7,8 @@ import Aside from 'src/containers/Aside';
 import Header from 'src/containers/Header';
 import CLoading from '@/components/CLoading';
 import useFcmToken from '@/hooks/useFcmToken';
-import { useGetTransactionsQuery, useGetUserQuery } from '@/services/userApi';
 import sendClientFcmToken from '@/services/sendClientFcmToken';
+import { useGetTransactionsQuery, useGetUserQuery } from '@/services/userApi';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const { token } = useFcmToken();
@@ -37,8 +37,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <div className="xl:px-8 xxl:px-8 px-4 mobile:p-0 pt-[9px] desktop:pb-5 bigScreen:pb-0 w-full h-screen m-auto">
       <Header />
+
       <section className="desktop:inline-flex basis-full gap-3 w-full desktop:h-[90%] mobile:h-full mobile:!overflow-auto">
         <Aside />
+
         <article className="basis-full h-full mobile:h-[calc(100vh-128px)] mobile:my-16">
           <div className="h-full">{children}</div>
         </article>

@@ -7,8 +7,8 @@ import { UserDataProps } from '@/models';
 import React from 'react';
 
 const UserDataProvider = (props: { child: React.ComponentType<UserDataProps> }) => {
-  let user = useAppSelector((state) => state.userApi.queries['getUser(undefined)']);
-  let txs = useAppSelector((state) => state.userApi.queries['getTransactions(undefined)']);
+  const user = useAppSelector((state) => state.userApi.queries['getUser(undefined)']);
+  const txs = useAppSelector((state) => state.userApi.queries['getTransactions(undefined)']);
 
   const isTxsPending = !txs || txs.status === 'pending';
   const isUserPending = !user || user.status === 'pending';

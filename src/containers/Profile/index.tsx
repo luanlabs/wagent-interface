@@ -1,24 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
-import Image from 'next/image';
 import cn from 'classnames';
+import Image from 'next/image';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
-import { useAppSelector } from '@/hooks/useRedux';
-import signout from 'public/images/signout.svg';
 import { Pages } from '@/constants/pages';
+import signout from 'public/images/signout.svg';
+import { ISettingData } from '@/constants/types';
+import { useAppSelector } from '@/hooks/useRedux';
 
 interface ProfileProp {
   isMinimizedAside?: boolean;
 }
 
 const Profile = ({ isMinimizedAside }: ProfileProp) => {
+  const router = useRouter();
+
   const [isHidden, setIsHidden] = useState(true);
   const [showSignOut, setShowSignOut] = useState(false);
 
-  const profile = useAppSelector((state) => state.profile);
-
-  const router = useRouter();
+  const getUser = useAppSelector((state) => state.userApi.queries['getUser(undefined)']);
+  const userData: any = getUser?.data;
+  const user = userData.result as ISettingData;
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -55,7 +58,7 @@ const Profile = ({ isMinimizedAside }: ProfileProp) => {
             })}
           >
             <Image
-              src={profile.storeLogo}
+              src={user.logo}
               priority
               width={isMinimizedAside ? 30 : 44}
               height={isMinimizedAside ? 30 : 44}
@@ -73,7 +76,7 @@ const Profile = ({ isMinimizedAside }: ProfileProp) => {
               hidden: isHidden,
             })}
           >
-            {profile.storeName}
+            {user.name}
           </div>
         </div>
 

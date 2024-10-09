@@ -2,7 +2,7 @@ import CCard from '../CCard';
 
 type CItemFieldProps = {
   title: string;
-  description: string | JSX.Element;
+  description?: string | JSX.Element;
   children: React.ReactNode;
 };
 

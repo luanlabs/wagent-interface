@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useCallback, useState } from 'react';
-import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { MultiValue } from 'react-select';
 import { useRouter } from 'next/navigation';
@@ -11,11 +10,11 @@ import { Pages } from '@/constants/pages';
 import CButton from '@/components/CButton';
 import CMethods from '@/components/CMethods';
 import CCheckbox from '@/components/CCheckbox';
+import CInputCopy from '@/components/CInputCopy';
 import CItemField from '@/components/CItemField';
 import EditProfile from '@/containers/EditProfile';
 import CNumberInput from '@/components/CNumberInput';
 import useCheckboxColors from '@/hooks/useCheckboxColors';
-import CInputCopyPaste from '@/components/CInputCopyPaste';
 import CRadioButtonGroup from '@/components/CRadioButtonGroup';
 import CSelectSearchable from '@/components/CSelectSearchable';
 
@@ -59,13 +58,13 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
     name: data.name,
     logo: data.logo,
     tokens: data.tokens,
+    isSingleChecked: true,
+    address: data.address,
     methods: data.methods,
+    isVestingChecked: false,
     apiKeyValue: data.apiKey,
     isSubscribed: data.isSubscribed,
-    walletAddress: data.walletAddress,
-    isSingleChecked: true,
     isStreamChecked: data.methods === 3 ? true : false,
-    isVestingChecked: false,
     minimumCancellableStreamDuration: data.minimumCancellableStreamDuration,
   });
 
@@ -77,6 +76,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    console.log(name);
 
     const parsedValue =
       name === 'minimumCancellableStreamDuration'
@@ -89,8 +89,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
       ...prevState,
       [name]: parsedValue,
     }));
-
-    console.log(name, value, typeof parsedValue);
+    console.log(name, parsedValue);
 
     updateUser({ [name]: parsedValue });
   };
@@ -122,8 +121,10 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
     setFormState((prevState) => ({
       ...prevState,
       isStreamChecked: e.target.checked,
+      methods: e.target.checked ? 3 : 1,
     }));
-    if (e.target.checked === true) {
+
+    if (e.target.checked) {
       updateUser({
         methods: 3,
       });
@@ -158,7 +159,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
     updateApiKey()
       .unwrap()
       .then((res) => {
-        const newApiKey = res.data?.result;
+        const newApiKey = res.result;
         if (newApiKey) {
           setFormState((prevState) => ({
             ...prevState,
@@ -188,6 +189,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
               label={<CMethods suffix="Method" method="single" />}
               checked={formState.isSingleChecked}
               onChange={handleChange}
+              disabled
             />
             <CCheckbox
               type="secondary"
@@ -221,23 +223,19 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
             />
           </div>
         </CItemField>
-
         <CItemField
           title="Enter your stellar wallet"
           description="Your wallet address for receiving payments. Ensure it's valid."
         >
-          <div className="w-[356px]">
-            <CInputCopyPaste
-              mode="paste"
-              type="text"
-              name="walletAddress"
-              value={formState.walletAddress}
+          <div className="w-[400px] short:w-[320px]">
+            <CInputCopy
+              name="address"
+              value={formState.address}
               placeholder="Enter Wallet Address"
               onChange={handleChange}
             />
           </div>
         </CItemField>
-
         <CItemField
           title="Minimum cancellable duration"
           description="Set the minimum time before a stream payment can be cancelled."
@@ -251,7 +249,6 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
             />
           </div>
         </CItemField>
-
         <CItemField
           title="Email Notifications"
           description="Get notified about transactions and account updates via email."
@@ -264,7 +261,6 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
             />
           </div>
         </CItemField>
-
         <CItemField
           title="API Key"
           description={
@@ -280,10 +276,8 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
             </p>
           }
         >
-          <div className="w-[400px]">
-            <CInputCopyPaste
-              mode="copy"
-              type="apiKey"
+          <div className="w-[400px] short:w-[320px]">
+            <CInputCopy
               name="apiKeyValue"
               hideCharacter
               eyeIconPosition="left"
@@ -293,9 +287,8 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
             />
           </div>
         </CItemField>
-
         <CItemField title="Acceptable Tokens" description="Choose which tokens to accept.">
-          <div className="w-[356px]">
+          <div className="w-[400px] short:w-[320px]">
             <CSelectSearchable
               options={options}
               onChange={handleSelectChange}
@@ -306,19 +299,18 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
         </CItemField>
       </form>
 
-      <CCard className="flex w-full justify-between items-center p-6 !mb-2">
-        <div>
-          <p className="text-lg">Sign out of Wagent</p>
-        </div>
-        <div className="w-1/5 mobile:w-[120px]">
-          <CButton
-            onClick={handleSignOut}
-            variant="simple"
-            text="Sign out"
-            className="w-full bg-lightestRed border border-lightRed text-error"
-          />
-        </div>
-      </CCard>
+      <div className="pb-2">
+        <CItemField title="Sign out of wagent">
+          <div className="w-[300px] mobile:w-[200px]">
+            <CButton
+              onClick={handleSignOut}
+              variant="simple"
+              text="Sign out"
+              className="w-full bg-lightestRed border border-lightRed text-error"
+            />
+          </div>
+        </CItemField>
+      </div>
 
       <EditProfile
         isOpen={isEditProfileOpen}

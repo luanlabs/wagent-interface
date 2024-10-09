@@ -163,7 +163,7 @@ export type IApiData = {
 
 export type IApiRes<T> = {
   message: object | string;
-  result?: object | string | T;
+  result?: T;
   error?: {
     message: string;
     extras?: any;
@@ -189,7 +189,7 @@ export interface ISettingData {
   isVerified: boolean;
   methods: number;
   isSubscribed: boolean;
-  walletAddress: string;
+  address: string;
   minimumCancellableStreamDuration: number;
 }
 

@@ -1,4 +1,4 @@
-import productImage from 'public/images/p.jpg';
+import productImage from 'public/images/shop.svg';
 import hoodie from 'public/images/hoodie.png';
 
 import { IProductItemCard, TokensType } from './types';

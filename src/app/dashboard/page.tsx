@@ -1,5 +1,6 @@
-import type { Metadata } from 'next';
+import { Metadata } from 'next';
 
+import UserDataProvider from '@/containers/UserDataProvider';
 import DashboardContainer from '@/containers/DashboardContainer';
 
 export const metadata: Metadata = {
@@ -7,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Dashboard() {
-  return <DashboardContainer />;
+  return <UserDataProvider child={DashboardContainer} />;
 }

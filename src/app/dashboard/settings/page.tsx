@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 
-import SettingsContainer from '@/containers/SettingsContainer';
+import React from 'react';
+import SettingsContainer from './container';
+import UserDataProvider from '@/containers/UserDataProvider';
 
 export const metadata: Metadata = {
   title: 'Wagent - Settings',
 };
 
 export default function Settings() {
-  return <SettingsContainer />;
+  return <UserDataProvider child={SettingsContainer} />;
 }

@@ -27,6 +27,7 @@ const initialState: ITransactionsReducer = {
   history: [],
   loading: true,
 };
+
 export interface IChangeCheckbox {
   key: 'stream' | 'single' | 'vesting' | 'completed' | 'expired' | 'pending';
   value: boolean;
@@ -36,10 +37,6 @@ export const transactions = createSlice({
   name: 'transactions',
   initialState,
   reducers: {
-    loadHistory: (state, action: PayloadAction<ITransaction[]>) => {
-      state.history = action.payload;
-      state.loading = false;
-    },
     setCheckBox: (state, action: PayloadAction<IChangeCheckbox>) => {
       state.filterValues[action.payload.key] = action.payload.value;
     },
@@ -55,6 +52,6 @@ export const transactions = createSlice({
   },
 });
 
-export const { loadHistory, setCheckBox, setTokenCheckBox } = transactions.actions;
+export const { setCheckBox, setTokenCheckBox } = transactions.actions;
 
 export default transactions.reducer;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Select, { MultiValue, ActionMeta, SingleValue } from 'react-select';
 
 import SelectOption from './Option';
@@ -7,34 +7,40 @@ import ValueContainer from './ValueContainer';
 import DropdownIndicator from './DropdownIndicator';
 import customStyles from './CSelectSearchableCustomStyles';
 
-import { BasicOptionType, OptionType } from '@/models';
+import { BasicOptionType } from '@/models';
 
 type CSelectSearchableProps = {
   placeholder?: string;
   options: BasicOptionType<string>[];
+  selectedOptions: MultiValue<BasicOptionType<string>>;
+  setSelectedOptions: (options: MultiValue<BasicOptionType<string>>) => void;
   onChange?: (value: MultiValue<BasicOptionType<string>>) => void;
 };
 
 const CSelectSearchable = ({
   onChange,
-  placeholder = 'Search ...',
+  placeholder = 'Search...',
   options,
+  selectedOptions,
+  setSelectedOptions,
 }: CSelectSearchableProps) => {
-  const [selectedOptions, setSelectedOptions] = useState<
-    MultiValue<BasicOptionType<string> | OptionType>
-  >([]);
-
   const handleChange = (
     newValue: MultiValue<BasicOptionType<string>> | SingleValue<BasicOptionType<string>>,
     _actionMeta: ActionMeta<BasicOptionType<string>>,
   ) => {
-    setSelectedOptions(newValue as MultiValue<BasicOptionType<string>>);
+    const selectedValue = newValue as MultiValue<BasicOptionType<string>>;
+    setSelectedOptions(selectedValue);
 
-    if (onChange) onChange(selectedOptions);
+    if (onChange) onChange(selectedValue);
   };
 
   const handleRemove = (optionToRemove: BasicOptionType<string>) => {
-    setSelectedOptions(selectedOptions.filter((option) => option.value !== optionToRemove.value));
+    const updatedOptions = selectedOptions.filter(
+      (option) => option.value !== optionToRemove.value,
+    );
+    setSelectedOptions(updatedOptions);
+
+    if (onChange) onChange(updatedOptions);
   };
 
   return (
@@ -59,7 +65,7 @@ const CSelectSearchable = ({
         {selectedOptions.map((option) => (
           <CTokenLabel
             key={option.value}
-            symbol={option.value}
+            symbol={option.label}
             onRemove={() => handleRemove(option)}
             rounded
           />

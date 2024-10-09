@@ -2,18 +2,18 @@ import CCard from '../CCard';
 
 type CItemFieldProps = {
   title: string;
-  description: string;
-  component: React.ReactNode;
+  description?: string | JSX.Element;
+  children: React.ReactNode;
 };
 
-const CItemField = ({ title, description, component }: CItemFieldProps) => {
+const CItemField = ({ title, description, children }: CItemFieldProps) => {
   return (
     <CCard className="flex justify-between p-6 mobile:flex-col mobile:space-y-4">
-      <div className="flex flex-col">
+      <div className="flex flex-col justify-center">
         <p className="text-lg">{title}</p>
         <p className="text-cadetBlue text-sm">{description}</p>
       </div>
-      <div className="inline-flex gap-2">{component}</div>
+      <div className="inline-flex gap-2">{children}</div>
     </CCard>
   );
 };

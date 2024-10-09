@@ -8,9 +8,10 @@ export type CCheckboxType = 'primary' | 'secondary';
 
 type CCheckboxProps = {
   checked: boolean;
+  name?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   label: string | React.JSX.Element;
-  value: string;
+  value: string | number;
   disabled?: boolean;
   type?: CCheckboxType;
   className?: string;
@@ -25,6 +26,7 @@ const CCheckbox = ({
   onChange,
   label,
   value,
+  name,
   disabled = false,
   type = 'primary',
   className,
@@ -36,7 +38,7 @@ const CCheckbox = ({
         meta={meta}
         {...input}
         className="hidden"
-        name={value}
+        name={name}
         value={value}
         checked={checked}
         onChange={onChange}

@@ -30,6 +30,7 @@ interface CInputProps {
   eyeIconPosition?: 'left' | 'right';
   type?: React.HTMLInputTypeAttribute;
   onClick?: MouseEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   clearInputClick?: MouseEventHandler<HTMLImageElement>;
   onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>;
@@ -46,6 +47,7 @@ const CInput = ({
   error,
   value,
   border,
+  onBlur,
   onClick,
   disabled,
   onChange,
@@ -110,6 +112,7 @@ const CInput = ({
           meta={meta}
           name={name}
           value={value}
+          onBlur={onBlur}
           onClick={onClick}
           autoComplete={autoComplete}
           disabled={disabled}

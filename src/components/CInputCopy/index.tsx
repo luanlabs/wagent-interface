@@ -13,12 +13,14 @@ interface CInputCopy {
   placeholder: string;
   hideCharacter?: boolean;
   eyeIconPosition?: 'left' | 'right';
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const CInputCopy = ({
   name,
   value,
+  onBlur,
   onChange,
   className,
   placeholder,
@@ -46,6 +48,7 @@ const CInputCopy = ({
         hideCharacter={hideCharacter}
         eyeIconPosition={eyeIconPosition}
         onChange={handleCInputCopyChange}
+        onBlur={onBlur}
         inputClassName={cn(className, '!border-gray')}
       />
       <div

@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 import { Pages } from '@/constants/pages';
+import { IUserInfo } from '@/constants/types';
 import signout from 'public/images/signout.svg';
-import { ISettingData } from '@/constants/types';
 import { useAppSelector } from '@/hooks/useRedux';
 
 interface ProfileProp {
@@ -21,7 +21,7 @@ const Profile = ({ isMinimizedAside }: ProfileProp) => {
 
   const getUser = useAppSelector((state) => state.userApi.queries['getUser(undefined)']);
   const userData: any = getUser?.data;
-  const user = userData.result as ISettingData;
+  const user = userData.result as IUserInfo;
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;

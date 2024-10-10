@@ -7,13 +7,13 @@ import { setProfile, clearProfile } from '@/reducers/profile';
 import CButton from '@/components/CButton';
 import CModal from '@/components/CModal';
 import CInput from '@/components/CInput';
-import { ISettingData } from '@/constants/types';
+import { IUserInfo } from '@/constants/types';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 
 interface EditProfileProps {
   isOpen: boolean;
   onClose: () => void;
-  data: ISettingData;
+  data: IUserInfo;
   onProfileChange: (storeName: string, storeLogo: string | ArrayBuffer | null) => void;
 }
 

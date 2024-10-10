@@ -4,8 +4,8 @@ import React, { useCallback, useState } from 'react';
 import Cookies from 'js-cookie';
 import { MultiValue } from 'react-select';
 import { useRouter } from 'next/navigation';
+import { StrKey } from '@stellar/stellar-sdk';
 
-import CCard from '@/components/CCard';
 import { Pages } from '@/constants/pages';
 import CButton from '@/components/CButton';
 import CMethods from '@/components/CMethods';
@@ -17,9 +17,8 @@ import CNumberInput from '@/components/CNumberInput';
 import useCheckboxColors from '@/hooks/useCheckboxColors';
 import CRadioButtonGroup from '@/components/CRadioButtonGroup';
 import CSelectSearchable from '@/components/CSelectSearchable';
-
 import { BasicOptionType } from '@/models';
-import { ISettingData, ITokenServerType } from '@/constants/types';
+import { IUserInfo, ITokenServerType } from '@/constants/types';
 import {
   useGetTokensQuery,
   useUpdateApiKeyMutation,
@@ -32,7 +31,7 @@ const switchOptions = [
 ];
 
 type SettingsProps = {
-  data: ISettingData;
+  data: IUserInfo;
   isEditProfileOpen: boolean;
   setIsEditProfileOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -43,7 +42,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
   const options: BasicOptionType<string>[] = Array.isArray(tokenData?.result)
     ? tokenData.result.map((item: ITokenServerType) => ({
         value: item._id,
-        label: item.symbol,
+        label: item.symbol.toUpperCase(),
       }))
     : [];
 
@@ -68,15 +67,19 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
     minimumCancellableStreamDuration: data.minimumCancellableStreamDuration,
   });
 
+  const [addressError, setAddressError] = useState<string | null>(null);
+
   const router = useRouter();
   const checkBoxColors = useCheckboxColors(formState.isStreamChecked, formState.isVestingChecked);
 
   const [updateUser, { isError }] = useUpdateUserMutation();
   const [updateApiKey] = useUpdateApiKeyMutation();
 
+  const validateAddress = (address: string): boolean => {
+    return StrKey.isValidEd25519PublicKey(address);
+  };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    console.log(name);
 
     const parsedValue =
       name === 'minimumCancellableStreamDuration'
@@ -89,9 +92,16 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
       ...prevState,
       [name]: parsedValue,
     }));
-    console.log(name, parsedValue);
+  };
 
-    updateUser({ [name]: parsedValue });
+  const handleBlur = () => {
+    const { address } = formState;
+    if (!validateAddress(address)) {
+      setAddressError('This address is not valid.');
+    } else {
+      setAddressError(null);
+      updateUser({ address });
+    }
   };
 
   const handleSelectChange = (value: MultiValue<BasicOptionType<string>>) => {
@@ -215,14 +225,16 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
                   suffix="Method"
                   method="vesting"
                   fill={checkBoxColors.vestingIconColor}
-                  className={checkBoxColors.vestingTextColor}
+                  className={`${formState.isVestingChecked && '!text-[#101828]'}`}
                 />
               }
+              disabled
               checked={formState.isVestingChecked}
               onChange={handleChange}
             />
           </div>
         </CItemField>
+
         <CItemField
           title="Enter your stellar wallet"
           description="Your wallet address for receiving payments. Ensure it's valid."
@@ -233,9 +245,12 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
               value={formState.address}
               placeholder="Enter Wallet Address"
               onChange={handleChange}
+              onBlur={handleBlur}
             />
+            {addressError && <p className="!text-[12px] text-error mt-1">{addressError}</p>}
           </div>
         </CItemField>
+
         <CItemField
           title="Minimum cancellable duration"
           description="Set the minimum time before a stream payment can be cancelled."
@@ -249,6 +264,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
             />
           </div>
         </CItemField>
+
         <CItemField
           title="Email Notifications"
           description="Get notified about transactions and account updates via email."
@@ -261,6 +277,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
             />
           </div>
         </CItemField>
+
         <CItemField
           title="API Key"
           description={
@@ -287,6 +304,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
             />
           </div>
         </CItemField>
+
         <CItemField title="Acceptable Tokens" description="Choose which tokens to accept.">
           <div className="w-[400px] short:w-[320px]">
             <CSelectSearchable

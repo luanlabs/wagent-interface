@@ -174,12 +174,13 @@ export type IUpdateUserPayload = {
   name?: string;
   logo?: string;
   methods?: number;
-  isSubscribed?: boolean;
   tokens?: string[];
+  address?: string;
+  isSubscribed?: boolean;
   minimumCancellableStreamDuration?: number;
 };
 
-export interface ISettingData {
+export interface IUserInfo {
   name: string;
   logo: string;
   email: string;

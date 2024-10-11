@@ -94,13 +94,19 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
     }));
   };
 
-  const handleBlur = () => {
-    const { address } = formState;
-    if (!validateAddress(address)) {
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newAddress = e.target.value;
+
+    setFormState((prevState) => ({
+      ...prevState,
+      address: newAddress,
+    }));
+
+    if (!validateAddress(newAddress)) {
       setAddressError('This address is not valid.');
     } else {
       setAddressError(null);
-      updateUser({ address });
+      updateUser({ address: newAddress });
     }
   };
 
@@ -244,8 +250,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
               name="address"
               value={formState.address}
               placeholder="Enter Wallet Address"
-              onChange={handleChange}
-              onBlur={handleBlur}
+              onChange={handleAddressChange}
             />
             {addressError && <p className="!text-[12px] text-error mt-1">{addressError}</p>}
           </div>

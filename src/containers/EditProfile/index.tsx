@@ -7,6 +7,7 @@ import { setProfile, clearProfile } from '@/reducers/profile';
 import CButton from '@/components/CButton';
 import CModal from '@/components/CModal';
 import CInput from '@/components/CInput';
+import shop from 'public/images/shop.svg';
 import { IUserInfo } from '@/constants/types';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 
@@ -14,7 +15,7 @@ interface EditProfileProps {
   isOpen: boolean;
   onClose: () => void;
   data: IUserInfo;
-  onProfileChange: (storeName: string, storeLogo: string | ArrayBuffer | null) => void;
+  onProfileChange: (storeName: string, storeLogo?: string | ArrayBuffer | null) => void;
 }
 
 const EditProfile = ({ isOpen, onClose, data, onProfileChange }: EditProfileProps) => {
@@ -22,20 +23,24 @@ const EditProfile = ({ isOpen, onClose, data, onProfileChange }: EditProfileProp
   const [storeName, setStoreName] = useState(data.name);
   const [storeLogo, setStoreLogo] = useState(data.logo);
   const [newLogo, setNewLogo] = useState<string | ArrayBuffer | null>(null);
-  const selectProfile = useAppSelector((state) => state.profile);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    dispatch(setProfile({ storeName, storeLogo }));
+    if (storeLogo) {
+      dispatch(setProfile({ storeName, storeLogo }));
+    }
+    dispatch(setProfile({ storeName }));
   }, [data, dispatch, storeLogo, storeName]);
 
   const handleProfileChange = () => {
     const updatedLogo = newLogo || storeLogo;
     setStoreLogo(updatedLogo as string);
     dispatch(setProfile({ storeName, storeLogo: updatedLogo }));
-
-    onProfileChange(storeName, updatedLogo);
+    if (updatedLogo) {
+      onProfileChange(storeName, updatedLogo);
+    }
+    onProfileChange(storeName);
     onClose();
   };
 
@@ -79,7 +84,7 @@ const EditProfile = ({ isOpen, onClose, data, onProfileChange }: EditProfileProp
           <div className="flex w-full items-center">
             <div className="h-[50px] w-[50px] mr-4">
               <Image
-                src={typeof newLogo === 'string' ? newLogo : storeLogo}
+                src={typeof newLogo === 'string' ? newLogo : storeLogo || shop}
                 priority
                 quality={100}
                 width={50}

@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
+import shop from 'public/images/shop.svg';
 import { Pages } from '@/constants/pages';
 import { IUserInfo } from '@/constants/types';
 import signout from 'public/images/signout.svg';
@@ -54,11 +55,11 @@ const Profile = ({ isMinimizedAside }: ProfileProp) => {
         >
           <div
             className={cn('mr-4 transition-all', {
-              'mr-0': isMinimizedAside,
+              'mr-0 short:!mr-0': isMinimizedAside,
             })}
           >
             <Image
-              src={user.logo}
+              src={user.logo || shop}
               priority
               width={isMinimizedAside ? 30 : 44}
               height={isMinimizedAside ? 30 : 44}

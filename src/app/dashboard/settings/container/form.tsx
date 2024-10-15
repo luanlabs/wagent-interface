@@ -4,20 +4,20 @@ import React, { useCallback, useState } from 'react';
 import Cookies from 'js-cookie';
 import { MultiValue } from 'react-select';
 import { useRouter } from 'next/navigation';
-import { StrKey } from '@stellar/stellar-sdk';
 
 import { Pages } from '@/constants/pages';
 import CButton from '@/components/CButton';
+import { BasicOptionType } from '@/models';
 import CMethods from '@/components/CMethods';
 import CCheckbox from '@/components/CCheckbox';
 import CInputCopy from '@/components/CInputCopy';
 import CItemField from '@/components/CItemField';
 import EditProfile from '@/containers/EditProfile';
 import CNumberInput from '@/components/CNumberInput';
+import { validateAddress } from '@/utils/validators';
 import useCheckboxColors from '@/hooks/useCheckboxColors';
 import CRadioButtonGroup from '@/components/CRadioButtonGroup';
 import CSelectSearchable from '@/components/CSelectSearchable';
-import { BasicOptionType } from '@/models';
 import { IUserInfo, ITokenServerType } from '@/constants/types';
 import {
   useGetTokensQuery,
@@ -75,9 +75,6 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
   const [updateUser, { isError }] = useUpdateUserMutation();
   const [updateApiKey] = useUpdateApiKeyMutation();
 
-  const validateAddress = (address: string): boolean => {
-    return StrKey.isValidEd25519PublicKey(address);
-  };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
@@ -102,7 +99,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
       address: newAddress,
     }));
 
-    if (!validateAddress(newAddress)) {
+    if (validateAddress(newAddress)) {
       setAddressError('This address is not valid.');
     } else {
       setAddressError(null);
@@ -120,16 +117,20 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
     });
   };
 
-  const handleProfileChange = (storeName: string, storeLogo: string | ArrayBuffer | null) => {
+  const handleProfileChange = (storeName: string, storeLogo?: string | ArrayBuffer | null) => {
     setFormState((prevState) => ({
       ...prevState,
       name: storeName,
       logo: typeof storeLogo === 'string' ? storeLogo : '',
     }));
-
+    if (storeLogo) {
+      updateUser({
+        name: storeName,
+        logo: typeof storeLogo === 'string' ? storeLogo : '',
+      });
+    }
     updateUser({
       name: storeName,
-      logo: typeof storeLogo === 'string' ? storeLogo : '',
     });
   };
 

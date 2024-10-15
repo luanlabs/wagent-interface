@@ -21,8 +21,9 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
   const onSubmit = async (credentials: AuthCredentials): Promise<void> => {
     try {
       const { response } = await authRequest('auth', {
-        email: credentials.email,
         name: credentials.name,
+        email: credentials.email,
+        address: credentials.address,
         password: credentials.password,
       });
 

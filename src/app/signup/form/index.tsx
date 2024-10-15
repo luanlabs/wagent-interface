@@ -8,8 +8,7 @@ import { Pages } from '@/constants/pages';
 import CInput from '@/components/CInput';
 import CButton from '@/components/CButton';
 import { composeValidators } from '@/utils/composeValidators';
-import { AuthCredentials } from '@/constants/types';
-import { required, minLength, validateEmail } from '@/utils/validators';
+import { required, minLength, validateEmail, validateAddress } from '@/utils/validators';
 
 import submitHandler from './submitHandler';
 
@@ -29,24 +28,6 @@ const SignUpForm = () => {
     routes.push(Pages.SIGNIN);
   };
 
-  const validateForm = (values: AuthCredentials) => {
-    const errors: Partial<AuthCredentials> = {};
-
-    const { password, confirmPassword } = values;
-
-    if (!password || !confirmPassword) {
-      if (!password) {
-        errors.password = 'Password is required';
-      }
-      if (!confirmPassword) {
-        errors.confirmPassword = 'Confirm password is required';
-      }
-    } else if (confirmPassword.trim() !== password.trim()) {
-      errors.confirmPassword = 'Passwords do not match';
-    }
-
-    return errors;
-  };
   return (
     <>
       <div className="relative flex-col h-full justify-between">
@@ -55,7 +36,6 @@ const SignUpForm = () => {
             <p className="text-2xl font-medium text-darkGreen select-none">Sign Up</p>
           </div>
           <Form
-            validate={validateForm}
             onSubmit={onSubmit}
             keepDirtyOnReinitialize
             render={({ handleSubmit, submitError, submitting, pristine, invalid }) => (
@@ -95,6 +75,22 @@ const SignUpForm = () => {
                   />
 
                   <Field
+                    name="address"
+                    validate={composeValidators(required, minLength(8), validateAddress)}
+                    render={({ input, meta }) => (
+                      <CInput
+                        {...input}
+                        border
+                        type="text"
+                        placeholder="Stellar wallet address"
+                        meta={meta}
+                        error={meta.touched && meta.error}
+                        errorMsg={meta.error}
+                      />
+                    )}
+                  />
+
+                  <Field
                     name="password"
                     validate={composeValidators(required, minLength(8))}
                     render={({ input, meta }) => (
@@ -106,24 +102,6 @@ const SignUpForm = () => {
                         meta={meta}
                         hideCharacter
                         eyeIconPosition="right"
-                        error={meta.touched && meta.error}
-                        errorMsg={meta.error}
-                      />
-                    )}
-                  />
-
-                  <Field
-                    name="confirmPassword"
-                    validate={composeValidators(required, minLength(8))}
-                    render={({ input, meta }) => (
-                      <CInput
-                        {...input}
-                        border
-                        hideCharacter
-                        eyeIconPosition="right"
-                        type="password"
-                        placeholder="Confirm Password"
-                        meta={meta}
                         error={meta.touched && meta.error}
                         errorMsg={meta.error}
                       />

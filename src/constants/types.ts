@@ -140,7 +140,7 @@ export type AuthCredentials = {
   name?: string;
   email: string;
   password: string;
-  confirmPassword?: string;
+  address: string;
   remember?: boolean;
 };
 
@@ -182,7 +182,7 @@ export type IUpdateUserPayload = {
 
 export interface IUserInfo {
   name: string;
-  logo: string;
+  logo?: string;
   email: string;
   apiKey: string;
   tokens: ITokenServerType[];

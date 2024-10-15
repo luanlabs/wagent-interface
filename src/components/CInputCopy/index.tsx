@@ -40,7 +40,7 @@ const CInputCopy = ({
   };
 
   return (
-    <div className="relative">
+    <div className="relative flex items-center">
       <CInput
         name={name}
         value={value}
@@ -49,11 +49,11 @@ const CInputCopy = ({
         eyeIconPosition={eyeIconPosition}
         onChange={handleCInputCopyChange}
         onBlur={onBlur}
-        inputClassName={cn(className, '!border-gray')}
+        inputClassName={cn(className, '!border-gray border-r-0 rounded-e-none')}
       />
       <div
         className="bg-white flex justify-center items-center select-none space-x-2 px-3 border border-gray rounded-r-lg hover:bg-[#eee]/90 active:bg-[#eee]/70 
-      text-smokyBlue h-10 text-[16px] absolute bottom-0 right-0 cursor-pointer transition"
+      text-smokyBlue h-10 text-[16px] cursor-pointer transition"
         onClick={handleCInputCopyClick}
       >
         <Copy />

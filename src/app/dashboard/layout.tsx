@@ -1,30 +1,30 @@
 'use client';
 
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 import CError from '@/components/CError';
 import Aside from 'src/containers/Aside';
 import Header from 'src/containers/Header';
 import CLoading from '@/components/CLoading';
-import useFcmToken from '@/hooks/useFcmToken';
-import sendClientFcmToken from '@/services/sendClientFcmToken';
+// import useFcmToken from '@/hooks/useFcmToken';
+// import sendClientFcmToken from '@/services/sendClientFcmToken';
 import { useGetTransactionsQuery, useGetUserQuery } from '@/services/userApi';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const { token } = useFcmToken();
+  // const { token } = useFcmToken();
 
   const { isLoading: userLoading, error: userError } = useGetUserQuery(undefined, {
     pollingInterval: 3000,
   });
   const { isLoading: txLoading, error: txError } = useGetTransactionsQuery();
 
-  useEffect(() => {
-    if (token) {
-      sendClientFcmToken({
-        token: token,
-      });
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   if (token) {
+  //     sendClientFcmToken({
+  //       token: token,
+  //     });
+  //   }
+  // }, [token]);
 
   if (userError || txError) {
     return <CError error={userError ? userError : txError} />;
@@ -35,10 +35,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   }
 
   return (
-    <div className="xl:px-8 xxl:px-8 px-4 mobile:p-0 pt-[9px] desktop:pb-5 bigScreen:pb-0 w-full h-screen m-auto">
+    <div className="xl:px-8 xxl:px-8 px-4 short:px-3 mobile:p-0 pt-[9px] desktop:pb-5 bigScreen:pb-0 w-full h-screen m-auto">
       <Header />
 
-      <section className="desktop:inline-flex basis-full gap-3 w-full desktop:h-[90%] mobile:h-full mobile:!overflow-auto">
+      <section className="desktop:inline-flex basis-full gap-3 w-full desktop:h-[90%] short:h-[89%] mobile:h-full mobile:!overflow-auto">
         <Aside />
 
         <article className="basis-full h-full mobile:h-[calc(100vh-128px)] mobile:my-16">

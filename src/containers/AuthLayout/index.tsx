@@ -17,7 +17,7 @@ const AuthLayout = ({ children, imageSrc }: AuthLayoutProps) => {
           <div className="flex justify-start items-start">
             <Typography />
           </div>
-          <div className="flex h-full w-full justify-center mobile:items-start mobile:!mt-12 short:items-center short:mt-0 desktop:mt-[25%] bigScreen:mt-[36%]">
+          <div className="flex h-full w-full justify-center mobile:items-start mobile:!mt-12 short:!items-center short:justify-center desktop:mt-[25%] bigScreen:mt-[36%]">
             <div className="flex flex-col h-full w-full">{children}</div>
           </div>
         </div>

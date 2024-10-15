@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface ProfileState {
-  storeLogo: string | ArrayBuffer;
+  storeLogo?: string | ArrayBuffer;
   storeName: string;
 }
 

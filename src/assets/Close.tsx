@@ -8,7 +8,7 @@ const Icon = ({ fill = '#667085' }: SvgProps) => {
         stroke={fill}
         strokeWidth="1.5"
         strokeLinecap="round"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
       <path
         d="M8 8L1 1"

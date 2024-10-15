@@ -15,7 +15,7 @@ type ErrorProps = {
 export default function Error({ error }: ErrorProps) {
   const router = useRouter();
 
-  if (error === ErrorMsg.INVALID_TOKEN) {
+  if (error?.data?.message === ErrorMsg.INVALID_TOKEN) {
     Cookies.remove('token');
   }
 

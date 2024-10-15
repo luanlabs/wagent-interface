@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface ProfileState {
-  storeLogo: string;
+  storeLogo: string | ArrayBuffer;
   storeName: string;
 }
 
 const initialState: ProfileState = {
-  storeLogo: '/images/p.jpg',
-  storeName: 'Amanda Shop',
+  storeLogo: '/images/shop.svg',
+  storeName: 'Your Shop',
 };
 
 const profileSlice = createSlice({

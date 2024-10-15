@@ -14,6 +14,7 @@ export enum ErrorMsg {
   TOO_MANY_REQUESTS = 'You can only request a token verification every 5 minutes.',
   USER_NOT_FOUND = 'Invalid email or password. Please try again or reset your password.',
   EMAIL_NOT_VERIFIED = 'Email not verified. Please check your inbox or verify your email.',
+  INVALID_TOKEN = 'Authorization token is invalid or expired',
 }
 
 export enum HttpStatusCode {
@@ -128,7 +129,6 @@ export interface IFilterValues {
   stream: boolean;
   single: boolean;
   vesting: boolean;
-  active?: boolean;
   expired: boolean;
   pending: boolean;
   completed: boolean;
@@ -152,14 +152,47 @@ export interface IUserAuth {
   token: string;
 }
 
-export type IApiData<T = null> = {
+export type IApiData = {
   message: object | string;
-  result?: object | string | T;
+  result?: object | string;
   error?: {
     message: string;
     extras?: any;
   };
 };
+
+export type IApiRes<T> = {
+  message: object | string;
+  result?: T;
+  error?: {
+    message: string;
+    extras?: any;
+  };
+};
+
+export type IUpdateUserPayload = {
+  name?: string;
+  logo?: string;
+  methods?: number;
+  tokens?: string[];
+  address?: string;
+  isSubscribed?: boolean;
+  minimumCancellableStreamDuration?: number;
+};
+
+export interface IUserInfo {
+  name: string;
+  logo: string;
+  email: string;
+  apiKey: string;
+  tokens: ITokenServerType[];
+  isAdmin: boolean;
+  isVerified: boolean;
+  methods: number;
+  isSubscribed: boolean;
+  address: string;
+  minimumCancellableStreamDuration: number;
+}
 
 export interface CustomResponse {
   status: 'success' | 'error' | '';

@@ -1,45 +1,72 @@
-import { useState } from 'react';
+'use client';
+
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { useSelector, useDispatch } from 'react-redux';
 
 import { setProfile, clearProfile } from '@/reducers/profile';
 import CButton from '@/components/CButton';
 import CModal from '@/components/CModal';
 import CInput from '@/components/CInput';
+import { IUserInfo } from '@/constants/types';
+import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 
 interface EditProfileProps {
   isOpen: boolean;
   onClose: () => void;
+  data: IUserInfo;
+  onProfileChange: (storeName: string, storeLogo: string | ArrayBuffer | null) => void;
 }
 
-const EditProfile = ({ isOpen, onClose }: EditProfileProps) => {
-  const profile = useSelector((state) => state.profile);
-  const dispatch = useDispatch();
-  const [storeName, setStoreName] = useState(profile.storeName);
-  const [storeLogo, setStoreLogo] = useState(profile.storeLogo);
+const EditProfile = ({ isOpen, onClose, data, onProfileChange }: EditProfileProps) => {
+  const dispatch = useAppDispatch();
+  const [storeName, setStoreName] = useState(data.name);
+  const [storeLogo, setStoreLogo] = useState(data.logo);
   const [newLogo, setNewLogo] = useState<string | ArrayBuffer | null>(null);
+  const selectProfile = useAppSelector((state) => state.profile);
 
-  const handleChange = () => {
-    const logoToUpdate = newLogo || storeLogo;
-    dispatch(setProfile({ storeName, storeLogo: logoToUpdate }));
-    setStoreLogo(logoToUpdate as string);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    dispatch(setProfile({ storeName, storeLogo }));
+  }, [data, dispatch, storeLogo, storeName]);
+
+  const handleProfileChange = () => {
+    const updatedLogo = newLogo || storeLogo;
+    setStoreLogo(updatedLogo as string);
+    dispatch(setProfile({ storeName, storeLogo: updatedLogo }));
+
+    onProfileChange(storeName, updatedLogo);
     onClose();
   };
 
-  const handleRemove = () => {
+  const handleLogoRemove = () => {
     dispatch(clearProfile());
+    const defaultLogo = '/images/default.jpg';
     setStoreName('');
-    setStoreLogo('/images/default.jpg');
+    setStoreLogo(defaultLogo);
     setNewLogo(null);
+
+    onProfileChange('', defaultLogo);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
+
+      if (!file.type.startsWith('image/')) {
+        console.error('Invalid file type. Please upload an image.');
+        return;
+      }
+
       const reader = new FileReader();
+
       reader.onloadend = () => {
-        setNewLogo(reader.result);
+        setNewLogo(reader.result as string);
       };
+      reader.onerror = () => {
+        console.error('Error reading file');
+      };
+
       reader.readAsDataURL(file);
     }
   };
@@ -52,9 +79,11 @@ const EditProfile = ({ isOpen, onClose }: EditProfileProps) => {
           <div className="flex w-full items-center">
             <div className="h-[50px] w-[50px] mr-4">
               <Image
-                src={newLogo ? newLogo : storeLogo}
-                width={0}
-                height={0}
+                src={typeof newLogo === 'string' ? newLogo : storeLogo}
+                priority
+                quality={100}
+                width={50}
+                height={50}
                 alt="Store Logo"
                 className="rounded-full w-full h-full object-cover"
               />
@@ -62,23 +91,23 @@ const EditProfile = ({ isOpen, onClose }: EditProfileProps) => {
 
             <div className="flex space-x-2">
               <input
+                ref={fileInputRef}
                 type="file"
                 accept="image/*"
                 className="hidden"
-                id="fileInput"
                 onChange={handleFileChange}
               />
               <CButton
                 variant="outline"
                 text="Change"
                 className="!w-[103px]"
-                onClick={() => document.getElementById('fileInput')?.click()}
+                onClick={() => fileInputRef.current?.click()}
               />
               <CButton
                 variant="outline"
                 text="Remove"
                 className="!w-[103px]"
-                onClick={handleRemove}
+                onClick={handleLogoRemove}
               />
             </div>
           </div>
@@ -87,14 +116,14 @@ const EditProfile = ({ isOpen, onClose }: EditProfileProps) => {
         <div className="mb-4">
           <p className="text-sm select-none font-normal text-offBlack mb-[6px]">Shop name</p>
           <CInput
-            placeholder="Amanda shop"
+            placeholder="Your shop's name"
             value={storeName}
             onChange={(e) => setStoreName(e.target.value)}
             border
           />
         </div>
 
-        <CButton variant="add" text="Change" onClick={handleChange} />
+        <CButton variant="add" text="Change" onClick={handleProfileChange} />
       </div>
     </CModal>
   );

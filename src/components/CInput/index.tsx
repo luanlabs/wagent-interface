@@ -12,9 +12,9 @@ interface CInputProps {
   input?: any;
   value?: any;
   icon?: string;
+  name?: string;
   label?: string;
   error?: boolean;
-  paste?: boolean;
   border?: boolean;
   errorMsg?: string;
   disabled?: boolean;
@@ -30,7 +30,7 @@ interface CInputProps {
   eyeIconPosition?: 'left' | 'right';
   type?: React.HTMLInputTypeAttribute;
   onClick?: MouseEventHandler<HTMLInputElement>;
-  handlePaste?: MouseEventHandler<HTMLDivElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   clearInputClick?: MouseEventHandler<HTMLImageElement>;
   onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>;
@@ -38,15 +38,16 @@ interface CInputProps {
 }
 
 const CInput = ({
+  name,
   meta,
   icon,
   type,
   input,
   label,
-  paste,
   error,
   value,
   border,
+  onBlur,
   onClick,
   disabled,
   onChange,
@@ -57,7 +58,6 @@ const CInput = ({
   onKeyPress,
   clearInput,
   placeholder,
-  handlePaste,
   enterKeyHint,
   hideCharacter,
   iconClassName,
@@ -80,14 +80,6 @@ const CInput = ({
         {icon && (
           <div className={cn(iconClassName, `absolute bottom-4 left-3`)}>
             <Image src={icon} width={22} height={22} alt="inputIcon" />
-          </div>
-        )}
-        {paste && (
-          <div
-            className="bg-white text-darkGreen text-sm px-[14px] py-[6px] rounded-lg absolute bottom-3 right-3.5 cursor-pointer transition hover:bg-[#E6E6EC]"
-            onClick={handlePaste}
-          >
-            <span>Paste</span>
           </div>
         )}
 
@@ -118,7 +110,9 @@ const CInput = ({
           {...input}
           type={hideCharacter ? (showPassword ? 'text' : 'password') : type}
           meta={meta}
+          name={name}
           value={value}
+          onBlur={onBlur}
           onClick={onClick}
           autoComplete={autoComplete}
           disabled={disabled}

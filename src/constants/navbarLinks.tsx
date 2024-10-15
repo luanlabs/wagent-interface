@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Home, Basket, Calender, Settings } from '@/assets';
+import { Home, Calender, Settings } from '@/assets';
 
 import { Pages } from './pages';
 import { CNavLinkProps as Type } from './types';
@@ -18,12 +18,12 @@ export const navLinks: Type[] = [
     activeIcon: <Calender />,
     url: Pages.HISTORY,
   },
-  {
-    title: 'Products',
-    icon: <Basket fill="#E4F9F1" />,
-    activeIcon: <Basket />,
-    url: Pages.PRODUCTS,
-  },
+  // {
+  //   title: 'Products',
+  //   icon: <Basket fill="#E4F9F1" />,
+  //   activeIcon: <Basket />,
+  //   url: Pages.PRODUCTS,
+  // },
   {
     title: 'Settings',
     icon: <Settings fill="#E4F9F1" />,

@@ -1,4 +1,5 @@
 import { MultiValue } from 'react-select';
+import { IUserInfo, ITransaction } from './constants/types';
 
 export type ErrorType = {
   title: string;
@@ -31,6 +32,7 @@ export interface TooltipProps {
 export interface BasicOptionType<T> {
   value: T;
   label: string;
+  id?: string;
 }
 
 export interface OptionType extends BasicOptionType<string> {
@@ -38,3 +40,8 @@ export interface OptionType extends BasicOptionType<string> {
 }
 
 export type MultiSelectType = MultiValue<OptionType> | null;
+
+export type UserDataProps = {
+  user: IUserInfo;
+  txs: ITransaction[];
+};

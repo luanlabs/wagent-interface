@@ -9,7 +9,7 @@ const SelectOption: React.ComponentType<
 > = (props) => (
   <components.Option {...props}>
     <Image
-      src={require(`/public/images/tokens/${props.data.value.toLowerCase()}.svg`)}
+      src={require(`/public/images/tokens/${props.data.label.toLowerCase()}.svg`)}
       width={20}
       height={20}
       alt={props.data.label}

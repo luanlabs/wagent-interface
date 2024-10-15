@@ -75,7 +75,7 @@ const CInput = ({
 
   return (
     <div className={className}>
-      <p className="text-sm select-none font-normal mb-[6px] text-offBlack">{label}</p>
+      {label && <p className="text-sm select-none font-normal mb-[6px] text-offBlack">{label}</p>}
       <div className="relative w-full">
         {icon && (
           <div className={cn(iconClassName, `absolute bottom-4 left-3`)}>

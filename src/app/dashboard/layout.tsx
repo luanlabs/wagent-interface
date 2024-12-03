@@ -1,30 +1,35 @@
 'use client';
 
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import CError from '@/components/CError';
 import Aside from 'src/containers/Aside';
 import Header from 'src/containers/Header';
 import CLoading from '@/components/CLoading';
-// import useFcmToken from '@/hooks/useFcmToken';
-// import sendClientFcmToken from '@/services/sendClientFcmToken';
-import { useGetTransactionsQuery, useGetUserQuery } from '@/services/userApi';
+import useFcmToken from '@/hooks/useFcmToken';
+import {
+  useGetTransactionsQuery,
+  useGetUserQuery,
+  useSendFcmTokenMutation,
+} from '@/services/userApi';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  // const { token } = useFcmToken();
+  const [sendFcmToken, { isLoading, isError, error }] = useSendFcmTokenMutation();
+  const { token } = useFcmToken();
 
   const { isLoading: userLoading, error: userError } = useGetUserQuery(undefined, {
     pollingInterval: 3000,
   });
   const { isLoading: txLoading, error: txError } = useGetTransactionsQuery();
 
-  // useEffect(() => {
-  //   if (token) {
-  //     sendClientFcmToken({
-  //       token: token,
-  //     });
-  //   }
-  // }, [token]);
+  useEffect(() => {
+    try {
+      const response = sendFcmToken(token).unwrap();
+      console.log('FCM Token sent:', response);
+    } catch (err) {
+      console.error('Error sending FCM token:', err);
+    }
+  }, [sendFcmToken, token]);
 
   if (userError || txError) {
     return <CError error={userError ? userError : txError} />;

@@ -6,6 +6,7 @@ import {
   ITokenServerType,
   ITransaction,
   IUpdateUserPayload,
+  IApiData,
 } from '@/constants/types';
 
 export const userApi = createApi({
@@ -39,6 +40,14 @@ export const userApi = createApi({
       }),
     }),
 
+    sendFcmToken: builder.mutation<IApiRes<IApiData>, string>({
+      query: (token) => ({
+        url: `/users/notification`,
+        method: 'POST',
+        body: { token },
+      }),
+    }),
+
     updateApiKey: builder.mutation<IApiRes<string>, void>({
       query: () => ({
         url: `/users/api-key`,
@@ -62,4 +71,5 @@ export const {
   useUpdateApiKeyMutation,
   useGetTransactionsQuery,
   useGetTokensQuery,
+  useSendFcmTokenMutation,
 } = userApi;

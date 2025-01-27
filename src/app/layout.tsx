@@ -3,8 +3,7 @@
 import { Suspense } from 'react';
 import { Provider } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
-
-import myFont from 'src/utils/localFont';
+import { Inter } from 'next/font/google';
 
 import Metadata from '@/constants/metadata';
 
@@ -13,10 +12,12 @@ import { store } from 'src/store';
 
 import Loading from './loading';
 
+const inter = Inter({ subsets: ['latin'] });
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
-      <html lang="en" className={myFont.className}>
+      <html lang="en" className={inter.className}>
         <head>
           <meta charSet="UTF-8" />
           <link rel="icon" href="/images/favicon.ico" />

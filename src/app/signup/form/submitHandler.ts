@@ -43,6 +43,10 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
     } catch (error: any) {
       let message = ErrorMsg.REGISTRATION_FAILED;
 
+      if (!error || !error.response) {
+        return;
+      }
+
       switch (error.response.status) {
         case HttpStatusCode.BadRequest:
           message = ErrorMsg.INVALID_CREDENTIALS;

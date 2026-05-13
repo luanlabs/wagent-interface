@@ -52,6 +52,10 @@ const SubmitHandler = (
     let title = 'Login Failed';
     let message = ErrorMsg.AUTH_FAILED;
 
+    if (!data || !data.response) {
+      return;
+    }
+
     switch (data.response.status) {
       case HttpStatusCode.BadRequest:
         title = 'Validation failed';
@@ -88,9 +92,10 @@ const SubmitHandler = (
       setIsOpen(true);
       setTimeout(() => {
         handleCloseModal();
-        if (error.response.status === HttpStatusCode.Unauthorized) {
-          router.push(Pages.VERIFY);
-        }
+
+        // if (error.response.status === HttpStatusCode.Unauthorized) {
+        router.push(Pages.VERIFY);
+        // }
       }, MODAL_CLOSE_DURATION_MS);
 
       handleAuthError(error);

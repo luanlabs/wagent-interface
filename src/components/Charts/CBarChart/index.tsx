@@ -9,7 +9,6 @@ import {
   Rectangle,
   ResponsiveContainer,
   Tooltip,
-  TooltipProps,
   XAxis,
 } from 'recharts';
 
@@ -33,10 +32,13 @@ const CBarChart = ({ data }: CBarChartProp) => {
     [setActiveIndex],
   );
 
-  const renderCustomTooltip = (props: TooltipProps<number, string>) => {
+  // recharts types its custom `content` render props loosely; we read the two
+  // fields we need and narrow to our own CustomTooltip shape.
+  const renderCustomTooltip = (props: { active?: boolean; payload?: unknown }) => {
     const { active, payload } = props;
-    if (active && payload && payload.length) {
-      return <CustomTooltip payload={payload as CustomTooltipProps['payload']} />;
+    const items = payload as CustomTooltipProps['payload'] | undefined;
+    if (active && items && items.length) {
+      return <CustomTooltip payload={items} />;
     }
     return null;
   };
@@ -49,7 +51,7 @@ const CBarChart = ({ data }: CBarChartProp) => {
         <BarChart data={data} className="-mt-3" height={230}>
           <XAxis
             dataKey="name"
-            tick={(props) => CustomAxisTick(props, activeIndex)}
+            tick={(props: any) => CustomAxisTick(props, activeIndex)}
             stroke="#D0D5DD"
             axisLine={false}
             tickLine={false}

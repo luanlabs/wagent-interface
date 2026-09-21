@@ -6,7 +6,7 @@ import { MethodType } from '@/constants/types';
 
 interface getMethodImageProp {
   method: MethodType;
-  fill: string;
+  fill?: string;
 }
 
 export const getMethodImage = ({ method, fill }: getMethodImageProp) => {

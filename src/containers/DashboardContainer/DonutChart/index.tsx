@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import dynamic from 'next/dynamic';
 
 import CCard from '@/components/CCard';
@@ -14,9 +14,9 @@ const CDonutChart = dynamic(() => import('@/components/Charts/CDonutChart'), { s
 const DonutChartContainer = () => {
   const [chartData, setChartData] = useState<DonutChartDataType[]>([]);
 
-  const handleChartData = (data: DonutChartDataType[]) => {
+  const handleChartData = useCallback((data: DonutChartDataType[]) => {
     setChartData(data);
-  };
+  }, []);
 
   return (
     <CCard

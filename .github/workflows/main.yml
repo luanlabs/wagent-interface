@@ -9,7 +9,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Build
         run: |
@@ -22,8 +22,8 @@ jobs:
     steps:
       - name: Execution
         run: |
-          docker-compose down
-          docker-compose up -d
+          docker compose down
+          docker compose up -d
 
   Cleanup:
     name: Cleanup

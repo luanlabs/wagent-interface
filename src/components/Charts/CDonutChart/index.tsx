@@ -19,15 +19,13 @@ const pieData = [
 
 const CDonutChart = ({ chartData }: CDonutChartProps) => {
   useEffect(() => {
-    const updatedChartData = pieData.map((entry, index) => ({
+    const updatedChartData = pieData.map((entry) => ({
       value: entry.value,
       name: entry.name,
     }));
 
-    if (chartData) {
-      chartData(updatedChartData);
-    }
-  }, [pieData]);
+    chartData(updatedChartData);
+  }, [chartData]);
 
   const COLORS = ['#00C17E', '#6938EF', '#D0D5DD', '#026AA2', '#F79009'];
 

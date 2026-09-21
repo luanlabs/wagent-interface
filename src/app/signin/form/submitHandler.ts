@@ -35,10 +35,15 @@ const SubmitHandler = (
       message: 'Your login was successful, now we will redirect you to dashboard.',
     });
 
+    const cookieOptions = {
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax' as const,
+    };
+
     if (isRememberChecked) {
-      Cookies.set('token', token, { expires: 365 });
+      Cookies.set('token', token, { ...cookieOptions, expires: 365 });
     } else {
-      Cookies.set('token', token);
+      Cookies.set('token', token, cookieOptions);
     }
 
     setIsOpen(true);

@@ -1,7 +1,8 @@
 import request from '@/utils/request';
+import { API_URL } from '@/config/env';
 
 const forgetPasswordRequest = async (email: string) => {
-  const { data, response } = await request(`${process.env.NEXT_PUBLIC_API}/users/auth/reset`, {
+  const { data, response } = await request(`${API_URL}/users/auth/reset`, {
     method: 'POST',
     body: email,
   });

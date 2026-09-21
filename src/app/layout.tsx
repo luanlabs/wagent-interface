@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <head>
           <meta charSet="UTF-8" />
           <link rel="icon" href="/images/favicon.ico" />
-          <meta name="manifest" content="/manifest.json" />
+          <link rel="manifest" href="/manifest.json" />
           <Metadata />
         </head>
 

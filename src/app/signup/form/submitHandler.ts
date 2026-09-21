@@ -56,6 +56,7 @@ const SignUpHandler = (setIsOpen: React.Dispatch<React.SetStateAction<boolean>>)
           break;
         case HttpStatusCode.InternalServerError:
           message = ErrorMsg.SERVER_ERROR;
+          break;
         default:
           message = ErrorMsg.REGISTRATION_FAILED;
       }

@@ -12,6 +12,8 @@ import { formatDate } from '@/utils/formatDate';
 import { ITransaction, MethodType } from '@/constants/types';
 import shortenAddress from '@/utils/shortenAddress';
 
+import questionMark from 'public/images/questionMark.svg';
+
 interface IDetailProps {
   data: ITransaction;
   isOpen: boolean;
@@ -33,7 +35,7 @@ const HistoryDetailsModal = ({ isOpen, onClose, data }: IDetailProps) => {
           <div className="inline-flex whitespace-nowrap gap-3 items-center">
             <>
               <Image
-                src={data.order.products[0].logo}
+                src={data.order.products[0].logo || questionMark}
                 alt={data.order.products[0].name}
                 className="rounded-[50px]"
                 width={30}

@@ -1,6 +1,6 @@
 import { useEffect, RefObject } from 'react';
 
-type Ref<T> = RefObject<T>;
+type Ref<T> = RefObject<T | null>;
 
 const useOutsideClickHandler = <T extends HTMLElement>(
   isModalOpen: boolean,

@@ -29,6 +29,9 @@ const CButtonGroup = ({
     ) {
       setSelectedTabs(newSelectedTabs);
     }
+    // `selectedTabs` is intentionally omitted: this effect only syncs incoming
+    // props into local state. Including it would revert the user's own clicks.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultValue, selectedMethod]);
 
   const handleClick = (method: string) => {

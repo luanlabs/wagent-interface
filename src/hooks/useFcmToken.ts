@@ -29,29 +29,27 @@ const useFcmToken = () => {
   const [notificationPermissionStatus, setNotificationPermissionStatus] =
     useState<NotificationPermission>('default');
 
-  const loadToken = async () => {
-    const token = await getNotificationPermissionAndToken();
-
-    if (token === '') {
-      console.error('An error occurred while retrieving token. Retrying...');
-
-      // await loadToken();
-      return '';
-    }
-
-    if (Notification.permission === 'denied') {
-      return '';
-    }
-
-    setToken(token);
-    setNotificationPermissionStatus(Notification.permission);
-  };
-
   useEffect(() => {
-    if ('Notification' in window) {
-      loadToken();
-    }
-  });
+    if (!('Notification' in window)) return;
+
+    const loadToken = async () => {
+      const fcmToken = await getNotificationPermissionAndToken();
+
+      if (fcmToken === '') {
+        console.error('An error occurred while retrieving the FCM token.');
+        return;
+      }
+
+      if (Notification.permission === 'denied') {
+        return;
+      }
+
+      setToken(fcmToken);
+      setNotificationPermissionStatus(Notification.permission);
+    };
+
+    loadToken();
+  }, []);
 
   useEffect(() => {
     const setupListener = async () => {

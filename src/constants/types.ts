@@ -31,8 +31,8 @@ export interface CNavLinkProps {
   url: string;
   title: string;
   isMinimized?: boolean;
-  icon: JSX.Element | React.ReactNode;
-  activeIcon: JSX.Element | React.ReactNode;
+  icon: React.JSX.Element | React.ReactNode;
+  activeIcon: React.JSX.Element | React.ReactNode;
 }
 
 export interface IUser extends Document {

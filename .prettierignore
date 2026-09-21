@@ -1,0 +1,16 @@
+# Build output & dependencies
+.next
+out
+build
+node_modules
+coverage
+
+# Generated PWA service worker
+public/sw.js
+public/sw.js.map
+public/workbox-*.js
+public/workbox-*.js.map
+
+# Lockfiles & generated types
+package-lock.json
+next-env.d.ts

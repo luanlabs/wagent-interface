@@ -10,8 +10,8 @@ const Metadata = () => {
         name="viewport"
         content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
       />
-      <meta name="apple-touch-icon" content="/public/icons/logo128.png" />
-      <meta name="icon" content="/public/icons/logo128.png" />
+      <link rel="apple-touch-icon" href="/icons/icon-128.png" />
+      <link rel="icon" href="/icons/icon-128.png" />
       <meta name="theme-color" content="#ffffff" />
       <meta
         name="description"

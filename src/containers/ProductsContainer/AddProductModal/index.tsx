@@ -153,7 +153,7 @@ const AddProductModal = ({ isOpen, onClose, onAddProduct }: ProductModalProps) =
           options={allTokensList}
           onChange={handleSelectChange}
           value={selectedTokens}
-          isCloseModal={!isOpen}
+          isModalClose={!isOpen}
         />
       </div>
       <CInput

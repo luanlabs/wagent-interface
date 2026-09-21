@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { API_URL } from '@/config/env';
 import {
   IApiRes,
   IUserInfo,
@@ -11,7 +12,7 @@ import {
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_API,
+    baseUrl: API_URL,
     prepareHeaders: (headers) => {
       headers.set('Content-Type', 'application/json');
       const token = Cookies.get('token');

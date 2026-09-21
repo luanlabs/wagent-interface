@@ -20,3 +20,11 @@ export default async function middleware(req: NextRequest) {
   }
   return NextResponse.next();
 }
+
+export const config = {
+  // Run middleware on application routes only, skipping Next internals, static
+  // assets and PWA files so it never adds latency to those requests.
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|icons|images|manifest.json|sw.js|workbox-).*)',
+  ],
+};

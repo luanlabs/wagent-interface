@@ -73,7 +73,13 @@ const EditProductModal = ({ isOpen, onClose, onSaveProduct, product }: EditProdu
   useEffect(() => {
     if (product) {
       setSelectedMethod(product.method);
-      setSelectedTokens(product.tokens);
+      setSelectedTokens(
+        product.tokens.map((token) => ({
+          value: token.value,
+          logo: token.logo,
+          label: token.label ?? token.value,
+        })),
+      );
       setAmount(product.amount);
       setProductName(product.title);
       initialValuesLengthRef.current = product.tokens.length;

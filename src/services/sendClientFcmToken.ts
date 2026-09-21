@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 
 import request from '@/utils/request';
+import { API_URL } from '@/config/env';
 
 type requestProps = {
   token: string;
@@ -9,7 +10,7 @@ type requestProps = {
 const sendClientFcmToken = async ({ token }: requestProps) => {
   const JWT_token = Cookies.get('token');
 
-  await request(`${process.env.NEXT_PUBLIC_API}/users/notification`, {
+  await request(`${API_URL}/users/notification`, {
     headers: {
       Authorization: `Bearer ${JWT_token}`,
     },

@@ -38,7 +38,7 @@ const HistoryItem = ({ data }: HistoryItemProps) => {
           {data.order.products && data.order.products[0] ? (
             <>
               <Image
-                src={data.order.products[0].logo}
+                src={data.order.products[0].logo || questionMark}
                 alt={data.order.products[0].name}
                 className="rounded-[50px]"
                 width={30}

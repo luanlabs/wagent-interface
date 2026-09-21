@@ -74,7 +74,7 @@ const customStyles = (
 
     '@media (max-width: 355px)': {
       width: selectedItemsLength >= 2 || editProductSelectedLength >= 2 ? '70%' : '70%',
-      height: ItemsSelectedLength >= 3 || editProductSelectedLength >= 2 ? '150px' : '42px',
+      height: selectedItemsLength >= 3 || editProductSelectedLength >= 2 ? '150px' : '42px',
     },
   }),
 

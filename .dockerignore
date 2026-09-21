@@ -1,0 +1,39 @@
+# Dependencies & build output (reinstalled/rebuilt inside the image)
+node_modules
+.next
+out
+build
+coverage
+
+# Generated PWA service worker (regenerated during build)
+public/sw.js
+public/sw.js.map
+public/workbox-*.js
+public/workbox-*.js.map
+
+# Version control & CI
+.git
+.gitignore
+.github
+
+# Local env files (never bake secrets into the image; pass build args instead)
+.env
+.env.*
+!.env.example
+
+# Editor / OS cruft
+.vscode
+.idea
+.DS_Store
+*.pem
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker & docs (not needed in the build context)
+Dockerfile
+.dockerignore
+docker-compose.yml
+README.md

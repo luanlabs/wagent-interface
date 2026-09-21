@@ -13,7 +13,11 @@ export interface CTokenLabelProps {
 }
 
 const CTokenLabel = ({ symbol, rounded, onRemove, className }: CTokenLabelProps) => {
-  const style = tokensStyles[symbol.toLowerCase()];
+  const style = tokensStyles[symbol.toLowerCase() as keyof typeof tokensStyles] ?? {
+    bgColor: '#F9FAFB',
+    borderColor: '#E4E7EC',
+    textColor: '#000000',
+  };
 
   return (
     <div

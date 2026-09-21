@@ -20,15 +20,6 @@ export type CBarChartType = {
   amount: number;
 };
 
-export interface TooltipProps {
-  active?: boolean;
-  payload?: {
-    payload: CBarChartType;
-    value: number;
-    dataKey: string;
-  }[];
-}
-
 export interface BasicOptionType<T> {
   value: T;
   label: string;

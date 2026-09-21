@@ -17,10 +17,11 @@ const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
   const link = payload.fcmOptions?.link || payload.data?.link;
+  const notification = payload.notification || {};
 
-  const notificationTitle = payload.notification.title;
+  const notificationTitle = notification.title || 'Wagent';
   const notificationOptions = {
-    body: payload.notification.body,
+    body: notification.body,
     icon: 'https://static.wagent.app/icons/wagent.png',
     data: { url: link },
   };

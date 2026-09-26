@@ -41,6 +41,11 @@ const Profile = ({ isMinimizedAside }: ProfileProp) => {
 
   const handleSignOut = () => {
     Cookies.remove('token');
+    void import('@bluxcc/core')
+      .then(({ blux }) => {
+        blux.logout();
+      })
+      .catch(() => undefined);
     setTimeout(() => {
       router.push(Pages.SIGNIN);
     }, 1000);

@@ -12,6 +12,7 @@ interface CInputCopy {
   className?: string;
   placeholder: string;
   hideCharacter?: boolean;
+  disabled?: boolean;
   eyeIconPosition?: 'left' | 'right';
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
@@ -25,6 +26,7 @@ const CInputCopy = ({
   className,
   placeholder,
   hideCharacter,
+  disabled,
   eyeIconPosition,
 }: CInputCopy) => {
   const [inputValue, setInputValue] = useState('');
@@ -36,7 +38,7 @@ const CInputCopy = ({
   };
 
   const handleCInputCopyClick = () => {
-    copyText(inputValue);
+    copyText(value || inputValue);
   };
 
   return (
@@ -46,8 +48,9 @@ const CInputCopy = ({
         value={value}
         placeholder={placeholder}
         hideCharacter={hideCharacter}
+        disabled={disabled}
         eyeIconPosition={eyeIconPosition}
-        onChange={handleCInputCopyChange}
+        onChange={disabled ? undefined : handleCInputCopyChange}
         onBlur={onBlur}
         inputClassName={cn(className, '!border-gray border-r-0 rounded-e-none')}
       />

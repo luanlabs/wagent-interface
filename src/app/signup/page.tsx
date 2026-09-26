@@ -1,20 +1,9 @@
-import { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 
-import AuthLayout from '@/containers/AuthLayout';
-import Form from './form';
-
-import dashboardGlance from 'public/images/dashboardGlance.svg';
-
-export const metadata: Metadata = {
-  title: 'Wagent - Sign up',
-};
+import { Pages } from '@/constants/pages';
 
 const SignUp = () => {
-  return (
-    <AuthLayout imageSrc={dashboardGlance}>
-      <Form />
-    </AuthLayout>
-  );
+  redirect(Pages.SIGNIN);
 };
 
 export default SignUp;

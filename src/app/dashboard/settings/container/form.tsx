@@ -14,7 +14,6 @@ import CInputCopy from '@/components/CInputCopy';
 import CItemField from '@/components/CItemField';
 import EditProfile from '@/containers/EditProfile';
 import CNumberInput from '@/components/CNumberInput';
-import { validateAddress } from '@/utils/validators';
 import useCheckboxColors from '@/hooks/useCheckboxColors';
 import CRadioButtonGroup from '@/components/CRadioButtonGroup';
 import CSelectSearchable from '@/components/CSelectSearchable';
@@ -58,7 +57,6 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
     logo: data.logo,
     tokens: data.tokens,
     isSingleChecked: true,
-    address: data.address,
     methods: data.methods,
     isVestingChecked: false,
     apiKeyValue: data.apiKey,
@@ -66,8 +64,6 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
     isStreamChecked: data.methods === 3 ? true : false,
     minimumCancellableStreamDuration: data.minimumCancellableStreamDuration,
   });
-
-  const [addressError, setAddressError] = useState<string | null>(null);
 
   const router = useRouter();
   const checkBoxColors = useCheckboxColors(formState.isStreamChecked, formState.isVestingChecked);
@@ -89,22 +85,6 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
       ...prevState,
       [name]: parsedValue,
     }));
-  };
-
-  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newAddress = e.target.value;
-
-    setFormState((prevState) => ({
-      ...prevState,
-      address: newAddress,
-    }));
-
-    if (validateAddress(newAddress)) {
-      setAddressError('This address is not valid.');
-    } else {
-      setAddressError(null);
-      updateUser({ address: newAddress });
-    }
   };
 
   const handleSelectChange = (value: MultiValue<BasicOptionType<string>>) => {
@@ -169,6 +149,11 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
 
   const handleSignOut = useCallback(() => {
     Cookies.remove('token');
+    void import('@bluxcc/core')
+      .then(({ blux }) => {
+        blux.logout();
+      })
+      .catch(() => undefined);
     router.push(Pages.SIGNIN);
   }, [router]);
 
@@ -243,17 +228,16 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
         </CItemField>
 
         <CItemField
-          title="Enter your stellar wallet"
-          description="Your wallet address for receiving payments. Ensure it's valid."
+          title="Stellar wallet"
+          description="Assigned by Blux and used for withdrawals."
         >
           <div className="w-[400px] short:w-[320px]">
             <CInputCopy
               name="address"
-              value={formState.address}
-              placeholder="Enter Wallet Address"
-              onChange={handleAddressChange}
+              value={data.address}
+              placeholder="Stellar address"
+              disabled
             />
-            {addressError && <p className="!text-[12px] text-error mt-1">{addressError}</p>}
           </div>
         </CItemField>
 
@@ -287,7 +271,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
         <CItemField
           title="API Key"
           description={
-            <p className="desktop:whitespace-nowrap">
+            <span className="desktop:whitespace-nowrap">
               Connect Wagent to your shop. Keep it secure, and{' '}
               <span
                 onClick={handleRegenerate}
@@ -296,7 +280,7 @@ const SettingsForm = ({ data, setIsEditProfileOpen, isEditProfileOpen }: Setting
                 regenerate
               </span>{' '}
               only if needed.
-            </p>
+            </span>
           }
         >
           <div className="w-[400px] short:w-[320px]">

@@ -81,7 +81,7 @@ const VerifyForm = () => {
   };
 
   const handleRedirect = () => {
-    router.push(Pages.SIGNUP);
+    router.push(Pages.SIGNIN);
   };
 
   return (
@@ -128,9 +128,9 @@ const VerifyForm = () => {
           />
         </div>
         <div className="absolute bottom-0 flex justify-between items-center w-full">
-          <p className="text-sm select-none text-smokyBlue">Don&apos;t have an Account?</p>
+          <p className="text-sm select-none text-smokyBlue">Ready to continue?</p>
 
-          <CButton text="Sign up" variant="outline" className="!w-1/3" onClick={handleRedirect} />
+          <CButton text="Sign in" variant="outline" className="!w-1/3" onClick={handleRedirect} />
         </div>
       </div>
       <CLoadingModal

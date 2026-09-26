@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast';
 import { Inter } from 'next/font/google';
 
 import Metadata from '@/constants/metadata';
+import AppBluxProvider from '@/containers/AppBluxProvider';
 
 import 'src/styles/globals.css';
 import { store } from 'src/store';
@@ -26,12 +27,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </head>
 
         <body className="overflow-hidden mobile:bg-white desktop:bg-alabaster">
-          <Suspense fallback={<Loading />}>
-            <main className="relative mobile:overflow-hidden h-full w-full">
-              {children}
-              <Toaster position="bottom-center" />
-            </main>
-          </Suspense>
+          <AppBluxProvider>
+            <Suspense fallback={<Loading />}>
+              <main className="relative mobile:overflow-hidden h-full w-full">
+                {children}
+                <Toaster position="bottom-center" />
+              </main>
+            </Suspense>
+          </AppBluxProvider>
         </body>
       </html>
     </Provider>

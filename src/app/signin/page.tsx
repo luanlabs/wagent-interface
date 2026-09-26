@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 import AuthLayout from '@/containers/AuthLayout';
-import Form from './form';
+import Form from './form/loader';
 
 import settingsGlance from 'public/images/settingsGlance.svg';
 
